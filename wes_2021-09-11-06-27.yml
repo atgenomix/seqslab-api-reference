@@ -1,0 +1,2048 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-first and enterprise BioMed-IT infrastructure.
+paths:
+  /wes/v1/operator-pipelines/:
+    get:
+      operationId: wes_v1_operator_pipelines_list
+      description: A viewset for run operator pipeline CRUD actions
+      tags:
+      - OperatorPipeline
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+    post:
+      operationId: wes_v1_operator_pipelines_create
+      description: A viewset for run operator pipeline CRUD actions
+      tags:
+      - OperatorPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+  /wes/v1/operator-pipelines/{id}/:
+    get:
+      operationId: wes_v1_operator_pipelines_retrieve
+      description: A viewset for run operator pipeline CRUD actions
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipeline
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+    put:
+      operationId: wes_v1_operator_pipelines_update
+      description: A viewset for run operator pipeline CRUD actions
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+    patch:
+      operationId: wes_v1_operator_pipelines_partial_update
+      description: A viewset for run operator pipeline CRUD actions
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+    delete:
+      operationId: wes_v1_operator_pipelines_destroy
+      description: A viewset for run operator pipeline CRUD actions
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipeline
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /wes/v1/runs/:
+    get:
+      operationId: wes_v1_runs_list
+      description: |-
+        list, create (once now), and retrieve workflow runs
+        in the user authenticated backend.
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RunsTable'
+          description: ''
+    post:
+      operationId: wes_v1_runs_create
+      description: |-
+        list, create (once now), and retrieve workflow runs
+        in the user authenticated backend.
+      parameters:
+      - in: query
+        name: request_id
+        schema:
+          type: string
+        description: create run with request_id if run request is created
+      tags:
+      - Runs
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunRequestRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Runs'
+          description: ''
+  /wes/v1/runs/{run_id}/:
+    get:
+      operationId: wes_v1_runs_retrieve
+      description: |-
+        list, create (once now), and retrieve workflow runs
+        in the user authenticated backend.
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Runs'
+          description: ''
+  /wes/v1/runs/{run_id}/status/:
+    get:
+      operationId: wes_v1_runs_status_retrieve
+      description: |-
+        list, create (once now), and retrieve workflow runs
+        in the user authenticated backend.
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunStatus'
+          description: ''
+    post:
+      operationId: wes_v1_runs_status_create
+      description: |-
+        list, create (once now), and retrieve workflow runs
+        in the user authenticated backend.
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunStatusRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunStatusRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunStatus'
+          description: ''
+  /wes/v1/schedules/:
+    get:
+      operationId: wes_v1_schedules_list
+      description: View set for listing, creating, destroying run schedules.
+      tags:
+      - RunSchedule
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RunSchedule'
+          description: ''
+    post:
+      operationId: wes_v1_schedules_create
+      description: View set for listing, creating, destroying run schedules.
+      tags:
+      - RunSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunScheduleInputRequest'
+            examples:
+              RunScheduleNotebookRequestExample:
+                value:
+                  schedule:
+                    schedule_type: O
+                    next_run: 2021-09-11 08:57:57.361355+00:00
+                  request:
+                    name: string
+                    description: string
+                    workflow_type: NOTEBOOK
+                    workflow_backend_params:
+                      workspace: string
+                      clusters:
+                      - name: string
+                        id: string
+                        description: string
+                        settings:
+                          type: string
+                          vm_size: string
+                          workers:
+                            dedicated: 0
+                            spot: 0
+                          worker_on_master: true
+                          auto_scale: false
+                        options:
+                        - string
+                        slcu: {}
+                summary: 'Run schedule request example: Create Notebook'
+                description: Notebook example
+              RunScheduleWDLRequestExample:
+                value:
+                  schedule:
+                    schedule_type: O
+                    next_run: 2021-09-11 08:57:57.361370+00:00
+                  request:
+                    name: string
+                    description: string
+                    workflow_type: WDL
+                    workflow_backend_params:
+                      workspace: string
+                summary: 'Run schedule request example: Create WDL'
+                description: WDL example
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunSchedule'
+          description: ''
+  /wes/v1/schedules/{id}/:
+    get:
+      operationId: wes_v1_schedules_retrieve
+      description: View set for listing, creating, destroying run schedules.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedule
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunSchedule'
+          description: ''
+    delete:
+      operationId: wes_v1_schedules_destroy
+      description: View set for listing, creating, destroying run schedules.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedule
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /wes/v1/schedules/{id}/parameters/:
+    post:
+      operationId: wes_v1_schedules_parameters_create
+      description: |-
+        1. run womtools graph/inputs
+        2. create response data
+        {
+            inputs:{},
+            configs:{},
+            runtime_options:{},
+            operator_pipelines:{},
+            workflows:{}
+        }
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedule
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParameterFileInputRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputJson'
+          description: ''
+  /wes/v1/schedules/{id}/requests/:
+    post:
+      operationId: wes_v1_schedules_requests_create
+      description: |-
+        1. update run_request information
+        2. check next-run time is smaller than utc timenow
+        3. update django Q schedule
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputJsonRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputJson'
+          description: ''
+  /wes/v1/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /wes/v1/service-info/:
+    get:
+      operationId: wes_v1_service_info_list
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+  /wes/v1/service-info/workspaces/:
+    get:
+      operationId: wes_v1_service_info_workspaces_list
+      description: List workspaces available in the service.
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: Display workspace resource list (true or false)
+      - in: query
+        name: force
+        schema:
+          type: boolean
+        description: Force reload system if cache exists
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                WorkspaceList(expand=false):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                  summary: workspace list (expand=false)
+                  description: workspace information list <br>Information includes
+                    the id, name, and location
+                WorkspaceList(expand=true):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                  summary: workspace list (expand=true)
+                  description: detailed workspace information list.  <br>Information
+                    includes the id, name, location and resources list.
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/:
+    get:
+      operationId: wes_v1_service_info_workspaces_name
+      description: Obtain OAuth2 client credential token, resources, container given
+        a workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspacesName'
+              examples:
+                WorkspaceInformation:
+                  value:
+                  - id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                    registries:
+                    - id: resources id
+                      name: acr name
+                      location: location
+                      login_server: login server
+                      admin_user: true
+                      authorization: authorization code
+                      repositories:
+                      - name: image name
+                        tags:
+                        - name: latest
+                          digest: digest
+                          created: '2021-08-10T09:52:49.1368541Z'
+                          last_updated: '2021-08-10T09:52:49.1368541Z'
+                          size: size
+                          type: image type
+                    tokens:
+                      management.azure.com: ''
+                      batch.core.windows.net: ''
+                  summary: workspace information
+                  description: workspace information include resources, token, and
+                    registries
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/container-registries/:
+    get:
+      operationId: wes_v1_service_info_workspaces_container_registries_list
+      description: List container registries available in a given workspace.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContainerRegistries'
+              examples:
+                ContainerRegistries:
+                  value:
+                  - id: resources id
+                    name: acr name
+                    location: location
+                    login_server: login server
+                    admin_user: true
+                    authorization: authorization code
+                    repositories:
+                    - name: image name
+                      tags:
+                      - name: latest
+                        digest: digest
+                        created: '2021-08-10T09:52:49.1368541Z'
+                        last_updated: '2021-08-10T09:52:49.1368541Z'
+                        size: size
+                        type: image type
+                  summary: container_registries
+                  description: return container_registries according to the workspace
+                    name
+                ContainerRegistriesEmpty_:
+                  value:
+                  - id: resources id
+                    name: acr name
+                    location: location
+                    login_server: login server
+                    admin_user: true
+                    authorization: authorization code
+                  summary: 'container_registries_empty '
+                  description: container_registries does not have any images
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/resources/:
+    get:
+      operationId: wes_v1_service_info_workspaces_resources
+      description: Obtain OAuth2 client credential token given a workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspacesResources'
+              examples:
+                ResourcesInformation:
+                  value:
+                  - id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                    tokens:
+                      management.azure.com: ''
+                      batch.core.windows.net: ''
+                  summary: resources information
+                  description: return resources information according to the workspace
+                    name <br>Information include id, name, location, resources, and
+                    token
+          description: ''
+components:
+  schemas:
+    Cluster:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+        settings:
+          $ref: '#/components/schemas/Settings'
+        options:
+          type: array
+          items:
+            type: string
+        slcu:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - id
+      - name
+      - settings
+    ClusterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+        settings:
+          $ref: '#/components/schemas/SettingsRequest'
+        options:
+          type: array
+          items:
+            type: string
+        slcu:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - id
+      - name
+      - settings
+    ContainerRegistries:
+      type: object
+      properties:
+        registries:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - registries
+    Image:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+    ImageRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+    InputJson:
+      type: object
+      properties:
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Inputs'
+        runtimes:
+          $ref: '#/components/schemas/Runtimes'
+        trs:
+          $ref: '#/components/schemas/Trs'
+        workflow_url:
+          type: string
+          format: uri
+    InputJsonRequest:
+      type: object
+      properties:
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/InputsRequest'
+        runtimes:
+          $ref: '#/components/schemas/RuntimesRequest'
+        trs:
+          $ref: '#/components/schemas/TrsRequest'
+        workflow_url:
+          type: string
+          format: uri
+    Inputs:
+      type: object
+      properties:
+        fqn:
+          type: string
+        local:
+          type: object
+          additionalProperties: {}
+        cloud:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        operators:
+          type: object
+          additionalProperties: {}
+      required:
+      - fqn
+    InputsRequest:
+      type: object
+      properties:
+        fqn:
+          type: string
+        local:
+          type: object
+          additionalProperties: {}
+        cloud:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        operators:
+          type: object
+          additionalProperties: {}
+      required:
+      - fqn
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          maxLength: 1023
+        workflow_type:
+          $ref: '#/components/schemas/WorkflowTypeEnum'
+        workflow_type_version:
+          type: string
+          maxLength: 15
+        workflow_params:
+          type: object
+          additionalProperties: {}
+        workflow_backend_params:
+          type: object
+          additionalProperties: {}
+        workflow_url:
+          type: string
+          format: uri
+          maxLength: 200
+        workflow_engine_params:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - name
+      - tags
+      - workflow_engine_params
+    NestedRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          maxLength: 255
+        depth:
+          type: integer
+          maximum: 4294967295
+          format: int64
+          minimum: 0
+        numchild:
+          type: integer
+          maximum: 4294967295
+          format: int64
+          minimum: 0
+        name:
+          type: string
+          description: 'Label name: any string e.g. ''TUMOR'' '
+          maxLength: 255
+        extra:
+          type: object
+          additionalProperties: {}
+          description: 'optional, dictionary include color key, color use hex code
+            to represent <br/>e.g. {"color": "#000000"}'
+        user:
+          type: string
+      required:
+      - depth
+      - name
+      - path
+      - user
+    ParameterFileInputRequest:
+      type: object
+      properties:
+        PRIMARY_DESCRIPTOR:
+          type: string
+        file:
+          type: string
+          format: binary
+          description: Please upload zip file
+      required:
+      - PRIMARY_DESCRIPTOR
+      - file
+    PatchedRunOperatorPipelineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+    RunLog:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 63
+        cmd:
+          type: string
+          maxLength: 8191
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        stdout:
+          type: string
+          maxLength: 64
+        stderr:
+          type: string
+          maxLength: 64
+        activity:
+          type: string
+          maxLength: 64
+        exit_code:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        outputs:
+          type: object
+          additionalProperties: {}
+      required:
+      - activity
+      - cmd
+      - exit_code
+      - name
+      - stderr
+      - stdout
+    RunLogRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 63
+        cmd:
+          type: string
+          maxLength: 8191
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        stdout:
+          type: string
+          maxLength: 64
+        stderr:
+          type: string
+          maxLength: 64
+        activity:
+          type: string
+          maxLength: 64
+        exit_code:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        outputs:
+          type: object
+          additionalProperties: {}
+      required:
+      - activity
+      - cmd
+      - exit_code
+      - name
+      - stderr
+      - stdout
+    RunOperatorPipeline:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        version:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - description
+      - file_type
+      - id
+      - version
+    RunOperatorPipelineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - file_type
+      - id
+    RunRequestInfo:
+      type: object
+      properties:
+        description:
+          type: string
+          readOnly: true
+        tags:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - description
+      - tags
+    RunRequestRequest:
+      type: object
+      properties:
+        workflow_params:
+          type: object
+          additionalProperties: {}
+        workflow_type:
+          $ref: '#/components/schemas/WorkflowTypeEnum'
+        workflow_type_version:
+          type: string
+          maxLength: 15
+        workflow_backend_params:
+          type: object
+          additionalProperties: {}
+        workflow_url:
+          type: string
+          format: uri
+          maxLength: 200
+    RunSchedule:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        schedule:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        request:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+      required:
+      - id
+      - request
+      - schedule
+    RunScheduleClusterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: cluster type. For Notebook, this value is main.
+        id:
+          type: string
+          description: cluster name
+        description:
+          type: string
+          description: RunSchedule description
+        settings:
+          $ref: '#/components/schemas/SettingsRequest'
+        options:
+          type: array
+          items:
+            type: string
+        slcu:
+          type: object
+          additionalProperties: {}
+      required:
+      - id
+      - name
+      - settings
+    RunScheduleInputRequest:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/ScheduleRequest'
+        request:
+          $ref: '#/components/schemas/RunScheduleRequestsRequest'
+      required:
+      - request
+    RunScheduleRequestsRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+          maxLength: 1023
+        workflow_type:
+          $ref: '#/components/schemas/WorkflowTypeEnum'
+        workflow_backend_params:
+          $ref: '#/components/schemas/WorkflowBackendParamsRequest'
+      required:
+      - name
+      - workflow_backend_params
+    RunStatus:
+      type: object
+      properties:
+        run_log:
+          $ref: '#/components/schemas/RunLog'
+        state:
+          $ref: '#/components/schemas/StateEnum'
+      required:
+      - state
+    RunStatusRequest:
+      type: object
+      properties:
+        run_log:
+          $ref: '#/components/schemas/RunLogRequest'
+        state:
+          $ref: '#/components/schemas/StateEnum'
+      required:
+      - state
+    Runs:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          allOf:
+          - $ref: '#/components/schemas/StateEnum'
+          readOnly: true
+        request:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+      required:
+      - end_time
+      - id
+      - name
+      - request
+      - start_time
+      - state
+    RunsTable:
+      type: object
+      properties:
+        run_id:
+          type: string
+        request:
+          allOf:
+          - $ref: '#/components/schemas/RunRequestInfo'
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          allOf:
+          - $ref: '#/components/schemas/StateEnum'
+          readOnly: true
+      required:
+      - end_time
+      - name
+      - request
+      - run_id
+      - start_time
+      - state
+    Runtimes:
+      type: object
+      properties:
+        graph:
+          type: string
+        workspace:
+          type: string
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cluster'
+      required:
+      - clusters
+      - workspace
+    RuntimesRequest:
+      type: object
+      properties:
+        graph:
+          type: string
+        workspace:
+          type: string
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterRequest'
+      required:
+      - clusters
+      - workspace
+    ScheduleRequest:
+      type: object
+      properties:
+        schedule_type:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleTypeEnum'
+          default: O
+          description: 'schedule type: <br>((''O'', ''Once''), (''I'', ''Minutes''),
+            (''H'', ''Hourly''), (''D'', ''Daily''), (''W'', ''Weekly''), (''M'',
+            ''Monthly''), (''Q'', ''Quarterly''), (''Y'', ''Yearly''), (''C'', ''Cron''))'
+        next_run:
+          type: string
+          format: date-time
+          default: '2021-09-11T08:57:57.334951Z'
+          description: running time setting
+    ScheduleTypeEnum:
+      enum:
+      - O
+      - I
+      - H
+      - D
+      - W
+      - M
+      - Q
+      - Y
+      - C
+      type: string
+    ServiceInfo:
+      type: object
+      description: |-
+        serialize service info, workspaces, containers,
+        managed clusters required for creating workflow run.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        workspaces:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+        workflow_type_versions:
+          type: object
+          additionalProperties: {}
+        supported_wes_versions:
+          type: object
+          additionalProperties: {}
+        supported_filesystem_protocols:
+          type: object
+          additionalProperties: {}
+        workflow_engine_versions:
+          type: object
+          additionalProperties: {}
+        system_state_counts:
+          type: object
+          additionalProperties: {}
+        auth_instructions_url:
+          type: string
+          format: uri
+          maxLength: 200
+        tags:
+          type: object
+          additionalProperties: {}
+        default_workflow_engine_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nested'
+          readOnly: true
+      required:
+      - auth_instructions_url
+      - created_at
+      - default_workflow_engine_params
+      - description
+      - id
+      - name
+      - updated_at
+      - workspaces
+    Settings:
+      type: object
+      properties:
+        type:
+          type: string
+        vm_size:
+          type: string
+        workers:
+          $ref: '#/components/schemas/Workers'
+        worker_on_master:
+          type: boolean
+          default: true
+        auto_scale:
+          type: boolean
+          default: false
+      required:
+      - type
+      - vm_size
+      - workers
+    SettingsRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        vm_size:
+          type: string
+        workers:
+          $ref: '#/components/schemas/WorkersRequest'
+        worker_on_master:
+          type: boolean
+          default: true
+        auto_scale:
+          type: boolean
+          default: false
+      required:
+      - type
+      - vm_size
+      - workers
+    StateEnum:
+      enum:
+      - UNKNOWN
+      - QUEUED
+      - INITIALIZING
+      - RUNNING
+      - PAUSED
+      - COMPLETE
+      - EXECUTOR_ERROR
+      - SYSTEM_ERROR
+      - CANCELED
+      - CANCELING
+      type: string
+    Trs:
+      type: object
+      properties:
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+      required:
+      - images
+      - name
+    TrsRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageRequest'
+      required:
+      - images
+      - name
+    Workers:
+      type: object
+      properties:
+        dedicated:
+          type: integer
+          description: The number of dedicated VM
+        spot:
+          type: integer
+          description: The number of low priority VM
+      required:
+      - dedicated
+      - spot
+    WorkersRequest:
+      type: object
+      properties:
+        dedicated:
+          type: integer
+          description: The number of dedicated VM
+        spot:
+          type: integer
+          description: The number of low priority VM
+      required:
+      - dedicated
+      - spot
+    WorkflowBackendParamsRequest:
+      type: object
+      properties:
+        workspace:
+          type: string
+          description: workspace name
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunScheduleClusterRequest'
+          description: If workflow_type is WDL, this fields should be empty or null.
+            <br>If workflow_type is NOTEBOOK, this fields should contains cluster
+            information
+          maxItems: 1
+      required:
+      - workspace
+    WorkflowTypeEnum:
+      enum:
+      - WDL
+      - NOTEBOOK
+      type: string
+    WorkloadTypeEnum:
+      enum:
+      - REGULAR
+      - FILE
+      - MEMORY
+      type: string
+    Workspaces:
+      type: object
+      properties:
+        workspaces:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - workspaces
+    WorkspacesName:
+      type: object
+      properties:
+        workspace:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - workspace
+    WorkspacesResources:
+      type: object
+      properties:
+        resources:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - resources
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
