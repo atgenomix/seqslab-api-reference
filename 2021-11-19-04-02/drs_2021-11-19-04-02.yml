@@ -1,0 +1,2980 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /ga4gh/drs/v1/objects/:
+    get:
+      operationId: ga4gh_drs_v1_objects_list
+      description: list drs object
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: expand ContentsObject of DrsObject, true or false
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDrsObjectList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: create_drs_object
+      description: Create, Retrieve, Update, Delete DrsObject
+      parameters:
+      - in: query
+        name: bundle
+        schema:
+          type: boolean
+        description: 'create bundle object <br>False(default): it will create blob
+          object. <br>True: it will create bundle object'
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drsObjectRequest'
+            examples:
+              CreateSingleBlob:
+                value:
+                  name: hic_pro_hg19_sh_files
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2021-11-23 07:36:53.759109+00:00'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    access_tier: hot
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: create single blob
+                description: create single blob <br>Serializers refer to DrsObjectSerializer.
+              CreateMultipleBlob:
+                value:
+                - name: hic_pro_hg19_sh_files
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2021-11-23 07:36:53.759151+00:00'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    access_tier: hot
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                - name: hic_pro_hg19_sh_files1
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2021-11-23 07:36:53.759159+00:00'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg191.sh
+                      headers: {}
+                    access_tier: hot
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: create multiple blob
+                description: create multiple blob <br>Serializers refer to DrsObjectSerializer.
+              CreateBundleWithDrsId:
+                value:
+                  name: hg19_files_bundle
+                  mime_type: string
+                  file_type: bundle
+                  description: string
+                  tags:
+                  - tags1
+                  - tags2
+                  aliases: []
+                  metadata: {}
+                  contents:
+                  - drs_id: drs_LpwyqpXXs6H0zds
+                  - drs_id: drs_h01oZinCqzYKDEl
+                summary: create bundle with drs id
+                description: 'create bundle with drs id <br>Please set bundle is true
+                  <br>Note: contents should contains at least two drs objects.Serializers
+                  refer to BundleObjectSerializer.'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsObject'
+              examples:
+                CreateSingleBlob:
+                  value:
+                  - id: drs_1cu5pYmDJKRefG3
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3/
+                    size: 3189
+                    version: 2021-11-23 07:36:53.759133+00:00
+                    created_time: 2021-11-23 07:36:53.759135+00:00
+                    updated_time: null
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_tier: hot
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                  summary: create single blob
+                  description: create single blob response
+                CreateMultipleBlobResponse:
+                  value:
+                  - id: drs_1cu5pYmDJKRefG3
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3/
+                    size: 3189
+                    version: 2021-11-23 07:36:53.759164+00:00
+                    created_time: 2021-11-23 07:36:53.759166+00:00
+                    updated_time: null
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_tier: hot
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                  - id: drs_1cu5pYmDJKRefG4
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4/
+                    size: 3189
+                    version: 2021-11-23 07:36:53.759172+00:00
+                    created_time: 2021-11-23 07:36:53.759174+00:00
+                    updated_time: null
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_tier: hot
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg191.sh
+                  summary: create multiple blob response
+                  description: create multiple blob  response
+                CreateBundleWithDrsIdResponse:
+                  value:
+                  - id: drs_WJ3DjHFj0ITLtFl
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_WJ3DjHFj0ITLtFl/
+                    size: 3189
+                    version: '2021-09-11T03:11:37.673810Z'
+                    created_time: null
+                    updated_time: null
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                    contents:
+                    - id: 211
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/drs_h01oZinCqzYKDEl/
+                      drs_id: drs_h01oZinCqzYKDEl
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_tier: hot
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.blob.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                    - id: 213
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/drs_LpwyqpXXs6H0zds/
+                      drs_id: drs_LpwyqpXXs6H0zds
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_tier: hot
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.blob.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                  summary: create bundle with drs id response
+                  description: create bundle with drs id response
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/:
+    get:
+      operationId: ga4gh_drs_v1_objects_retrieve
+      description: |-
+        Returns object metadata, and a list of access methods
+        that can be used to fetch object bytes.
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: expand ContentsObject of DrsObject, true or false
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: drs object id
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsObject'
+              examples:
+                GetDrsObjectWithExpand(true):
+                  value:
+                    id: drs_SfJ2ApkL3q7nJVT
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT/
+                    size: 3189
+                    version: 2021-11-23 07:36:53.759332+00:00
+                    created_time: null
+                    updated_time: null
+                    metadata:
+                      sample:
+                        host: null
+                        specimen: null
+                        phenotype: null
+                      sequence:
+                        library:
+                          name: null
+                          layout: null
+                          strategy: null
+                        quality:
+                          gtFP: null
+                          score: null
+                          fscore: null
+                          method: null
+                          recall: null
+                          queryFP: null
+                          queryTP: null
+                          truthFN: null
+                          truthTP: null
+                          precision: null
+                        platform:
+                          udi: null
+                          model: null
+                        readCount: null
+                        readCoverage: null
+                        referenceSeq:
+                          url: null
+                          genomeBuild: null
+                      investigation:
+                        center: null
+                        project: null
+                        internalReviewBoard: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                    contents:
+                    - id: 211
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/hic_pro_hg19_sh_files/
+                      drs_id: drs_h01oZinCqzYKDEl
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_tier: hot
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.dfs.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                  summary: get drs object with expand(true)
+                  description: get drs object with expand(true)
+                GetDrsObjectWithExpand(false):
+                  value:
+                    id: drs_SfJ2ApkL3q7nJVT
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT/
+                    size: 3189
+                    version: 2021-11-23 07:36:53.759322+00:00
+                    created_time: null
+                    updated_time: null
+                    metadata:
+                      sample:
+                        host: null
+                        specimen: null
+                        phenotype: null
+                      sequence:
+                        library:
+                          name: null
+                          layout: null
+                          strategy: null
+                        quality:
+                          gtFP: null
+                          score: null
+                          fscore: null
+                          method: null
+                          recall: null
+                          queryFP: null
+                          queryTP: null
+                          truthFN: null
+                          truthTP: null
+                          precision: null
+                        platform:
+                          udi: null
+                          model: null
+                        readCount: null
+                        readCoverage: null
+                        referenceSeq:
+                          url: null
+                          genomeBuild: null
+                      investigation:
+                        center: null
+                        project: null
+                        internalReviewBoard: null
+                    aliases: []
+                    tags:
+                    - /tags1
+                    - /tags2
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                  summary: get drs object with expand(false)
+                  description: get drs object with expand(false)
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: Not found.
+                    status: 404
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    put:
+      operationId: ga4gh_drs_v1_objects_update
+      description: |-
+        Update drs object updated_time, metadata, tag, checksum,
+        or create created_time
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: drs object id
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drsObjectUpdateRequest'
+            examples:
+              UpdateBlobDataAndContent:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                  created_time: 2021-11-23 07:36:53.759286+00:00
+                  updated_time: 2021-11-23 07:36:53.759288+00:00
+                summary: update blob data and content
+                description: 'update name, tags, metadata and drs object content <br>name:
+                  drs object name <br>tags: drs object label(note: it will override
+                  the original tags)<br>metadata: drs object metadata <br>created_time:
+                  data created time<br>updated_time:  data updated time or last modified
+                  time <br>checksums: blob checksum (note: it will override the original
+                  checksums)<br>Serializers refer to BlobUpdateRequest.'
+              UpdateBundleData:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: update bundle data
+                description: 'update name, tags, and metadata <br>name: drs object
+                  name <br>tags: drs object label (note: it will override the original
+                  tags)<br>metadata: drs object metadata <br>Serializers refer to
+                  BundleUpdateRequest.'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsObject'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+          description: ''
+    patch:
+      operationId: ga4gh_drs_v1_objects_partial_update
+      description: |-
+        Update drs object updated_time, metadata, tag, checksum,
+        or create created_time
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: drs object id
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatcheddrsObjectPartialUpdateRequest'
+            examples:
+              UpdateBlobDataAndContent:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                  created_time: 2021-11-23 07:36:53.759286+00:00
+                  updated_time: 2021-11-23 07:36:53.759288+00:00
+                summary: update blob data and content
+                description: 'update name, tags, metadata and drs object content <br>name:
+                  drs object name <br>tags: drs object label(note: it will override
+                  the original tags)<br>metadata: drs object metadata <br>created_time:
+                  data created time<br>updated_time:  data updated time or last modified
+                  time <br>checksums: blob checksum (note: it will override the original
+                  checksums)<br>Serializers refer to BlobUpdateRequest.'
+              CreateOrUpdateBlobChecksums:
+                value:
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: create or update blob checksums
+                description: 'create or update drs object checksum. (note: it will
+                  override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
+              UpdateBlobContentUpdatedTime:
+                value:
+                  updated_time: 2021-11-23 07:36:53.759297+00:00
+                summary: update blob content updated_time
+                description: update drs object content updated_time(this will connect
+                  to the data updated time or last modified time), <br>Serializers
+                  refer to BlobUpdateRequest.
+              UpdateBlobContentCreatedTime:
+                value:
+                  created_time: 2021-11-23 07:36:53.759293+00:00
+                summary: update blob content created_time
+                description: update blob content created_time(this will connect to
+                  the data create time) <br>Serializers refer to BlobUpdateRequest.
+              UpdateBundleData:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: update bundle data
+                description: 'update name, tags, and metadata <br>name: drs object
+                  name <br>tags: drs object label (note: it will override the original
+                  tags)<br>metadata: drs object metadata <br>Serializers refer to
+                  BundleUpdateRequest.'
+              UpdateName:
+                value:
+                  name: hg19
+                summary: update name
+                description: update drs object name<br>
+              UpdateTags:
+                value:
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: update tags
+                description: 'update drs object tags(note: it will override the original
+                  tags) <br>'
+              UpdateMetadata:
+                value:
+                  metadata: {}
+                summary: update metadata
+                description: update drs object metadata<br>
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsObject'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1_objects_destroy
+      description: delete drs object
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: drs object id
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: Not found.
+                    status: 404
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/access/{access_id}/:
+    get:
+      operationId: ga4gh_drs_v1_objects_access_retrieve
+      description: "Returns a URL that can be used to fetch the bytes of a DrsObject.\
+        \ <br>\nThis method only needs to be called when using an AccessMethod \n\
+        that contains an access_id \n(e.g., for servers that use signed URLs for fetching\
+        \ object bytes)."
+      parameters:
+      - in: path
+        name: access_id
+        schema:
+          type: string
+        description: access method id
+        required: true
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: drs object id
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessURL'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/objects/search/:
+    post:
+      operationId: ga4gh_drs_v1_objects_search_create
+      description: search drs objects by keys and values.
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+            examples:
+              SearchDrsObjectByTagsAndSetReturnLatestUploadData:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                  reverse: true
+                  top: 1
+                  order_by: created_time
+                summary: search drs object by tags and set return latest upload data
+                description: search drs object by tags, order by created_time ,and
+                  return latest upload data
+              SearchDrsObjectByTagsAndSetReturnTheFirst10UploadData:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                  reverse: false
+                  top: 10
+                  order_by: created_time
+                summary: search drs object by tags and set return the first 10 upload
+                  data
+                description: search drs object by tags, order by created_time ,and
+                  return first 10 upload data
+              SearchDrsObjectByTags:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                summary: search drs object by tags
+                description: search drs object by tags
+              SearchDrsObjectByNames:
+                value:
+                  names:
+                  - ref.fa
+                  - '38'
+                  fields:
+                  - all
+                  mode: exact
+                summary: search drs object by names
+                description: search drs object by drs object names
+              SearchDrsObjectByPaths:
+                value:
+                  paths:
+                  - /usr/GRCH.fa
+                  - /usr/local/99.txt
+                  fields:
+                  - all
+                  mode: exact
+                summary: search drs object by paths
+                description: search drs object by file paths
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsSearchOutputExample'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/upload/:
+    get:
+      operationId: ga4gh_drs_v1_objects_upload_retrieve
+      description: return sas token have writeable permission
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: workspace name
+        required: true
+      - in: query
+        name: path
+        schema:
+          type: string
+        description: get sas token under drs/user_id/path ,
+      tags:
+      - upload
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Upload'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/objects/upload/refresh/:
+    get:
+      operationId: ga4gh_drs_v1_objects_upload_refresh_retrieve
+      description: return sas token have writeable permission
+      parameters:
+      - in: query
+        name: upload_url
+        schema:
+          type: string
+          format: uri
+        description: upload url
+        required: true
+      tags:
+      - upload
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRefresh'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/service-info/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_list
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: ga4gh_drs_v1_service_info_create
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/service-info/{id}/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_retrieve
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: Not found.
+                    status: 404
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    put:
+      operationId: ga4gh_drs_v1_service_info_update
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+          description: ''
+    patch:
+      operationId: ga4gh_drs_v1_service_info_partial_update
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1_service_info_destroy
+      description: |-
+        List workflow execution service information including
+        workspaces, container images, managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: Not found.
+                    status: 404
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /ga4gh/drs/v1/service-info/workspaces/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_workspaces_list
+      description: List workspaces available in the service.
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: Display workspace resource list (true or false)
+      - in: query
+        name: force
+        schema:
+          type: boolean
+        description: Force reload system if cache exists
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                WorkspaceList(expand=false):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                  summary: workspace list (expand=false)
+                  description: workspace information list <br>Information includes
+                    the id, name, and location
+                WorkspaceList(expand=true):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: storage_account_access_method
+                      location: '{location}'
+                      identity:
+                        type: None
+                      url: storage_account_url
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: storage_account_access_method
+                      location: '{location}'
+                      identity:
+                        type: None
+                      url: storage_account_url
+                  summary: workspace list (expand=true)
+                  description: detailed workspace information list.  <br>Information
+                    includes the id, name, location and resources. <br>resources include
+                    id, name, type, sku, kind, location, and url. <br>url means the
+                    storage account endpoint url. <br>type means storage account access
+                    method type(abfss, s3, and gs)
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_workspaces_resources_list
+      description: Obtain OAuth2 client credential token given a workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspacesResources'
+              examples:
+                ResourcesInformation:
+                  value:
+                    id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: storage_account_access_method
+                      location: '{location}'
+                      identity:
+                        type: None
+                      url: storage_account_url
+                    token: {}
+                  summary: resources information
+                  description: return resources information according to the workspace
+                    name <br>Information include id, name, location, resources, and
+                    token<br>resources include id, name, type, sku, kind, location,
+                    and url. <br>url means the storage account endpoint url. <br>type
+                    means storage account access method type(abfss, s3, and gs)
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    status: 401
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    code: token_not_valid
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    status: 401
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    status: 403
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+components:
+  schemas:
+    AccessMethod:
+      type: object
+      description: Access Method Serializer
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeFc1Enum'
+        region:
+          type: string
+          nullable: true
+          maxLength: 16
+        access_tier:
+          type: string
+          maxLength: 16
+        access_url:
+          $ref: '#/components/schemas/AccessURL'
+      required:
+      - id
+      - type
+    AccessMethodRequest:
+      type: object
+      description: Access Method Serializer
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeFc1Enum'
+        region:
+          type: string
+          nullable: true
+          maxLength: 16
+        access_tier:
+          type: string
+          maxLength: 16
+        access_url:
+          $ref: '#/components/schemas/AccessURLRequest'
+      required:
+      - type
+    AccessURL:
+      type: object
+      properties:
+        headers:
+          type: object
+          additionalProperties: {}
+          description: Url authorization method and code. <br>Authorization default
+            is the storage account access token.
+        url:
+          type: string
+          nullable: true
+          format: uri
+      required:
+      - headers
+    AccessURLRequest:
+      type: object
+      properties:
+        headers:
+          type: object
+          additionalProperties: {}
+          description: Url authorization method and code. <br>Authorization default
+            is the storage account access token.
+        url:
+          type: string
+          nullable: true
+          format: uri
+      required:
+      - headers
+    BlobUpdateRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        name:
+          type: string
+          description: Only use name or path to search for drs objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+    BundleObjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentsObjectRequest'
+          description: If not set, this DrsObject is a single blob. If set, this DrsObject
+            is a bundle containing the listed ContentsObjects (some of which may be
+            further nested).
+          minItems: 1
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+      required:
+      - name
+    BundleUpdateRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        name:
+          type: string
+          description: Only use name or path to search for drs objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+    Checksum:
+      type: object
+      properties:
+        checksum:
+          type: string
+          pattern: ^[0-9a-fA-F]+$
+          maxLength: 256
+        type:
+          $ref: '#/components/schemas/ChecksumTypeEnum'
+      required:
+      - checksum
+      - type
+    ChecksumRequest:
+      type: object
+      properties:
+        checksum:
+          type: string
+          pattern: ^[0-9a-fA-F]+$
+          maxLength: 256
+        type:
+          $ref: '#/components/schemas/ChecksumTypeEnum'
+      required:
+      - checksum
+      - type
+    ChecksumTypeEnum:
+      enum:
+      - md5
+      - sha256
+      - sha512
+      - sha3_256
+      - sha3_512
+      - shake_256
+      type: string
+    ContentsObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          description: name and drs_id only can pass one parameter
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        drs_uri:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        drs_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethod'
+          readOnly: true
+      required:
+      - access_methods
+      - drs_uri
+      - id
+      - name
+    ContentsObjectRequest:
+      type: object
+      properties:
+        drs_id:
+          type: string
+          nullable: true
+          maxLength: 255
+    DrsObject:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 128
+        size:
+          type: integer
+          description: If drs object is blob and name is given, this field is required.
+          minimum: 0
+        version:
+          type: string
+          format: date-time
+          readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethod'
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentsObject'
+          readOnly: true
+          description: If not set, this DrsObject is a single blob. If set, this DrsObject
+            is a bundle containing the listed ContentsObjects (some of which may be
+            further nested).
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/Checksum'
+      required:
+      - access_methods
+      - checksums
+      - contents
+      - id
+      - name
+      - size
+      - version
+    DrsObjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 128
+        size:
+          type: integer
+          description: If drs object is blob and name is given, this field is required.
+          minimum: 0
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+      required:
+      - access_methods
+      - checksums
+      - name
+      - size
+    DrsSearchOutputExample:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrsSearchQuerySetExample'
+          description: 'search_key: User provide search optionsDrsSearchQuerySetExampleSerializer:
+            search result'
+      required:
+      - objects
+    DrsSearchQuerySetExample:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+          readOnly: true
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 128
+        size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          description: If not specified, this fields will be empty
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        version:
+          type: string
+          format: date-time
+          readOnly: true
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        aliases:
+          type: object
+          additionalProperties: {}
+        metadata:
+          type: object
+          additionalProperties: {}
+      required:
+      - name
+      - tags
+      - version
+    DrsSearchRequest:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+            description: Drs object name
+        paths:
+          type: array
+          items:
+            type: string
+            description: local file path. <br>
+        tags:
+          type: array
+          items:
+            type: string
+            description: search drs object by tags
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          writeOnly: true
+          default: exact
+          description: search mode <br><li>exact <br><li>iexact(ignore case) <br>
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldsEnum'
+          writeOnly: true
+          default:
+          - all
+          description: 'A list of fields to return, Default: all'
+        order_by:
+          allOf:
+          - $ref: '#/components/schemas/OrderByEnum'
+          writeOnly: true
+          description: return queryset order  <br>
+        reverse:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: 'sort condition (only order_by is provided, this is valid)
+            <by>True: descending sortFalse: ascending sort'
+        top:
+          type: integer
+          writeOnly: true
+          default: 0
+          description: 'Number of Matching query returns <br>0: return all match query
+            <br>1: return one of match query <br>Note: if you pass many value, it
+            will not return the number of the matched query for each condition. Example,
+            if you set search condition name=["a", "b"] and top=1, it will return
+            only one matched query.'
+          minimum: 0
+    ErrorSerializers:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The integer representing the HTTP status code.
+        detail:
+          type: string
+          description: A detailed error message.
+      required:
+      - detail
+      - status_code
+    FieldsEnum:
+      enum:
+      - all
+      - id
+      - name
+      - self_uri
+      - size
+      - created_time
+      - updated_time
+      - version
+      - mime_type
+      - file_type
+      - description
+      - aliases
+      - metadata
+      - tags
+      type: string
+    ModeEnum:
+      enum:
+      - exact
+      - iexact
+      type: string
+    OrderByEnum:
+      enum:
+      - id
+      - name
+      - self_uri
+      - size
+      - created_time
+      - updated_time
+      - version
+      - mime_type
+      - file_type
+      - description
+      - aliases
+      - metadata
+      - tags
+      type: string
+    PaginatedDrsObjectList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrsObject'
+    PatchedBlobUpdateRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        name:
+          type: string
+          description: Only use name or path to search for drs objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+    PatchedBundleUpdateRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g. ''TUMOR'' '
+        name:
+          type: string
+          description: Only use name or path to search for drs objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+    PatchedServiceInfoRequest:
+      type: object
+      description: serialize service info.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+    PatcheddrsObjectPartialUpdateRequest:
+      oneOf:
+      - $ref: '#/components/schemas/PatchedBlobUpdateRequest'
+      - $ref: '#/components/schemas/PatchedBundleUpdateRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/PatchedBundleUpdateRequest'
+    ServiceInfo:
+      type: object
+      description: serialize service info.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+      required:
+      - created_at
+      - description
+      - id
+      - name
+      - updated_at
+    ServiceInfoRequest:
+      type: object
+      description: serialize service info.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+      required:
+      - created_at
+      - description
+      - id
+      - name
+      - updated_at
+    TypeFc1Enum:
+      enum:
+      - s3
+      - gs
+      - abfss
+      - htsget
+      - https
+      - file
+      type: string
+    UnauthorizedErrorSerializers:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          default: 401
+          description: The integer representing the HTTP status code.
+        msg:
+          type: string
+          default: Authentication credentials were not provided.
+          description: A detailed error message.
+    Upload:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: upload url
+        headers:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: upload token
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeFc1Enum'
+          readOnly: true
+        region:
+          type: string
+          readOnly: true
+          description: url region
+        AlreadyExists:
+          type: boolean
+          readOnly: true
+          description: path was already exists
+      required:
+      - AlreadyExists
+      - headers
+      - region
+      - type
+      - url
+    UploadRefresh:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: upload url
+        headers:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: upload token
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeFc1Enum'
+          readOnly: true
+        region:
+          type: string
+          readOnly: true
+          description: url region
+      required:
+      - headers
+      - region
+      - type
+      - url
+    Workspaces:
+      type: object
+      properties:
+        workspaces:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - workspaces
+    WorkspacesResources:
+      type: object
+      properties:
+        resources:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - resources
+    drsObjectRequest:
+      oneOf:
+      - $ref: '#/components/schemas/DrsObjectRequest'
+      - $ref: '#/components/schemas/BundleObjectRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/BundleObjectRequest'
+    drsObjectUpdateRequest:
+      oneOf:
+      - $ref: '#/components/schemas/BlobUpdateRequest'
+      - $ref: '#/components/schemas/BundleUpdateRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/BundleUpdateRequest'
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
