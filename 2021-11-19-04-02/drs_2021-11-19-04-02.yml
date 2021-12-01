@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Atgenomix SeqsLab V3 platform API
   version: 3.0.0
-  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+  description: GA4GH-compliant RESTful API apps on the Atgenomix SeqsLab platform, a
     cloud-native enterprise biomedical informatics platform.
 paths:
   /ga4gh/drs/v1/objects/:
@@ -52,7 +52,7 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
@@ -77,14 +77,13 @@ paths:
           description: ''
     post:
       operationId: create_drs_object
-      description: Create, Retrieve, Update, Delete DrsObject
+      description: Create, retrieve, update, or delete DRS object.
       parameters:
       - in: query
         name: bundle
         schema:
           type: boolean
-        description: 'create bundle object <br>False(default): it will create blob
-          object. <br>True: it will create bundle object'
+        description: 'Create a bundle object <br> False (default): Create a blob object. <br> True: Create a bundle object'
       tags:
       - ga4gh
       requestBody:
@@ -116,8 +115,8 @@ paths:
                   checksums:
                   - checksum: 3d21be0454bb1dd3ac736344212a79ee
                     type: md5
-                summary: create single blob
-                description: create single blob <br>Serializers refer to DrsObjectSerializer.
+                summary: Create a single blob
+                description: Create a single blob <br>Serializers refer to DrsObjectSerializer.
               CreateMultipleBlob:
                 value:
                 - name: hic_pro_hg19_sh_files
@@ -162,8 +161,8 @@ paths:
                   checksums:
                   - checksum: 3d21be0454bb1dd3ac736344212a79ee
                     type: md5
-                summary: create multiple blob
-                description: create multiple blob <br>Serializers refer to DrsObjectSerializer.
+                summary: Create multiple blobs
+                description: Create multiple blobs <br>Serializers refer to DrsObjectSerializer.
               CreateBundleWithDrsId:
                 value:
                   name: hg19_files_bundle
@@ -178,10 +177,8 @@ paths:
                   contents:
                   - drs_id: drs_LpwyqpXXs6H0zds
                   - drs_id: drs_h01oZinCqzYKDEl
-                summary: create bundle with drs id
-                description: 'create bundle with drs id <br>Please set bundle is true
-                  <br>Note: contents should contains at least two drs objects.Serializers
-                  refer to BundleObjectSerializer.'
+                summary: Create bundle with DRS ID
+                description: 'Create bundle <br>Note: Contents should be set with DRS ID. Serializers refer to BundleObjectSerializer.'
       security:
       - jwtAuth: []
       responses:
@@ -252,8 +249,8 @@ paths:
                         headers:
                           Authorization: {}
                         url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
-                  summary: create single blob
-                  description: create single blob response
+                  summary: Create a single blob
+                  description: Create a single blob response.
                 CreateMultipleBlobResponse:
                   value:
                   - id: drs_1cu5pYmDJKRefG3
@@ -374,8 +371,8 @@ paths:
                         headers:
                           Authorization: {}
                         url: abfss://containerg@storageaccount.dfs.core.windows.net/hg19/make_hg191.sh
-                  summary: create multiple blob response
-                  description: create multiple blob  response
+                  summary: Create multiple blob responses
+                  description: Create multiple blob responses.
                 CreateBundleWithDrsIdResponse:
                   value:
                   - id: drs_WJ3DjHFj0ITLtFl
@@ -455,8 +452,8 @@ paths:
                           headers:
                             Authorization: Authorization code
                           url: https://storageaccount.blob.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
-                  summary: create bundle with drs id response
-                  description: create bundle with drs id response
+                  summary: Create bundle with DRS ID response
+                  description: Create bundle with DRS ID response.
           description: ''
         '401':
           content:
@@ -499,19 +496,19 @@ paths:
     get:
       operationId: ga4gh_drs_v1_objects_retrieve
       description: |-
-        Returns object metadata, and a list of access methods
+        Return object metadata, and a list of access methods
         that can be used to fetch object bytes.
       parameters:
       - in: query
         name: expand
         schema:
           type: boolean
-        description: expand ContentsObject of DrsObject, true or false
+        description: 'Define whether the ContentsObject of a DRS object is displayed. Allowed: true | false'
       - in: path
         name: object_id
         schema:
           type: string
-        description: drs object id
+        description: DRS object ID.
         required: true
       tags:
       - ga4gh
@@ -590,8 +587,8 @@ paths:
                           headers:
                             Authorization: Authorization code
                           url: https://storageaccount.dfs.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
-                  summary: get drs object with expand(true)
-                  description: get drs object with expand(true)
+                  summary: Get DRS object with expand (true)
+                  description: Get DRS object with expand (true).
                 GetDrsObjectWithExpand(false):
                   value:
                     id: drs_SfJ2ApkL3q7nJVT
@@ -644,8 +641,8 @@ paths:
                     checksums:
                     - checksum: 58b496b0a82e6166a4018f7a894e5def
                       type: md5
-                  summary: get drs object with expand(false)
-                  description: get drs object with expand(false)
+                  summary: Get DRS object with expand (false)
+                  description: Get DRS object with expand (false).
           description: ''
         '401':
           content:
@@ -668,7 +665,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -700,14 +697,14 @@ paths:
     put:
       operationId: ga4gh_drs_v1_objects_update
       description: |-
-        Update drs object updated_time, metadata, tag, checksum,
-        or create created_time
+        Update DRS object updated_time, metadata, tag, checksum,
+        or created_time.
       parameters:
       - in: path
         name: object_id
         schema:
           type: string
-        description: drs object id
+        description: DRS object ID
         required: true
       tags:
       - ga4gh
@@ -729,12 +726,12 @@ paths:
                     type: md5
                   created_time: 2021-11-23 07:36:53.759286+00:00
                   updated_time: 2021-11-23 07:36:53.759288+00:00
-                summary: update blob data and content
-                description: 'update name, tags, metadata and drs object content <br>name:
-                  drs object name <br>tags: drs object label(note: it will override
-                  the original tags)<br>metadata: drs object metadata <br>created_time:
-                  data created time<br>updated_time:  data updated time or last modified
-                  time <br>checksums: blob checksum (note: it will override the original
+                summary: Update blob data and content
+                description: 'Update name, tags, metadata and DRS object content <br>name:
+                  DRS object name <br>tags: DRS object label (Note: It will override
+                  the original tags)<br>metadata: DRS object metadata <br>created_time:
+                  data created time<br>updated_time: data updated time or last modified
+                  time <br>checksums: blob checksum (Note: It will override the original
                   checksums)<br>Serializers refer to BlobUpdateRequest.'
               UpdateBundleData:
                 value:
@@ -743,10 +740,10 @@ paths:
                   tags:
                   - fqn_label
                   - fqn_label1
-                summary: update bundle data
-                description: 'update name, tags, and metadata <br>name: drs object
-                  name <br>tags: drs object label (note: it will override the original
-                  tags)<br>metadata: drs object metadata <br>Serializers refer to
+                summary: Update bundle data
+                description: 'Update name, tags, and metadata <br>name: DRS object
+                  name <br>tags: DRS object label (Note: It will override the original
+                  tags)<br>metadata: DRS object metadata <br>Serializers refer to
                   BundleUpdateRequest.'
       security:
       - jwtAuth: []
@@ -778,7 +775,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -803,14 +800,14 @@ paths:
     patch:
       operationId: ga4gh_drs_v1_objects_partial_update
       description: |-
-        Update drs object updated_time, metadata, tag, checksum,
-        or create created_time
+        Update DRS object updated_time, metadata, tag, checksum,
+        or created_time.
       parameters:
       - in: path
         name: object_id
         schema:
           type: string
-        description: drs object id
+        description: DRS object ID
         required: true
       tags:
       - ga4gh
@@ -832,34 +829,34 @@ paths:
                     type: md5
                   created_time: 2021-11-23 07:36:53.759286+00:00
                   updated_time: 2021-11-23 07:36:53.759288+00:00
-                summary: update blob data and content
-                description: 'update name, tags, metadata and drs object content <br>name:
-                  drs object name <br>tags: drs object label(note: it will override
-                  the original tags)<br>metadata: drs object metadata <br>created_time:
-                  data created time<br>updated_time:  data updated time or last modified
-                  time <br>checksums: blob checksum (note: it will override the original
+                summary: Update blob data and content
+                description: 'Update name, tags, metadata and DRS object content <br>name:
+                  DRS object name <br>tags: DRS object label (Note: It will override
+                  the original tags)<br>metadata: DRS object metadata <br>created_time:
+                  data created time<br>updated_time: data updated time or last modified
+                  time <br>checksums: blob checksum (Note: It will override the original
                   checksums)<br>Serializers refer to BlobUpdateRequest.'
               CreateOrUpdateBlobChecksums:
                 value:
                   checksums:
                   - checksum: 3d21be0454bb1dd3ac736344212a79ee
                     type: md5
-                summary: create or update blob checksums
-                description: 'create or update drs object checksum. (note: it will
+                summary: Create or update blob checksums
+                description: 'Create or update DRS object checksum. (Note: It will
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
                   updated_time: 2021-11-23 07:36:53.759297+00:00
-                summary: update blob content updated_time
-                description: update drs object content updated_time(this will connect
-                  to the data updated time or last modified time), <br>Serializers
+                summary: Update blob content updated_time
+                description: Update DRS object content updated_time. This will connect
+                  to the data updated time or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
                   created_time: 2021-11-23 07:36:53.759293+00:00
-                summary: update blob content created_time
-                description: update blob content created_time(this will connect to
-                  the data create time) <br>Serializers refer to BlobUpdateRequest.
+                summary: Update blob content created_time
+                description: Update blob content created_time. This will connect to
+                  the data create time. <br>Serializers refer to BlobUpdateRequest.
               UpdateBundleData:
                 value:
                   name: hg19
@@ -868,28 +865,28 @@ paths:
                   - fqn_label
                   - fqn_label1
                 summary: update bundle data
-                description: 'update name, tags, and metadata <br>name: drs object
-                  name <br>tags: drs object label (note: it will override the original
-                  tags)<br>metadata: drs object metadata <br>Serializers refer to
+                description: 'Update name, tags, and metadata <br>name: DRS object
+                  name <br>tags: DRS object label (Note: It will override the original
+                  tags)<br>metadata: DRS object metadata <br>Serializers refer to
                   BundleUpdateRequest.'
               UpdateName:
                 value:
                   name: hg19
-                summary: update name
-                description: update drs object name<br>
+                summary: Update name
+                description: Update DRS object name.
               UpdateTags:
                 value:
                   tags:
                   - fqn_label
                   - fqn_label1
                 summary: update tags
-                description: 'update drs object tags(note: it will override the original
-                  tags) <br>'
+                description: 'Update DRS object tags (Note: It will override the original
+                  tags).'
               UpdateMetadata:
                 value:
                   metadata: {}
-                summary: update metadata
-                description: update drs object metadata<br>
+                summary: Update metadata
+                description: Update DRS object metadata.
       security:
       - jwtAuth: []
       responses:
@@ -920,7 +917,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -944,13 +941,13 @@ paths:
           description: ''
     delete:
       operationId: ga4gh_drs_v1_objects_destroy
-      description: delete drs object
+      description: Delete DRS object
       parameters:
       - in: path
         name: object_id
         schema:
           type: string
-        description: drs object id
+        description: DRS object ID
         required: true
       tags:
       - ga4gh
@@ -973,7 +970,7 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
@@ -1012,7 +1009,7 @@ paths:
   /ga4gh/drs/v1/objects/{object_id}/access/{access_id}/:
     get:
       operationId: ga4gh_drs_v1_objects_access_retrieve
-      description: "Returns a URL that can be used to fetch the bytes of a DrsObject.\
+      description: "Return a URL that can be used to fetch the bytes of a DRS object.\
         \ <br>\nThis method only needs to be called when using an AccessMethod \n\
         that contains an access_id \n(e.g., for servers that use signed URLs for fetching\
         \ object bytes)."
@@ -1021,13 +1018,13 @@ paths:
         name: access_id
         schema:
           type: string
-        description: access method id
+        description: Access method ID
         required: true
       - in: path
         name: object_id
         schema:
           type: string
-        description: drs object id
+        description: DRS object ID
         required: true
       tags:
       - ga4gh
@@ -1054,7 +1051,7 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
@@ -1080,7 +1077,7 @@ paths:
   /ga4gh/drs/v1/objects/search/:
     post:
       operationId: ga4gh_drs_v1_objects_search_create
-      description: search drs objects by keys and values.
+      description: Search DRS objects by keys and values.
       tags:
       - ga4gh
       requestBody:
@@ -1102,9 +1099,9 @@ paths:
                   reverse: true
                   top: 1
                   order_by: created_time
-                summary: search drs object by tags and set return latest upload data
-                description: search drs object by tags, order by created_time ,and
-                  return latest upload data
+                summary: Search DRS object by tags and set to return latest upload data
+                description: Search drs object by tags, order by created_time, and
+                  return latest upload data.
               SearchDrsObjectByTagsAndSetReturnTheFirst10UploadData:
                 value:
                   tags:
@@ -1118,10 +1115,10 @@ paths:
                   reverse: false
                   top: 10
                   order_by: created_time
-                summary: search drs object by tags and set return the first 10 upload
+                summary: Search DRS object by tags and set return the first 10 upload
                   data
-                description: search drs object by tags, order by created_time ,and
-                  return first 10 upload data
+                description: Search DRS object by tags, order by created_time, and
+                  return first 10 upload data.
               SearchDrsObjectByTags:
                 value:
                   tags:
@@ -1132,8 +1129,8 @@ paths:
                   - name
                   - tags
                   mode: exact
-                summary: search drs object by tags
-                description: search drs object by tags
+                summary: Search DRS objects by tags
+                description: Search DRS objects by tags.
               SearchDrsObjectByNames:
                 value:
                   names:
@@ -1142,8 +1139,8 @@ paths:
                   fields:
                   - all
                   mode: exact
-                summary: search drs object by names
-                description: search drs object by drs object names
+                summary: Search DRS object by names
+                description: Search DRS objects by DRS object names.
               SearchDrsObjectByPaths:
                 value:
                   paths:
@@ -1152,8 +1149,8 @@ paths:
                   fields:
                   - all
                   mode: exact
-                summary: search drs object by paths
-                description: search drs object by file paths
+                summary: Search DRS objects by file paths
+                description: Search DRS objects by file paths.
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/DrsSearchRequest'
@@ -1190,7 +1187,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1201,10 +1198,10 @@ paths:
               examples:
                 YouDoNotHavePermissionToPerformThisAction.:
                   value:
-                    detail: You do not have permission to perform this action.
+                    detail: You do not have permission to perform this action
                     status: 403
-                  summary: You do not have permission to perform this action.
-                  description: You do not have permission to perform this action.
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
           description: ''
         '400':
           content:
@@ -1215,7 +1212,7 @@ paths:
   /ga4gh/drs/v1/objects/upload/:
     get:
       operationId: ga4gh_drs_v1_objects_upload_retrieve
-      description: return sas token have writeable permission
+      description: Return a SAS token with write permission.
       parameters:
       - in: query
         name: name
@@ -1227,7 +1224,7 @@ paths:
         name: path
         schema:
           type: string
-        description: get sas token under drs/user_id/path ,
+        description: Get a SAS token under drs/user_id/path
       tags:
       - upload
       security:
@@ -1253,14 +1250,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1271,15 +1268,15 @@ paths:
               examples:
                 YouDoNotHavePermissionToPerformThisAction.:
                   value:
-                    detail: You do not have permission to perform this action.
+                    detail: You do not have permission to perform this action
                     status: 403
-                  summary: You do not have permission to perform this action.
-                  description: You do not have permission to perform this action.
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
           description: ''
   /ga4gh/drs/v1/objects/upload/refresh/:
     get:
       operationId: ga4gh_drs_v1_objects_upload_refresh_retrieve
-      description: return sas token have writeable permission
+      description: Return a SAS token with write permission.
       parameters:
       - in: query
         name: upload_url
@@ -1307,13 +1304,13 @@ paths:
               examples:
                 AuthenticationCredentialsWereNotProvided.:
                   value:
-                    detail: Authentication credentials were not provided.
+                    detail: Authentication credentials were not provided
                     status: 401
-                  summary: Authentication credentials were not provided.
+                  summary: Authentication credentials were not provided
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
@@ -1331,9 +1328,9 @@ paths:
               examples:
                 YouDoNotHavePermissionToPerformThisAction.:
                   value:
-                    detail: You do not have permission to perform this action.
+                    detail: You do not have permission to perform this action
                     status: 403
-                  summary: You do not have permission to perform this action.
+                  summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action.
           description: ''
   /ga4gh/drs/v1/schema/:
@@ -1512,7 +1509,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_list
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       tags:
       - service-info
@@ -1541,14 +1538,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1568,7 +1565,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_create
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       tags:
       - ga4gh
@@ -1607,14 +1604,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1635,7 +1632,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_retrieve
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       parameters:
       - in: path
@@ -1669,14 +1666,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1709,7 +1706,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_update
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       parameters:
       - in: path
@@ -1755,14 +1752,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1788,7 +1785,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_partial_update
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       parameters:
       - in: path
@@ -1833,14 +1830,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1866,7 +1863,7 @@ paths:
       operationId: ga4gh_drs_v1_service_info_destroy
       description: |-
         List workflow execution service information including
-        workspaces, container images, managed clusters
+        workspaces, container images, and managed clusters
         available in the service.
       parameters:
       - in: path
@@ -1896,14 +1893,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1941,12 +1938,12 @@ paths:
         name: expand
         schema:
           type: boolean
-        description: Display workspace resource list (true or false)
+        description: Display workspace resource list (true or false).
       - in: query
         name: force
         schema:
           type: boolean
-        description: Force reload system if cache exists
+        description: Force reload system if cache exists.
       tags:
       - service-info
       security:
@@ -1969,8 +1966,8 @@ paths:
                     name: '{resourceGroups1}'
                     location: '{location1}'
                   summary: workspace list (expand=false)
-                  description: workspace information list <br>Information includes
-                    the id, name, and location
+                  description: Workspace information list <br>Information includes
+                    the ID, name, and location.
                 WorkspaceList(expand=true):
                   value:
                   - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
@@ -1995,12 +1992,12 @@ paths:
                       identity:
                         type: None
                       url: storage_account_url
-                  summary: workspace list (expand=true)
-                  description: detailed workspace information list.  <br>Information
-                    includes the id, name, location and resources. <br>resources include
-                    id, name, type, sku, kind, location, and url. <br>url means the
-                    storage account endpoint url. <br>type means storage account access
-                    method type(abfss, s3, and gs)
+                  summary: Workspace list (expand=true)
+                  description: Detailed workspace information list.  <br>Information
+                    includes the ID, name, location, and resources. <br>Resources include
+                    ID, name, type, SKU, kind, location, and url. <br>URL refers to the
+                    storage account endpoint URL. <br>Type refers to the storage account access
+                    method type (abfss, s3, and gs).
           description: ''
         '401':
           content:
@@ -2016,14 +2013,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -2042,7 +2039,7 @@ paths:
   /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
     get:
       operationId: ga4gh_drs_v1_service_info_workspaces_resources_list
-      description: Obtain OAuth2 client credential token given a workspace
+      description: Obtain OAuth2 client credential token for a given workspace.
       parameters:
       - in: path
         name: name
@@ -2076,12 +2073,12 @@ paths:
                         type: None
                       url: storage_account_url
                     token: {}
-                  summary: resources information
-                  description: return resources information according to the workspace
-                    name <br>Information include id, name, location, resources, and
-                    token<br>resources include id, name, type, sku, kind, location,
-                    and url. <br>url means the storage account endpoint url. <br>type
-                    means storage account access method type(abfss, s3, and gs)
+                  summary: Resources information
+                  description: Return resources information according to the workspace
+                    name. <br>Information include ID, name, location, resources, and
+                    token.<br>Resources include ID, name, type, sku, kind, location,
+                    and URL. <br>URL refers to the storage account endpoint url. <br>Type
+                    refers to the storage account access method type (abfss, s3, and gs).
           description: ''
         '401':
           content:
@@ -2104,7 +2101,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -2124,7 +2121,7 @@ components:
   schemas:
     AccessMethod:
       type: object
-      description: Access Method Serializer
+      description: Access method
       properties:
         id:
           type: integer
@@ -2145,7 +2142,7 @@ components:
       - type
     AccessMethodRequest:
       type: object
-      description: Access Method Serializer
+      description: Access method
       properties:
         type:
           $ref: '#/components/schemas/TypeFc1Enum'
@@ -2166,8 +2163,8 @@ components:
         headers:
           type: object
           additionalProperties: {}
-          description: Url authorization method and code. <br>Authorization default
-            is the storage account access token.
+          description: URL authorization method and code. <br>"
+                  If the 'AccessMethod' is 'abfss', an Authorization key is created with the storage account access token as its default value.
         url:
           type: string
           nullable: true
@@ -2180,8 +2177,8 @@ components:
         headers:
           type: object
           additionalProperties: {}
-          description: Url authorization method and code. <br>Authorization default
-            is the storage account access token.
+          description: URL authorization method and code. <br>"
+                  If the 'AccessMethod' is 'abfss', an Authorization key is created with the storage account access token as its default value.
         url:
           type: string
           nullable: true
@@ -2198,10 +2195,10 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         name:
           type: string
-          description: Only use name or path to search for drs objects
+          description: Use only the name or path to search for DRS objects.
           pattern: ^[0-9a-zA-Z\-\._]+$
           maxLength: 64
         checksums:
@@ -2241,14 +2238,12 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         contents:
           type: array
           items:
             $ref: '#/components/schemas/ContentsObjectRequest'
-          description: If not set, this DrsObject is a single blob. If set, this DrsObject
-            is a bundle containing the listed ContentsObjects (some of which may be
-            further nested).
+          description: If not set, the DrsObject is a single blob. <br>If set, the DrsObject is a bundle containing the listed ContentsObjects (some of which may be further nested).
           minItems: 1
         access_methods:
           type: array
@@ -2266,10 +2261,10 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         name:
           type: string
-          description: Only use name or path to search for drs objects
+          description: Use only the name or path to search for DRS objects.
           pattern: ^[0-9a-zA-Z\-\._]+$
           maxLength: 64
     Checksum:
@@ -2314,7 +2309,7 @@ components:
         name:
           type: string
           readOnly: true
-          description: name and drs_id only can pass one parameter
+          description: Name and drs_id only can pass one parameter.
           pattern: ^[0-9a-zA-Z\-\._]+$
           maxLength: 64
         drs_uri:
@@ -2371,7 +2366,7 @@ components:
           maxLength: 128
         size:
           type: integer
-          description: If drs object is blob and name is given, this field is required.
+          description: If the DRS object is a blob and a name is given, this field is required.
           minimum: 0
         version:
           type: string
@@ -2395,7 +2390,7 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         access_methods:
           type: array
           items:
@@ -2405,9 +2400,7 @@ components:
           items:
             $ref: '#/components/schemas/ContentsObject'
           readOnly: true
-          description: If not set, this DrsObject is a single blob. If set, this DrsObject
-            is a bundle containing the listed ContentsObjects (some of which may be
-            further nested).
+          description: If not set, the DrsObject is a single blob. <br>If set, the DrsObject is a bundle containing the listed ContentsObjects (some of which may be further nested).
         checksums:
           type: array
           items:
@@ -2446,7 +2439,7 @@ components:
           maxLength: 128
         size:
           type: integer
-          description: If drs object is blob and name is given, this field is required.
+          description: If the DRS object is a blob and a name is given, this field is required.
           minimum: 0
         created_time:
           type: string
@@ -2466,7 +2459,7 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         access_methods:
           type: array
           items:
@@ -2487,7 +2480,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DrsSearchQuerySetExample'
-          description: 'search_key: User provide search optionsDrsSearchQuerySetExampleSerializer:
+          description: 'search_key: User provided search optionsDrsSearchQuerySetExampleSerializer:
             search result'
       required:
       - objects
@@ -2517,7 +2510,7 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-          description: If not specified, this fields will be empty
+          description: If not specified, this field will be empty.
         created_time:
           type: string
           format: date-time
@@ -2559,7 +2552,7 @@ components:
           type: array
           items:
             type: string
-            description: Drs object name
+            description: DRS object name
         paths:
           type: array
           items:
@@ -2569,13 +2562,13 @@ components:
           type: array
           items:
             type: string
-            description: search drs object by tags
+            description: Search DRS object by tags.
         mode:
           allOf:
           - $ref: '#/components/schemas/ModeEnum'
           writeOnly: true
           default: exact
-          description: search mode <br><li>exact <br><li>iexact(ignore case) <br>
+          description: Search mode <br><li>exact <br><li>iexact(ignore case) <br>
         fields:
           type: array
           items:
@@ -2583,7 +2576,7 @@ components:
           writeOnly: true
           default:
           - all
-          description: 'A list of fields to return, Default: all'
+          description: 'A list of fields to return. Default: all'
         order_by:
           allOf:
           - $ref: '#/components/schemas/OrderByEnum'
@@ -2593,17 +2586,18 @@ components:
           type: boolean
           writeOnly: true
           default: false
-          description: 'sort condition (only order_by is provided, this is valid)
-            <by>True: descending sortFalse: ascending sort'
+          description: 'Sort strategy (should be used with order_by)<br> True: descending sort<br> False: ascending sort'
         top:
           type: integer
           writeOnly: true
           default: 0
-          description: 'Number of Matching query returns <br>0: return all match query
-            <br>1: return one of match query <br>Note: if you pass many value, it
-            will not return the number of the matched query for each condition. Example,
-            if you set search condition name=["a", "b"] and top=1, it will return
-            only one matched query.'
+          description: 'Display the number of Matching queries <br>
+                  0: Return all matching queries <br>
+                  1: Return one of the matching queries <br>
+                  Note: If you pass multiple values, it will not return the number <br>
+                  of matched queries for each condition. <br>
+                  For example, if you set search condition name=["a", "b"] and <br>
+                  top=1, it will only return one matched query.'
           minimum: 0
     ErrorSerializers:
       type: object
@@ -2685,10 +2679,10 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         name:
           type: string
-          description: Only use name or path to search for drs objects
+          description: Use only the name or path to search for DRS objects.
           pattern: ^[0-9a-zA-Z\-\._]+$
           maxLength: 64
         checksums:
@@ -2713,15 +2707,15 @@ components:
           type: array
           items:
             type: string
-            description: 'Label name: any string e.g. ''TUMOR'' '
+            description: 'Label name: any string e.g., ''TUMOR'' '
         name:
           type: string
-          description: Only use name or path to search for drs objects
+          description: Use only the name or path to search for DRS objects.
           pattern: ^[0-9a-zA-Z\-\._]+$
           maxLength: 64
     PatchedServiceInfoRequest:
       type: object
-      description: serialize service info.
+      description: Serialize service information.
       properties:
         id:
           type: string
@@ -2769,7 +2763,7 @@ components:
           None: '#/components/schemas/PatchedBundleUpdateRequest'
     ServiceInfo:
       type: object
-      description: serialize service info.
+      description: Serialize service information.
       properties:
         id:
           type: string
@@ -2815,7 +2809,7 @@ components:
       - updated_at
     ServiceInfoRequest:
       type: object
-      description: serialize service info.
+      description: Serialize service information.
       properties:
         id:
           type: string
@@ -2898,11 +2892,11 @@ components:
         region:
           type: string
           readOnly: true
-          description: url region
+          description: URL region
         AlreadyExists:
           type: boolean
           readOnly: true
-          description: path was already exists
+          description: Path already exists
       required:
       - AlreadyExists
       - headers
@@ -2915,12 +2909,12 @@ components:
         url:
           type: string
           readOnly: true
-          description: upload url
+          description: Upload URL
         headers:
           type: object
           additionalProperties: {}
           readOnly: true
-          description: upload token
+          description: Upload token
         type:
           allOf:
           - $ref: '#/components/schemas/TypeFc1Enum'
@@ -2928,7 +2922,7 @@ components:
         region:
           type: string
           readOnly: true
-          description: url region
+          description: URL region
       required:
       - headers
       - region
