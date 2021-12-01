@@ -8,13 +8,13 @@ paths:
   /ga4gh/drs/v1/objects/:
     get:
       operationId: ga4gh_drs_v1_objects_list
-      description: list drs object
+      description: List DRS objects
       parameters:
       - in: query
         name: expand
         schema:
           type: boolean
-        description: expand ContentsObject of DrsObject, true or false
+        description: 'Define whether the ContentsObject of a DRS object is displayed. Allowed: true | false'
       - name: page
         required: false
         in: query
