@@ -236,7 +236,7 @@ paths:
     post:
       operationId: trs_v2_service_info_create
       description: |-
-        List tool Discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       tags:
@@ -303,7 +303,7 @@ paths:
     get:
       operationId: trs_v2_service_info_retrieve
       description: |-
-        List tool Discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
@@ -377,7 +377,7 @@ paths:
     put:
       operationId: trs_v2_service_info_update
       description: |-
-        List tool Discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, documentationUrl,
         available in the service.
       parameters:
@@ -534,7 +534,7 @@ paths:
     delete:
       operationId: trs_v2_service_info_destroy
       description: |-
-        List tool Discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
@@ -604,7 +604,7 @@ paths:
   /trs/v2/service-info/workspaces/:
     get:
       operationId: trs_v2_service_info_workspaces_list
-      description: List workspaces available in the service.
+      description: List workspaces available in the service
       parameters:
       - in: query
         name: expand
@@ -759,7 +759,7 @@ paths:
                       management.azure.com: ''
                       batch.core.windows.net: ''
                   summary: Workspace information
-                  description: Workspace information include resources, token, and
+                  description: Workspace information includes resources, token, and
                     registries.
           description: ''
         '401':
@@ -802,7 +802,8 @@ paths:
   /trs/v2/service-info/workspaces/{name}/container-registries/:
     get:
       operationId: trs_v2_service_info_workspaces_container_registries_list
-      description: List container registries available in a given workspace.
+      summary: List container registries
+      description: List container registries available for a given workspace.
       parameters:
       - in: path
         name: name
@@ -840,7 +841,7 @@ paths:
                         size: size
                         type: image type
                   summary: Return container registries
-                  description: Return container registries for the given workspace
+                  description: Return container registries for a given workspace
                     name.
                 ContainerRegistriesEmpty_:
                   value:
@@ -893,6 +894,7 @@ paths:
   /trs/v2/service-info/workspaces/{name}/resources/:
     get:
       operationId: wes_v1_service_info_workspaces_resources
+      summary: Obtain OAuth2 client credential token
       description: Obtain OAuth2 client credential token for a given workspace.
       parameters:
       - in: path
@@ -1210,6 +1212,7 @@ paths:
   /trs/v2/tools/{id}/versions/:
     get:
       operationId: trs_v2_tools_versions_list
+      summary: Create tool version
       description: Create versions of a tool.
       parameters:
       - in: path
@@ -1245,7 +1248,7 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
@@ -1270,6 +1273,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_create
+      summary: Create tool version
       description: Create versions of a tool.
       parameters:
       - in: path
@@ -1417,6 +1421,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/:
     get:
       operationId: trs_v2_tools_versions_descriptor_list
+      summary: Create a descriptor
       description: Create a descriptor / descriptor/{relative_path}.
       parameters:
       - in: path
@@ -1492,6 +1497,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/{relative_path}/:
     get:
       operationId: trs_v2_tools_versions_descriptor_retrieve
+      summary: Create a descriptor
       description: Create a descriptor / descriptor/{relative_path}.
       parameters:
       - in: path
@@ -1583,15 +1589,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/files/:
     get:
       operationId: trs_v2_tools_versions_files_list
-      description: |-
-        1. check expanded or not
-        2. download or response Json
-        3. if download
-            3-1. get storage url
-            3-2. download files
-            3-3. checksum checking
-            3-4. zip files
-            3-5. response
+      description: List tool files
       parameters:
       - in: query
         name: expand
@@ -1604,7 +1602,7 @@ paths:
           type: string
           enum:
           - zip
-        description: 'Return a ZIP file of all files when format=zip is specified. '
+        description: 'Return a zip file of all files when format=zip is specified. '
       - in: path
         name: id
         schema:
@@ -1678,11 +1676,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_files_create
-      description: |-
-        1. check file_info and create checksum
-        2. check the file is exist in this version or not
-        3. create information in RDB
-        4. upload data to GEN2
+      description: Create tool files
       parameters:
       - in: path
         name: id
@@ -1762,7 +1756,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/tests/:
     get:
       operationId: trs_v2_tools_versions_tests_list
-      description: Create a test.
+      description: Create a test
       parameters:
       - in: path
         name: id
@@ -1837,10 +1831,7 @@ paths:
   /trs/v2/tools/{type}/files/:
     post:
       operationId: trs_v2_tools_files_create
-      description: |-
-        View set for parse a tool file
-        type should be "WDL", "CWL"
-        file should be a zip file
+      description: Parse WDL or CWL zip file
       parameters:
       - in: path
         name: type

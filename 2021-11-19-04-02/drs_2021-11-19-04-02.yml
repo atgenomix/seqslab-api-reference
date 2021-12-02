@@ -2075,7 +2075,7 @@ paths:
                     token: {}
                   summary: Resources information
                   description: Return resources information according to the workspace
-                    name. <br>Information include ID, name, location, resources, and
+                    name. <br>Information includes ID, name, location, resources, and
                     token.<br>Resources include ID, name, type, sku, kind, location,
                     and URL. <br>URL refers to the storage account endpoint url. <br>Type
                     refers to the storage account access method type (abfss, s3, and gs).
