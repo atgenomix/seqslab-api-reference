@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Atgenomix SeqsLab V3 platform API
   version: 3.0.0
-  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+  description: GA4GH-compliant RESTful API apps on the Atgenomix SeqsLab platform, a
     cloud-native enterprise biomedical informatics platform.
 paths:
   /trs/v2/schema/:
@@ -180,8 +180,8 @@ paths:
     get:
       operationId: trs_v2_service_info_list
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       tags:
       - trs
@@ -217,7 +217,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -236,8 +236,8 @@ paths:
     post:
       operationId: trs_v2_service_info_create
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool Discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       tags:
       - trs
@@ -276,14 +276,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -303,8 +303,8 @@ paths:
     get:
       operationId: trs_v2_service_info_retrieve
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool Discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
       - in: path
@@ -377,8 +377,8 @@ paths:
     put:
       operationId: trs_v2_service_info_update
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool Discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, documentationUrl,
         available in the service.
       parameters:
       - in: path
@@ -456,8 +456,8 @@ paths:
     patch:
       operationId: trs_v2_service_info_partial_update
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool Discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
       - in: path
@@ -502,14 +502,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -534,8 +534,8 @@ paths:
     delete:
       operationId: trs_v2_service_info_destroy
       description: |-
-        List tool Discovery service information including
-        id, name, type, description, organization, contactUrl, documentationUrl,
+        List tool Discovery service information <br>
+        including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
       - in: path
@@ -565,14 +565,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -638,8 +638,8 @@ paths:
                     name: '{resourceGroups1}'
                     location: '{location1}'
                   summary: workspace list (expand=false)
-                  description: workspace information list <br>Information includes
-                    the id, name, and location
+                  description: Workspace information list <br>Information includes
+                    the ID, name, and location.
                 WorkspaceList(expand=true):
                   value:
                   - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
@@ -662,9 +662,9 @@ paths:
                       location: '{location'
                       identity:
                         type: None
-                  summary: workspace list (expand=true)
-                  description: detailed workspace information list.  <br>Information
-                    includes the id, name, location and resources list.
+                  summary: Workspace list (expand=true)
+                  description: Detailed workspace information list.  <br>Information
+                    includes the ID, name, location, and resources list.
           description: ''
         '401':
           content:
@@ -680,14 +680,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -706,8 +706,8 @@ paths:
   /trs/v2/service-info/workspaces/{name}/:
     get:
       operationId: wes_v1_service_info_workspaces_name
-      description: Obtain OAuth2 client credential token, resources, container given
-        a workspace
+      description: Obtain OAuth2 client credential token, resources, and container for a given
+        workspace.
       parameters:
       - in: path
         name: name
@@ -758,9 +758,9 @@ paths:
                     tokens:
                       management.azure.com: ''
                       batch.core.windows.net: ''
-                  summary: workspace information
-                  description: workspace information include resources, token, and
-                    registries
+                  summary: Workspace information
+                  description: Workspace information include resources, token, and
+                    registries.
           description: ''
         '401':
           content:
@@ -776,14 +776,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -839,9 +839,9 @@ paths:
                         last_updated: '2021-08-10T09:52:49.1368541Z'
                         size: size
                         type: image type
-                  summary: container_registries
-                  description: return container_registries according to the workspace
-                    name
+                  summary: Return container registries
+                  description: Return container registries for the given workspace
+                    name.
                 ContainerRegistriesEmpty_:
                   value:
                     id: resources id
@@ -851,7 +851,7 @@ paths:
                     admin_user: true
                     authorization: authorization code
                   summary: 'container_registries_empty '
-                  description: container_registries does not have any images
+                  description: container_registries do not have any images.
           description: ''
         '401':
           content:
@@ -867,14 +867,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -893,7 +893,7 @@ paths:
   /trs/v2/service-info/workspaces/{name}/resources/:
     get:
       operationId: wes_v1_service_info_workspaces_resources
-      description: Obtain OAuth2 client credential token given a workspace
+      description: Obtain OAuth2 client credential token for a given workspace.
       parameters:
       - in: path
         name: name
@@ -929,9 +929,9 @@ paths:
                       management.azure.com: ''
                       batch.core.windows.net: ''
                   summary: resources information
-                  description: return resources information according to the workspace
-                    name <br>Information include id, name, location, resources, and
-                    token
+                  description: Return resources information according to the workspace
+                    name. <br>Information includes ID, name, location, resources, and
+                    token.
           description: ''
         '401':
           content:
@@ -1008,7 +1008,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1055,14 +1055,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1080,7 +1080,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_create
-      description: View set for creating a tool
+      description: Create a tool.
       tags:
       - Tool
       requestBody:
@@ -1112,14 +1112,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1171,14 +1171,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1210,7 +1210,7 @@ paths:
   /trs/v2/tools/{id}/versions/:
     get:
       operationId: trs_v2_tools_versions_list
-      description: View set for creating versions of a tool
+      description: Create versions of a tool.
       parameters:
       - in: path
         name: id
@@ -1252,7 +1252,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1270,7 +1270,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_create
-      description: View set for creating versions of a tool
+      description: Create versions of a tool.
       parameters:
       - in: path
         name: id
@@ -1281,7 +1281,7 @@ paths:
         name: workspace
         schema:
           type: string
-        description: workspace for storing trs tools
+        description: Workspace for storing TRS tools.
       tags:
       - ToolVersion
       requestBody:
@@ -1314,14 +1314,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1378,14 +1378,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1417,7 +1417,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/:
     get:
       operationId: trs_v2_tools_versions_descriptor_list
-      description: View set for creating descriptor / descriptor/{relative_path}
+      description: Create a descriptor / descriptor/{relative_path}.
       parameters:
       - in: path
         name: id
@@ -1466,14 +1466,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1492,7 +1492,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/{relative_path}/:
     get:
       operationId: trs_v2_tools_versions_descriptor_retrieve
-      description: View set for creating descriptor / descriptor/{relative_path}
+      description: Create a descriptor / descriptor/{relative_path}.
       parameters:
       - in: path
         name: id
@@ -1551,7 +1551,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1604,7 +1604,7 @@ paths:
           type: string
           enum:
           - zip
-        description: 'Returns a zip file of all files when format=zip is specified. '
+        description: 'Return a ZIP file of all files when format=zip is specified. '
       - in: path
         name: id
         schema:
@@ -1653,14 +1653,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1762,7 +1762,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/tests/:
     get:
       operationId: trs_v2_tools_versions_tests_list
-      description: View set for creating a test
+      description: Create a test.
       parameters:
       - in: path
         name: id
@@ -1818,7 +1818,7 @@ paths:
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
@@ -1882,14 +1882,14 @@ paths:
                   description: Authentication credentials were not provided.
                 GivenTokenNotValidForAnyTokenType:
                   value:
-                    detail: Given token not valid for any token type
+                    detail: Given token is not valid for any token type
                     code: token_not_valid
                     messages:
                     - token_class: AccessToken
                       token_type: access
                       message: Token is invalid or expired
                     status: 401
-                  summary: Given token not valid for any token type
+                  summary: Given token is not valid for any token type
                   description: Given token is not valid for any token type.
           description: ''
         '403':
