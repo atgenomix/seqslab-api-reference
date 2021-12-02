@@ -180,7 +180,7 @@ paths:
     get:
       operationId: trs_v2_service_info_list
       description: |-
-        List tool discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       tags:
@@ -456,7 +456,7 @@ paths:
     patch:
       operationId: trs_v2_service_info_partial_update
       description: |-
-        List tool Discovery service information <br>
+        List tool discovery service information
         including ID, name, type, description, organization, contactUrl, and documentationUrl,
         available in the service.
       parameters:
@@ -706,6 +706,7 @@ paths:
   /trs/v2/service-info/workspaces/{name}/:
     get:
       operationId: wes_v1_service_info_workspaces_name
+      summary: Obtain OAuth2 client credential token, resources, and container
       description: Obtain OAuth2 client credential token, resources, and container for a given
         workspace.
       parameters:
@@ -1212,8 +1213,8 @@ paths:
   /trs/v2/tools/{id}/versions/:
     get:
       operationId: trs_v2_tools_versions_list
-      summary: Create tool version
-      description: Create versions of a tool.
+      summary: List tool versions
+      description: List versions of a tool.
       parameters:
       - in: path
         name: id
@@ -1273,7 +1274,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_create
-      summary: Create tool version
+      summary: Create tool versions
       description: Create versions of a tool.
       parameters:
       - in: path
@@ -1344,7 +1345,8 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/:
     get:
       operationId: trs_v2_tools_versions_retrieve
-      description: View set for creating versions of a tool
+      summary: List tool versions
+      description: List versions of a tool.
       parameters:
       - in: path
         name: id
@@ -1421,8 +1423,8 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/:
     get:
       operationId: trs_v2_tools_versions_descriptor_list
-      summary: Create a descriptor
-      description: Create a descriptor / descriptor/{relative_path}.
+      summary: List descriptors
+      description: List descriptors / descriptor/{relative_path}.
       parameters:
       - in: path
         name: id
