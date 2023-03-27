@@ -1200,7 +1200,7 @@ paths:
       - name: page
         required: false
         in: query
-        description: A page number within the paginated result set.
+        description: A page number within the paginated result set
         schema:
           type: integer
       - name: page_size
@@ -1213,7 +1213,7 @@ paths:
         name: search
         schema:
           type: string
-        description: Search tool name, description or organization that contains keyword.
+        description: Search tool name, description, or organization that contains keyword
       tags:
       - Tool
       security:
@@ -1408,7 +1408,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       tags:
       - Tool
@@ -1504,7 +1504,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       tags:
       - Tool
@@ -1614,7 +1614,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       tags:
       - Tool
@@ -1723,7 +1723,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       tags:
       - Tool
@@ -1816,7 +1816,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       tags:
       - ToolVersion
@@ -1899,7 +1899,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this tool.
+        description: A unique value identifying this tool
         required: true
       - in: query
         name: workspace
