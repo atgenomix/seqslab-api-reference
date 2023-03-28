@@ -9,7 +9,7 @@ paths:
     get:
       operationId: ga4gh_drs_v1_objects_list
       description: |-
-        List DRS objects.
+        List DRS objects
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DatasetViewer
       parameters:
@@ -33,7 +33,7 @@ paths:
         name: label
         schema:
           type: string
-        description: Filter DRS objects by labels (ex. "label1, label2")
+        description: Filter DRS objects by labels (e.g., "label1, label2")
       - in: query
         name: location
         schema:
@@ -67,13 +67,13 @@ paths:
       - name: page
         required: false
         in: query
-        description: A page number within the paginated result set.
+        description: A page number within the paginated result set
         schema:
           type: integer
       - name: page_size
         required: false
         in: query
-        description: Number of results to return per page.
+        description: Number of results to return per page
         schema:
           type: integer
       - in: query
@@ -251,7 +251,7 @@ paths:
                   - drs_id: drs_LpwyqpXXs6H0zds
                   - drs_id: drs_h01oZinCqzYKDEl
                 summary: Create a bundle with DRS ID
-                description: 'Create a bundle with DRS ID. <br>Set bundle to true.
+                description: 'Create a bundle with DRS ID <br>Set bundle to true.
                   <br>Note: It should contain at least two DRS objects.Serializers
                   refer to the BundleObjectSerializer.'
       security:
@@ -952,7 +952,7 @@ paths:
     patch:
       operationId: ga4gh_drs_v1_objects_partial_update
       description: |-
-        Partially modify a specific DRS object updated_time, metadata, tag, checksum, or created_time.
+        Partially modify a specific DRS object updated_time, metadata, tag, checksum, or created_time
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DatasetDownloader(Owner)
       parameters:
@@ -1003,20 +1003,20 @@ paths:
                   - checksum: 3d21be0454bb1dd3ac736344212a79ee
                     type: md5
                 summary: Create or update blob checksums
-                description: 'Create or update DRS object checksum. (Note: It will
+                description: 'Create or update DRS object checksum <br>(Note: It will
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
                   updated_time: 2023-02-24 01:16:09.377237+00:00
                 summary: Update blob content updated_time
-                description: Update DRS object content updated_time.This will connect
+                description: Update DRS object content updated_time <br>This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
                   created_time: 2023-02-24 01:16:09.377235+00:00
                 summary: Update blob content created_time
-                description: Update blob content created_time.This will connect to
+                description: Update blob content created_time <br>This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
               CreateOrUpdateBlobAccessMethods:
                 value:
@@ -1052,8 +1052,8 @@ paths:
                   - fqn_label
                   - fqn_label1
                 summary: Update tags
-                description: 'Update DRS object tags (Note: It will override the original
-                  tags) <br>'
+                description: 'Update DRS object tags <br>(Note: It will override the original
+                  tags) '
               UpdateMetadata:
                 value:
                   metadata: {}
@@ -1240,7 +1240,7 @@ paths:
     get:
       operationId: ga4gh_drs_v1_objects_download_retrieve
       description: |-
-        Return a JSON list of Gen2 file information.
+        Return a JSON list of Gen2 file information
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
       parameters:
@@ -1265,7 +1265,7 @@ paths:
                   value:
                   - contentLength: 0
                     name: string1
-                  summary: list Gen2 File information
+                  summary: List Gen2 File information
           description: ''
         '500':
           content:
@@ -1338,7 +1338,7 @@ paths:
         name: object_id
         schema:
           type: string
-        description: A unique value identifying this drs object.
+        description: A unique value identifying this DRS object
         required: true
       tags:
       - Label
@@ -1414,7 +1414,7 @@ paths:
     delete:
       operationId: ga4gh_drs_v1_objects_labels_destroy
       description: |-
-        Dissociate a specific label from a DRS object.
+        Dissociate a specific label from a DRS object
 
         Role: GlobalAdministrator/ DataHubAdministrator
       parameters:
@@ -1428,7 +1428,7 @@ paths:
         name: object_id
         schema:
           type: string
-        description: A unique value identifying this drs object.
+        description: A unique value identifying this DRS object
         required: true
       tags:
       - Label
@@ -1518,13 +1518,13 @@ paths:
       - name: page
         required: false
         in: query
-        description: A page number within the paginated result set.
+        description: A page number within the paginated result set
         schema:
           type: integer
       - name: page_size
         required: false
         in: query
-        description: Number of results to return per page.
+        description: Number of results to return per page
         schema:
           type: integer
       tags:
@@ -1710,7 +1710,7 @@ paths:
         name: access_id
         schema:
           type: integer
-        description: A unique integer value identifying this access method.
+        description: A unique integer value identifying this access method
         required: true
       - in: path
         name: objects_object_id
@@ -1800,7 +1800,7 @@ paths:
     patch:
       operationId: ga4gh_drs_v1_objects_labels_partial_update
       description: |-
-        Update labels to a list of DRS object.
+        Update labels to a list of DRS object
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
       tags:
@@ -1967,7 +1967,7 @@ paths:
     post:
       operationId: ga4gh_drs_v1_objects_search_create
       description: |-
-        Search DRS objects by keys and values.
+        Search DRS objects by keys and values
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
       tags:
@@ -2494,7 +2494,7 @@ paths:
     get:
       operationId: ga4gh_drs_v1_service_info_list
       description: |-
-        List datahub repository service informationincluding workspaces, container images, and managed clustersavailable in the service.
+        List datahub repository service information including workspaces, container images, and managed clusters available in the service.
 
         Role: Always allow
       tags:
@@ -2966,7 +2966,7 @@ paths:
         name: id
         schema:
           type: string
-        description: A unique value identifying this service.
+        description: A unique value identifying this service
         required: true
       tags:
       - service-info
@@ -3051,7 +3051,7 @@ paths:
     get:
       operationId: ga4gh_drs_v1_service_info_workspaces_list
       description: |-
-        List available workspaces in the service.
+        List available workspaces in the service
 
         Role: GlobalAdministrator/ DataHubAdministrator/ DatasetDownloader/ DataHubUploader/ DataHubWriter
       parameters:
@@ -3221,7 +3221,7 @@ paths:
                     token: {}
                   summary: Resources information
                   description: Return resources information according to the workspace
-                    name. <br>Information includes ID, name, location, resources,
+                    name <br>Information includes ID, name, location, resources,
                     and token.<br>Resources include ID, name, type, sku, kind, location,
                     and URL. <br>URL refers to the storage account endpoint URL. <br>Type
                     refers to the storage account access method type (abfss, s3, and
@@ -3334,7 +3334,7 @@ components:
         headers:
           type: object
           additionalProperties: {}
-          description: URL authorization method and code. <br>If the 'AccessMethod'
+          description: URL authorization method and code <br>If the 'AccessMethod'
             is 'abfss', an Authorization key is created with the storage account access
             token as its default value.
         url:
@@ -3349,7 +3349,7 @@ components:
         headers:
           type: object
           additionalProperties: {}
-          description: URL authorization method and code. <br>If the 'AccessMethod'
+          description: URL authorization method and code <br>If the 'AccessMethod'
             is 'abfss', an Authorization key is created with the storage account access
             token as its default value.
         url:
