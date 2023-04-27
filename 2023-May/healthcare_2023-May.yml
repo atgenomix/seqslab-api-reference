@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (healthcare-v3)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths: {}
+components: {}
