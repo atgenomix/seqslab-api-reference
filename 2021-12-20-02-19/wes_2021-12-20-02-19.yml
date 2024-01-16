@@ -1,0 +1,4864 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /wes/v1/operator-pipelines/:
+    get:
+      operationId: wes_v1_operator_pipelines_list
+      description: Create, read, update, or delete run operator pipelines
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - OperatorPipelines
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRunOperatorPipelineList'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_operator_pipelines_create
+      description: Create, read, update, or delete run operator pipelines
+      tags:
+      - OperatorPipelines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/operator-pipelines/{id}/:
+    get:
+      operationId: wes_v1_operator_pipelines_retrieve
+      description: Create, read, update, or delete run operator pipelines
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipelines
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    put:
+      operationId: wes_v1_operator_pipelines_update
+      description: Create, read, update, or delete run operator pipelines
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipelines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunOperatorPipelineRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    patch:
+      operationId: wes_v1_operator_pipelines_partial_update
+      description: Create, read, update, or delete run operator pipelines
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipelines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+            examples:
+              RunOperatorPipelineExample:
+                value:
+                - id: opp_fastq_partition-145728_path
+                  description: File-based Fastq workload parallelization pipeline
+                    with 145728 read records each partition.
+                  file_type: fastq,fastq.gz,fq.gz
+                  workload_type: FILE
+                  version: '2021-07-18'
+                  operators:
+                    source:
+                      class: com.atgenomix.seqslab.piper.operators.FastqSource
+                      codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                      url: []
+                      auth: ''
+                    partition:
+                      class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                      parallelism: '145728'
+                    format:
+                      class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                      url: []
+                      auth: ''
+                    p_pipe:
+                      class: com.atgenomix.seqslab.piper.operators.PPipe
+                    collect:
+                      class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                    sink:
+                      class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                      url: []
+                      auth: ''
+                  pipelines:
+                    input:
+                    - source
+                    - partition
+                    - format
+                    call:
+                    - format
+                    - p_pipe
+                    output:
+                    - collect
+                    - sink
+                summary: Run operator pipeline example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRunOperatorPipelineRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOperatorPipeline'
+              examples:
+                RunOperatorPipelineExample:
+                  value:
+                  - id: opp_fastq_partition-145728_path
+                    description: File-based Fastq workload parallelization pipeline
+                      with 145728 read records each partition.
+                    file_type: fastq,fastq.gz,fq.gz
+                    workload_type: FILE
+                    version: '2021-07-18'
+                    operators:
+                      source:
+                        class: com.atgenomix.seqslab.piper.operators.FastqSource
+                        codec: org.seqdoop.hadoop_bam.util.BGZFEnhancedGzipCodec
+                        url: []
+                        auth: ''
+                      partition:
+                        class: com.atgenomix.seqslab.piper.operators.FastqPartition
+                        parallelism: '145728'
+                      format:
+                        class: com.atgenomix.seqslab.piper.operators.FastqFormat
+                        url: []
+                        auth: ''
+                      p_pipe:
+                        class: com.atgenomix.seqslab.piper.operators.PPipe
+                      collect:
+                        class: com.atgenomix.seqslab.piper.operators.LocalCollect
+                      sink:
+                        class: com.atgenomix.seqslab.piper.operators.HadoopSink
+                        url: []
+                        auth: ''
+                    pipelines:
+                      input:
+                      - source
+                      - partition
+                      - format
+                      call:
+                      - format
+                      - p_pipe
+                      output:
+                      - collect
+                      - sink
+                  summary: Run operator pipeline example
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: wes_v1_operator_pipelines_destroy
+      description: Create, read, update, or delete run operator pipelines
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this run operator pipeline.
+        required: true
+      tags:
+      - OperatorPipelines
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /wes/v1/runs/:
+    get:
+      operationId: wes_v1_runs_list
+      description: List, create, or retrieve runs
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRunList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_runs_create
+      description: List, create, or retrieve runs
+      parameters:
+      - in: query
+        name: request_id
+        schema:
+          type: string
+        description: Create run with existing request_id for rerun usage
+      - in: query
+        name: run_name
+        schema:
+          type: string
+        description: User-defined run name. Default value is RunRequest name with
+          timestamp
+      tags:
+      - Runs
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunRequestRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunStatus'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/runs/{run_id}/:
+    get:
+      operationId: wes_v1_runs_retrieve
+      description: List, create, or retrieve runs
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /wes/v1/runs/{run_id}/notebook/:
+    delete:
+      operationId: wes_v1_runs_notebook_destroy
+      description: Delete a notebook run
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /wes/v1/runs/{run_id}/status/:
+    get:
+      operationId: wes_v1_runs_status_retrieve
+      description: Retrieve state, outputs and logs for a given run
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunStatus'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_runs_status_create
+      description: Update state, outputs and logs for a given run
+      parameters:
+      - in: path
+        name: run_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+            examples:
+              UpdateRun,CreateRunLogWithoutOutputsExample:
+                value:
+                  logs:
+                    name: e2e.alignmentRun.Fastp:0
+                    cmd: |-
+                      /tools/fastp/ \
+                      --trim_poly_g --detect_adapter_for_pe --cut_tail >> "demo1_Fastp.log" 2>&1
+                    start_time: '2021-08-23T15:06:58'
+                    end_time: '2021-08-24T23:30:33'
+                    stdout: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/stdout.log
+                    stderr: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/stderr.log
+                    activity: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/activity.log
+                    exit_code: 0
+                  state: INITIALIZING
+                summary: Update Run, Create RunLog without outputs example
+                description: Update Run Status example
+              UpdateRun,CreateRunLogWithOutputsExample:
+                value:
+                  outputs:
+                  - fqn: e2e.fastqc_archive
+                    local:
+                    - Fastqc.tgz
+                    cloud:
+                    - drs://127.0.0.1:8000/drs_HfitIVV9Gwr6kzh
+                  - fqn: e2e.coverage_fold
+                    local: 100
+                  logs:
+                    name: e2e.alignmentRun.Fastqc:0
+                    cmd: |-
+                      /tools/fastp/ \
+                      --trim_poly_g --detect_adapter_for_pe --cut_tail >> "demo1_Fastp.log" 2>&1
+                    start_time: '2021-08-23T15:06:58'
+                    end_time: '2021-08-24T23:30:33'
+                    stdout: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/stdout.log
+                    stderr: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/stderr.log
+                    activity: abfss://seqslab@seqslabapi97e51storage.dfs.core.windows.net/e2e/.../shard-0/activity.log
+                    exit_code: 0
+                  state: COMPLETE
+                summary: Update Run, Create RunLog with outputs example
+                description: Update Run Status example
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /wes/v1/runtime-options/:
+    get:
+      operationId: wes_v1_runtime_options_list
+      description: Create, read, update, or delete run run runtime options
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - RuntimeOptions
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRunRuntimeOptionList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_runtime_options_create
+      description: Create, read, update, or delete run run runtime options
+      tags:
+      - RuntimeOptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunRuntimeOption'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/runtime-options/{id}/:
+    get:
+      operationId: wes_v1_runtime_options_retrieve
+      description: Create, read, update, or delete run run runtime options
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run runtimes options.
+        required: true
+      tags:
+      - RuntimeOptions
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunRuntimeOption'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    put:
+      operationId: wes_v1_runtime_options_update
+      description: Create, read, update, or delete run run runtime options
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run runtimes options.
+        required: true
+      tags:
+      - RuntimeOptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RunRuntimeOptionRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunRuntimeOption'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    patch:
+      operationId: wes_v1_runtime_options_partial_update
+      description: Create, read, update, or delete run run runtime options
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run runtimes options.
+        required: true
+      tags:
+      - RuntimeOptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRunRuntimeOptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRunRuntimeOptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRunRuntimeOptionRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunRuntimeOption'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: wes_v1_runtime_options_destroy
+      description: Create, read, update, or delete run run runtime options
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run runtimes options.
+        required: true
+      tags:
+      - RuntimeOptions
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /wes/v1/schedules/:
+    get:
+      operationId: wes_v1_schedules_list
+      description: List, create, or delete run schedules
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - RunSchedules
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRunScheduleList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_schedules_create
+      description: List, create, or delete run schedules
+      tags:
+      - RunSchedules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunScheduleRequest'
+            examples:
+              RunScheduleNotebookRequestExample:
+                value:
+                  schedule:
+                    schedule_type: O
+                    next_run: 2021-12-20 02:40:23.392145+00:00
+                  request:
+                    name: string
+                    description: string
+                    tags:
+                    - tag1/tag2/tag3
+                    - tag4/tag5/tag6
+                    workflow_type: NOTEBOOK
+                    workflow_params: {}
+                    workflow_backend_params:
+                      workspace: string
+                      clusters:
+                      - name: string
+                        id: string
+                        description: string
+                        settings:
+                          type: string
+                          vm_size: string
+                          workers:
+                            dedicated: 0
+                            spot: 0
+                          worker_on_master: true
+                          auto_scale: false
+                        options:
+                        - string
+                        slcu: ''
+                summary: 'Run schedule request example: Create Notebook'
+                description: Notebook example
+              RunScheduleWDLRequestExample:
+                value:
+                  schedule:
+                    schedule_type: O
+                    next_run: 2021-12-20 02:40:23.392162+00:00
+                  request:
+                    tags:
+                    - tag1/tag2/tag3
+                    - tag4/tag5/tag6
+                    name: string
+                    description: string
+                    workflow_type: WDL
+                    workflow_backend_params:
+                      workspace: string
+                    workflow_params: {}
+                summary: 'Run schedule request example: Create WDL'
+                description: WDL example
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunSchedule'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/schedules/{id}/:
+    get:
+      operationId: wes_v1_schedules_retrieve
+      description: List, create, or delete run schedules
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedules
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunSchedule'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    delete:
+      operationId: wes_v1_schedules_destroy
+      description: List, create, or delete run schedules
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      - in: query
+        name: next_run
+        schema:
+          type: boolean
+        description: Display workspace resource list (true or false)
+      tags:
+      - RunSchedules
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /wes/v1/schedules/{id}/requests/:
+    patch:
+      operationId: wes_v1_schedules_requests_partial_update
+      description: Update run request of given run schedule
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this run schedule.
+        required: true
+      tags:
+      - RunSchedules
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRunRequestRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunRequest'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /wes/v1/schedules/parameters/:
+    patch:
+      operationId: wes_v1_schedules_parameters_partial_update
+      description: Generate parameter template from WDL zip file for creating a run
+        request
+      tags:
+      - RunSchedules
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParameterFileInputRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parameter'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /wes/v1/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/service-info/:
+    get:
+      operationId: wes_v1_service_info_list
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Services'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+    post:
+      operationId: wes_v1_service_info_create
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/service-info/{id}/:
+    get:
+      operationId: wes_v1_service_info_retrieve
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+    put:
+      operationId: wes_v1_service_info_update
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServicesRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    patch:
+      operationId: wes_v1_service_info_partial_update
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedServicesRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedServicesRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedServicesRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Services'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: wes_v1_service_info_destroy
+      description: |-
+        List workflow execution service information
+        including workspaces, container images, and managed clusters
+        available in the service.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this service.
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound.:
+                  value:
+                    detail: No <object> matches the given query.
+                    code: object_does_not_exist
+                  summary: Not found.
+                  description: Not found.
+          description: ''
+  /wes/v1/service-info/workspaces/:
+    get:
+      operationId: wes_v1_service_info_workspaces_list
+      description: List workspaces available in the service
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: Display workspace resource list (true or false)
+      - in: query
+        name: force
+        schema:
+          type: boolean
+        description: Force reload system if cache exists
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                WorkspaceList(expand=false):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                  summary: workspace list (expand=false)
+                  description: workspace information list <br>Information includes
+                    the id, name, and location
+                WorkspaceList(expand=true):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                    name: '{resourceGroups1}'
+                    location: '{location1}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                  summary: workspace list (expand=true)
+                  description: detailed workspace information list.  <br>Information
+                    includes the id, name, location and resources list.
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/:
+    get:
+      operationId: wes_v1_service_info_workspaces_name
+      description: Obtain OAuth2 client credential token, resources, and container
+        for a given workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: secret
+        schema:
+          type: string
+        description: With correct secret access token will be displayed
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                WorkspaceInformation:
+                  value:
+                    id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                    registries:
+                    - id: resources id
+                      name: acr name
+                      location: location
+                      login_server: login server
+                      admin_user: true
+                      authorization: authorization code
+                      repositories:
+                      - name: image name
+                        tags:
+                        - name: latest
+                          digest: digest
+                          created: '2021-08-10T09:52:49.1368541Z'
+                          last_updated: '2021-08-10T09:52:49.1368541Z'
+                          size: size
+                          type: image type
+                    tokens:
+                      management.azure.com: ''
+                      batch.core.windows.net: ''
+                  summary: workspace information
+                  description: workspace information include resources, token, and
+                    registries
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/container-registries/:
+    get:
+      operationId: wes_v1_service_info_workspaces_container_registries_list
+      description: List container registries available for a given workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                ContainerRegistries:
+                  value:
+                    id: resources id
+                    name: acr name
+                    location: location
+                    login_server: login server
+                    admin_user: true
+                    authorization: authorization code
+                    repositories:
+                    - name: image name
+                      tags:
+                      - name: latest
+                        digest: digest
+                        created: '2021-08-10T09:52:49.1368541Z'
+                        last_updated: '2021-08-10T09:52:49.1368541Z'
+                        size: size
+                        type: image type
+                  summary: container_registries
+                  description: return container_registries according to the workspace
+                    name
+                ContainerRegistriesEmpty_:
+                  value:
+                    id: resources id
+                    name: acr name
+                    location: location
+                    login_server: login server
+                    admin_user: true
+                    authorization: authorization code
+                  summary: 'container_registries_empty '
+                  description: container_registries does not have any images
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+  /wes/v1/service-info/workspaces/{name}/resources/:
+    get:
+      operationId: wes_v1_service_info_workspaces_resources
+      description: Obtain OAuth2 client credential token for a given workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                ResourcesInformation:
+                  value:
+                    id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                    tokens:
+                      management.azure.com: ''
+                      batch.core.windows.net: ''
+                  summary: resources information
+                  description: return resources information according to the workspace
+                    name <br>Information include id, name, location, resources, and
+                    token
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData.:
+                  value:
+                    detail: |-
+                      Got KeyError when attempting to get a value for field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.
+                      Original exception text was: 'workspace'.
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data.
+                  description: Serializer format is not same as the RDB data.
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided.:
+                  value:
+                    detail: Authentication credentials were not provided.
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided.
+                  description: Authentication credentials were not provided.
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type.
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction.:
+                  value:
+                    detail: You do not have permission to perform this action.
+                    code: permission_denied
+                  summary: You do not have permission to perform this action.
+                  description: You do not have permission to perform this action.
+          description: ''
+components:
+  schemas:
+    Cluster:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+        settings:
+          $ref: '#/components/schemas/Settings'
+        options:
+          type: array
+          items:
+            type: string
+        slcu:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - id
+      - name
+      - settings
+    ClusterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        description:
+          type: string
+        settings:
+          $ref: '#/components/schemas/SettingsRequest'
+        options:
+          type: array
+          items:
+            type: string
+        slcu:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - id
+      - name
+      - settings
+    Inputs:
+      type: object
+      properties:
+        fqn:
+          type: string
+        local:
+          type: object
+          additionalProperties: {}
+        cloud:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        operators:
+          type: object
+          additionalProperties: {}
+      required:
+      - fqn
+    InputsRequest:
+      type: object
+      properties:
+        fqn:
+          type: string
+        local:
+          type: object
+          additionalProperties: {}
+        cloud:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        operators:
+          type: object
+          additionalProperties: {}
+      required:
+      - fqn
+    Nested:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        type:
+          type: string
+          maxLength: 31
+        default_value:
+          type: string
+          maxLength: 255
+      required:
+      - default_value
+      - name
+    NestedRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        type:
+          type: string
+          maxLength: 31
+        default_value:
+          type: string
+          maxLength: 255
+      required:
+      - default_value
+      - name
+    PaginatedRunList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+    PaginatedRunOperatorPipelineList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunOperatorPipeline'
+    PaginatedRunRuntimeOptionList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunRuntimeOption'
+    PaginatedRunScheduleList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunSchedule'
+    Parameter:
+      type: object
+      properties:
+        graph:
+          type: string
+        inputs:
+          type: object
+          additionalProperties: {}
+        configs:
+          type: object
+          additionalProperties: {}
+        runtime_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunRuntimeOption'
+        operator_pipelines:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunOperatorPipeline'
+        workflow:
+          type: object
+          additionalProperties: {}
+      required:
+      - configs
+      - graph
+      - inputs
+      - operator_pipelines
+      - runtime_options
+      - workflow
+    PatchedParameterFileInputRequest:
+      type: object
+      properties:
+        PRIMARY_DESCRIPTOR:
+          type: string
+        file:
+          type: string
+          format: binary
+          description: Please upload zip file
+    PatchedRunOperatorPipelineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+    PatchedRunRequestRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        name:
+          type: string
+          default: ''
+        workflow_type:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTypeEnum'
+          default: WDL
+        workflow_type_version:
+          type: string
+          maxLength: 15
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g., ''TUMOR''.'
+          writeOnly: true
+        workflow_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowParamsRequest'
+          default: {}
+        workflow_backend_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowBackendParamsRequest'
+          default:
+            workspace: ws
+        workflow_url:
+          type: string
+          format: uri
+          maxLength: 200
+    PatchedRunRuntimeOptionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 40
+        description:
+          type: string
+          maxLength: 255
+        settings:
+          type: object
+          additionalProperties: {}
+        options:
+          type: object
+          additionalProperties: {}
+    PatchedServicesRequest:
+      type: object
+      description: |-
+        serialize service info, workspaces, containers,
+        managed clusters required for creating workflow run.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+        workflow_type_versions:
+          type: object
+          additionalProperties: {}
+        supported_wes_versions:
+          type: object
+          additionalProperties: {}
+        supported_filesystem_protocols:
+          type: object
+          additionalProperties: {}
+        workflow_engine_versions:
+          type: object
+          additionalProperties: {}
+        system_state_counts:
+          type: object
+          additionalProperties: {}
+        auth_instructions_url:
+          type: string
+          format: uri
+          maxLength: 200
+        tags:
+          type: object
+          additionalProperties: {}
+    Run:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          maxLength: 20
+        name:
+          type: string
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunLog'
+        state:
+          $ref: '#/components/schemas/StateEnum'
+        request:
+          $ref: '#/components/schemas/RunRequest'
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - request
+      - state
+    RunLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 63
+        cmd:
+          type: string
+          maxLength: 8191
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        stdout:
+          type: string
+          maxLength: 64
+        stderr:
+          type: string
+          maxLength: 64
+        activity:
+          type: string
+          maxLength: 64
+        storage_url:
+          type: string
+          nullable: true
+          format: uri
+          maxLength: 500
+        exit_code:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        outputs:
+          type: object
+          additionalProperties: {}
+      required:
+      - activity
+      - cmd
+      - exit_code
+      - id
+      - name
+      - stderr
+      - stdout
+    RunOperatorPipeline:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+        version:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - description
+      - file_type
+      - id
+      - version
+    RunOperatorPipelineRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 512
+        file_type:
+          type: string
+          maxLength: 64
+        workload_type:
+          $ref: '#/components/schemas/WorkloadTypeEnum'
+        operators:
+          type: object
+          additionalProperties: {}
+        pipelines:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - file_type
+      - id
+    RunRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          default: ''
+        workflow_type:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTypeEnum'
+          default: WDL
+        workflow_type_version:
+          type: string
+          maxLength: 15
+        workflow_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowParams'
+          default: {}
+        workflow_backend_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowBackendParams'
+          default:
+            workspace: ws
+        workflow_url:
+          type: string
+          format: uri
+          maxLength: 200
+      required:
+      - id
+    RunRequestRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        name:
+          type: string
+          default: ''
+        workflow_type:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTypeEnum'
+          default: WDL
+        workflow_type_version:
+          type: string
+          maxLength: 15
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g., ''TUMOR''.'
+          writeOnly: true
+        workflow_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowParamsRequest'
+          default: {}
+        workflow_backend_params:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowBackendParamsRequest'
+          default:
+            workspace: ws
+        workflow_url:
+          type: string
+          format: uri
+          maxLength: 200
+    RunRuntimeOption:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 40
+        description:
+          type: string
+          maxLength: 255
+        settings:
+          type: object
+          additionalProperties: {}
+        options:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - id
+      - name
+      - options
+      - settings
+    RunRuntimeOptionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 40
+        description:
+          type: string
+          maxLength: 255
+        settings:
+          type: object
+          additionalProperties: {}
+        options:
+          type: object
+          additionalProperties: {}
+      required:
+      - description
+      - name
+      - options
+      - settings
+    RunSchedule:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        request:
+          $ref: '#/components/schemas/RunRequest'
+      required:
+      - id
+      - request
+      - schedule
+    RunScheduleRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        schedule:
+          $ref: '#/components/schemas/ScheduleRequest'
+        request:
+          $ref: '#/components/schemas/RunRequestRequest'
+      required:
+      - request
+      - schedule
+    RunStatus:
+      type: object
+      description: RunStatusSerializer is used in API /wes​/v1​/runs​/{run_id}​/status​/
+      properties:
+        run_id:
+          type: string
+        state:
+          $ref: '#/components/schemas/StateEnum'
+      required:
+      - run_id
+    Schedule:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        schedule_type:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleTypeEnum'
+          default: O
+          description: 'schedule type: ((''O'', ''Once''), (''I'', ''Minutes''), (''H'',
+            ''Hourly''), (''D'', ''Daily''), (''W'', ''Weekly''), (''M'', ''Monthly''),
+            (''Q'', ''Quarterly''), (''Y'', ''Yearly''), (''C'', ''Cron''))<br>'
+        next_run:
+          type: string
+          format: date-time
+          default: '2021-12-20T02:40:23.388992Z'
+          description: Running time setting
+        name:
+          type: string
+          nullable: true
+          maxLength: 100
+        func:
+          type: string
+          description: e.g. module.tasks.function
+          maxLength: 256
+        hook:
+          type: string
+          nullable: true
+          description: e.g. module.tasks.result_function
+          maxLength: 256
+        args:
+          type: string
+          nullable: true
+          description: e.g. 1, 2, 'John'
+        kwargs:
+          type: string
+          nullable: true
+          description: e.g. x=1, y=2, name='John'
+        minutes:
+          type: integer
+          maximum: 65535
+          nullable: true
+          description: Number of minutes for the Minutes type
+          minimum: 0
+        repeats:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: n = n times, -1 = forever
+        cron:
+          type: string
+          nullable: true
+          description: Cron expression
+          maxLength: 100
+        task:
+          type: string
+          readOnly: true
+      required:
+      - func
+      - id
+      - task
+    ScheduleRequest:
+      type: object
+      properties:
+        schedule_type:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleTypeEnum'
+          default: O
+          description: 'schedule type: ((''O'', ''Once''), (''I'', ''Minutes''), (''H'',
+            ''Hourly''), (''D'', ''Daily''), (''W'', ''Weekly''), (''M'', ''Monthly''),
+            (''Q'', ''Quarterly''), (''Y'', ''Yearly''), (''C'', ''Cron''))<br>'
+        next_run:
+          type: string
+          format: date-time
+          default: '2021-12-20T02:40:23.388992Z'
+          description: Running time setting
+        name:
+          type: string
+          nullable: true
+          maxLength: 100
+        func:
+          type: string
+          description: e.g. module.tasks.function
+          maxLength: 256
+        hook:
+          type: string
+          nullable: true
+          description: e.g. module.tasks.result_function
+          maxLength: 256
+        args:
+          type: string
+          nullable: true
+          description: e.g. 1, 2, 'John'
+        kwargs:
+          type: string
+          nullable: true
+          description: e.g. x=1, y=2, name='John'
+        minutes:
+          type: integer
+          maximum: 65535
+          nullable: true
+          description: Number of minutes for the Minutes type
+          minimum: 0
+        repeats:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: n = n times, -1 = forever
+        cron:
+          type: string
+          nullable: true
+          description: Cron expression
+          maxLength: 100
+      required:
+      - func
+    ScheduleTypeEnum:
+      enum:
+      - O
+      - I
+      - H
+      - D
+      - W
+      - M
+      - Q
+      - Y
+      - C
+      type: string
+    Services:
+      type: object
+      description: |-
+        serialize service info, workspaces, containers,
+        managed clusters required for creating workflow run.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+        workflow_type_versions:
+          type: object
+          additionalProperties: {}
+        supported_wes_versions:
+          type: object
+          additionalProperties: {}
+        supported_filesystem_protocols:
+          type: object
+          additionalProperties: {}
+        workflow_engine_versions:
+          type: object
+          additionalProperties: {}
+        system_state_counts:
+          type: object
+          additionalProperties: {}
+        auth_instructions_url:
+          type: string
+          format: uri
+          maxLength: 200
+        tags:
+          type: object
+          additionalProperties: {}
+        default_workflow_engine_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nested'
+          readOnly: true
+      required:
+      - auth_instructions_url
+      - created_at
+      - default_workflow_engine_params
+      - description
+      - id
+      - name
+      - updated_at
+    ServicesRequest:
+      type: object
+      description: |-
+        serialize service info, workspaces, containers,
+        managed clusters required for creating workflow run.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+        workflow_type_versions:
+          type: object
+          additionalProperties: {}
+        supported_wes_versions:
+          type: object
+          additionalProperties: {}
+        supported_filesystem_protocols:
+          type: object
+          additionalProperties: {}
+        workflow_engine_versions:
+          type: object
+          additionalProperties: {}
+        system_state_counts:
+          type: object
+          additionalProperties: {}
+        auth_instructions_url:
+          type: string
+          format: uri
+          maxLength: 200
+        tags:
+          type: object
+          additionalProperties: {}
+      required:
+      - auth_instructions_url
+      - created_at
+      - description
+      - id
+      - name
+      - updated_at
+    Settings:
+      type: object
+      properties:
+        type:
+          type: string
+        vm_size:
+          type: string
+        workers:
+          $ref: '#/components/schemas/Workers'
+        worker_on_master:
+          type: boolean
+          default: true
+        auto_scale:
+          type: boolean
+          default: false
+      required:
+      - type
+      - vm_size
+      - workers
+    SettingsRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        vm_size:
+          type: string
+        workers:
+          $ref: '#/components/schemas/WorkersRequest'
+        worker_on_master:
+          type: boolean
+          default: true
+        auto_scale:
+          type: boolean
+          default: false
+      required:
+      - type
+      - vm_size
+      - workers
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided.
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+    StateEnum:
+      enum:
+      - UNKNOWN
+      - QUEUED
+      - INITIALIZING
+      - RUNNING
+      - PAUSED
+      - COMPLETE
+      - EXECUTOR_ERROR
+      - SYSTEM_ERROR
+      - CANCELED
+      - CANCELING
+      type: string
+    Workers:
+      type: object
+      properties:
+        dedicated:
+          type: integer
+          description: The number of dedicated VMs
+        spot:
+          type: integer
+          description: The number of low priority VMs
+      required:
+      - dedicated
+      - spot
+    WorkersRequest:
+      type: object
+      properties:
+        dedicated:
+          type: integer
+          description: The number of dedicated VMs
+        spot:
+          type: integer
+          description: The number of low priority VMs
+      required:
+      - dedicated
+      - spot
+    WorkflowBackendParams:
+      type: object
+      properties:
+        graph:
+          type: string
+        workspace:
+          type: string
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cluster'
+      required:
+      - workspace
+    WorkflowBackendParamsRequest:
+      type: object
+      properties:
+        graph:
+          type: string
+        workspace:
+          type: string
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterRequest'
+      required:
+      - workspace
+    WorkflowParams:
+      type: object
+      properties:
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Inputs'
+    WorkflowParamsRequest:
+      type: object
+      properties:
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/InputsRequest'
+    WorkflowTypeEnum:
+      enum:
+      - WDL
+      - NOTEBOOK
+      type: string
+    WorkloadTypeEnum:
+      enum:
+      - REGULAR
+      - FILE
+      - MEMORY
+      type: string
+    Workspaces:
+      type: object
+      properties:
+        workspaces:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - workspaces
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
