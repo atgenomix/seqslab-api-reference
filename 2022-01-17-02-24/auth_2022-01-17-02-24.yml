@@ -1,0 +1,829 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (auth-v3)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /auth/v3/permissions/{backend}/:
+    get:
+      operationId: auth_v3_permissions_retrieve
+      description: |-
+        Get admin consent for API application permissions on Console app,
+        so that the API is permitted to acquire access tokens by
+        client credential auth flow; otherwise, users can only use the
+        access token obtained from auth code flow.
+
+        #### Example of requesting admin consent
+        <https://login.microsoftonline.com/<tenant>/adminconsent?
+        client_id=<console client ID>&
+        state=usr_rbyLQVVUfVmx0mB&
+        redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fv1%2Fpermissions%2Fazure%2F>
+      parameters:
+      - in: path
+        name: backend
+        schema:
+          type: string
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /auth/v3/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /auth/v3/signin/{backend}/:
+    post:
+      operationId: auth_v3_signin_create
+      description: |-
+        The redirect_uri API (reply URI) of SeqsLab API app, where OAuth2 authorization
+        code flow responses for single page applications will be sent and received.
+        The complete URI must exactly match one of the redirect_uris registered in Azure portal
+        except it must be url encoded in query parameter.
+
+        [Microsoft Azure auth code flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+
+        #### Example of requesting OAuth2 authorization code
+        <https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?
+        client_id=xxxxxxxx-7700-42c2-996e-116578438579&
+        response_type=code+id_token&
+        redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fv1%2Fsignin%2Fazure%2F&
+        scope=openid+profile+offline_access+https%3A%2F%2Fgraph.microsoft.com%2FUser.Read+
+        https%3A%2F%2Fbatch.core.windows.net%2Fuser_impersonation+
+        https%3A%2F%2Fstorage.azure.com%2Fuser_impersonation+
+        https%3A%2F%2Fmanagement.azure.com%2Fuser_impersonation&
+        response_mode=form_post&state=hYwDx8PhPymh&prompt=consent&
+        code_challenge=xQTIzO-UeAd3Pg2RMXJBWUNDz0hxTNxLfv5PtKT1IS0&
+        code_challenge_method=S256&
+        nonce=syasNRDtc2iJ>
+
+        #### Exchange an OAuth2 auth code for an OAuth2 API token.
+        This simply defers the entire OAuth2 process to the front end
+        responsible for handling the entirety of the OAuth2 process;
+        we just step in at the end and use the access token to populate
+        some user identity.
+
+        The URL endpoint at which this view lives must include a backend field,
+        for example:
+
+            POST /auth/v3/signin/azure/?format=json
+
+        Note that those endpoint examples are verbatim according to the
+        PSA backends which we configured in settings.py. The URL pattern
+        configured in urls.py will get the target backend automatically.
+        Available provider backend names supported by PSA can be found:
+        https://github.com/python-social-auth/social-core/tree/master/social_core/backends
+
+        ##### Auth code flow requests must include the following field
+
+        - `code`: The OAuth2 authorization code provided by the identity provider.
+
+        - `session_state`: The value identifies the request session.
+
+        - `state`: The same value used in the login request state parameter,
+        a randomly generated unique value is typically used for preventing cross-site request forgery attacks.
+        The app should verify that the state values in the request and response are identical.
+
+        - `id_token`: A JSON Web Token (JWT).
+        The app can decode the segments of this token to request information about the user who signed in.
+      parameters:
+      - in: path
+        name: backend
+        schema:
+          type: string
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthCodeRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCodeRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+          description: ''
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2 login redirect URL'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /auth/v3/signout/{backend}/:
+    post:
+      operationId: auth_v3_signout_create
+      description: Disconnects given backend from the user of given association id.
+      parameters:
+      - in: path
+        name: backend
+        schema:
+          type: string
+        required: true
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /auth/v3/token/{backend}/:
+    post:
+      operationId: auth_v3_token_create
+      description: |-
+        Given the access token obtained from user sign-in experience,
+        return the API access token for the authorized user.
+
+        ##### Access token requests must include the following field
+
+        - `access_token`: The OAuth2 access token provided by the provider.
+
+        - `token_type`: The value Bearer
+
+        - `expires_in`: How long the access token is valid (in seconds).
+
+        - `refresh_token`: An OAuth 2.0 refresh token.
+        The app can use this token acquire additional access tokens after the current access token expires.
+
+        - `id_token`: A JSON Web Token (JWT).
+        The app can decode the segments of this token to request information about the user who signed in.
+      parameters:
+      - in: path
+        name: backend
+        schema:
+          type: string
+        required: true
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthTokenRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthTokenRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenNotValidForAnyTokenType:
+                  value:
+                    detail: Given token not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /auth/v3/token/refresh/:
+    post:
+      operationId: auth_v3_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+components:
+  schemas:
+    AuthCodeRequest:
+      type: object
+      description: |-
+        serializer which accepts an authentication response from
+        OAuth2 auth code flow.
+      properties:
+        code:
+          type: string
+          minLength: 1
+        id_token:
+          type: string
+          minLength: 1
+        session_state:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        redirect_uri:
+          type: string
+          format: uri
+          minLength: 1
+        error:
+          type: string
+          minLength: 1
+        error_description:
+          type: string
+          minLength: 1
+      required:
+      - code
+      - id_token
+      - state
+    AuthResponse:
+      type: object
+      properties:
+        tokens:
+          $ref: '#/components/schemas/TokenResponse'
+        consent:
+          $ref: '#/components/schemas/ConsentResponse'
+        last_signin:
+          type: string
+          format: date-time
+      required:
+      - tokens
+    AuthTokenRequest:
+      type: object
+      description: |-
+        serializer which accepts an access token response from
+        authorization code flow.
+      properties:
+        id_token:
+          type: string
+          minLength: 1
+        access_token:
+          type: string
+          minLength: 1
+        token_type:
+          type: string
+          minLength: 1
+          default: Bearer
+        expires_in:
+          type: integer
+          nullable: true
+        refresh_token:
+          type: string
+          minLength: 1
+      required:
+      - access_token
+      - expires_in
+      - id_token
+      - refresh_token
+    ConsentResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+        redirect_uri:
+          type: string
+          format: uri
+      required:
+      - redirect_uri
+      - state
+      - url
+    OAuth2 login redirect URL:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+      required:
+      - url
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+      required:
+      - access
+    TokenRefreshRequest:
+      type: object
+      properties:
+        refresh:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - refresh
+    TokenResponse:
+      type: object
+      properties:
+        refresh:
+          type: string
+        access:
+          type: string
+      required:
+      - access
+      - refresh
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
