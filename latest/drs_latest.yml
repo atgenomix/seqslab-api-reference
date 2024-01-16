@@ -346,8 +346,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-01-12 06:21:20.074878+00:00'
-                  deleted_time: '2024-04-11'
+                  created_time: '2024-01-16 06:53:38.091954+00:00'
+                  deleted_time: '2024-04-15'
                   aliases: []
                   metadata: {}
                   tags:
@@ -371,8 +371,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-01-12 06:21:20.075342+00:00'
-                  deleted_time: '2024-04-11'
+                  created_time: '2024-01-16 06:53:38.092286+00:00'
+                  deleted_time: '2024-04-15'
                   aliases: []
                   metadata: {}
                   tags:
@@ -392,8 +392,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-01-12 06:21:20.075491+00:00'
-                  deleted_time: '2024-04-11'
+                  created_time: '2024-01-16 06:53:38.092348+00:00'
+                  deleted_time: '2024-04-15'
                   aliases: []
                   metadata: {}
                   tags:
@@ -448,10 +448,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-01-12 06:21:20.075241+00:00
-                    created_time: 2024-01-12 06:21:20.075243+00:00
+                    version: 2024-01-16 06:53:38.092211+00:00
+                    created_time: 2024-01-16 06:53:38.092213+00:00
                     updated_time: null
-                    deleted_time: 2024-04-11
+                    deleted_time: 2024-04-15
                     metadata:
                       investigation:
                         center: null
@@ -513,10 +513,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-01-12 06:21:20.075584+00:00
-                    created_time: 2024-01-12 06:21:20.075587+00:00
+                    version: 2024-01-16 06:53:38.092412+00:00
+                    created_time: 2024-01-16 06:53:38.092414+00:00
                     updated_time: null
-                    deleted_time: 2024-04-11
+                    deleted_time: 2024-04-15
                     metadata:
                       investigation:
                         center: null
@@ -574,10 +574,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-01-12 06:21:20.075667+00:00
-                    created_time: 2024-01-12 06:21:20.075669+00:00
+                    version: 2024-01-16 06:53:38.092470+00:00
+                    created_time: 2024-01-16 06:53:38.092475+00:00
                     updated_time: null
-                    deleted_time: 2024-04-11
+                    deleted_time: 2024-04-15
                     metadata:
                       investigation:
                         center: null
@@ -642,7 +642,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2024-04-11
+                    deleted_time: 2024-04-15
                     metadata:
                       investigation:
                         center: null
@@ -819,7 +819,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-01-12 06:21:20.076103+00:00
+                    version: 2024-01-16 06:53:38.092799+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -887,7 +887,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-01-12 06:21:20.076093+00:00
+                    version: 2024-01-16 06:53:38.092791+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1043,9 +1043,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-01-12 06:21:20.075964+00:00
-                  updated_time: 2024-01-12 06:21:20.075967+00:00
-                  deleted_time: 2024-04-11
+                  created_time: 2024-01-16 06:53:38.092696+00:00
+                  updated_time: 2024-01-16 06:53:38.092698+00:00
+                  deleted_time: 2024-04-15
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1178,9 +1178,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-01-12 06:21:20.075964+00:00
-                  updated_time: 2024-01-12 06:21:20.075967+00:00
-                  deleted_time: 2024-04-11
+                  created_time: 2024-01-16 06:53:38.092696+00:00
+                  updated_time: 2024-01-16 06:53:38.092698+00:00
+                  deleted_time: 2024-04-15
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1199,14 +1199,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-01-12 06:21:20.076064+00:00
+                  updated_time: 2024-01-16 06:53:38.092765+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-01-12 06:21:20.076060+00:00
+                  created_time: 2024-01-16 06:53:38.092762+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
