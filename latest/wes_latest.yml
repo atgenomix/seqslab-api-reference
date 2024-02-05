@@ -1863,7 +1863,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-01-16 06:53:39.930779+00:00
+                    next_run: 2024-02-05 03:03:06.909432+00:00
                   request:
                     name: string
                     description: string
@@ -1900,7 +1900,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-01-16 06:53:39.930801+00:00
+                    next_run: 2024-02-05 03:03:06.909453+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4093,8 +4093,10 @@ components:
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/TagRequest'
-          description: 'Label name list: any string e.g., [''TUMOR''].'
+            type: string
+            minLength: 1
+            description: Label name list e.g., ['TUMOR']
+          writeOnly: true
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParamsRequest'
@@ -4142,7 +4144,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-01-16T06:53:39.934609Z'
+          default: '2024-02-05T03:03:06.912457Z'
           description: task time setting
     PatchedServicesRequest:
       type: object
@@ -4237,7 +4239,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
-          description: 'Label name list: any string e.g., [''TUMOR''].'
+          description: Label name list e.g., ['TUMOR']
         request:
           $ref: '#/components/schemas/RunRequest'
         start_time:
@@ -4375,11 +4377,6 @@ components:
         workflow_type_version:
           type: string
           maxLength: 15
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-          description: 'Label name list: any string e.g., [''TUMOR''].'
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParams'
@@ -4425,8 +4422,10 @@ components:
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/TagRequest'
-          description: 'Label name list: any string e.g., [''TUMOR''].'
+            type: string
+            minLength: 1
+            description: Label name list e.g., ['TUMOR']
+          writeOnly: true
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParamsRequest'
@@ -4555,7 +4554,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-01-16T06:53:39.934609Z'
+          default: '2024-02-05T03:03:06.912457Z'
           description: task time setting
       required:
       - id
@@ -4581,7 +4580,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-01-16T06:53:39.934609Z'
+          default: '2024-02-05T03:03:06.912457Z'
           description: task time setting
     ScheduleTypeEnum:
       enum:
@@ -4918,7 +4917,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-01-16T06:53:39.934609Z'
+          default: '2024-02-05T03:03:06.912457Z'
           description: task time setting
       required:
       - id
@@ -4944,7 +4943,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-01-16T06:53:39.934609Z'
+          default: '2024-02-05T03:03:06.912457Z'
           description: task time setting
     Tag:
       type: object
