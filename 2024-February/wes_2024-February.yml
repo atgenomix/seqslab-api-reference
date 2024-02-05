@@ -1863,7 +1863,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-02-05 06:29:08.895888+00:00
+                    next_run: 2024-02-05 06:34:10.188190+00:00
                   request:
                     name: string
                     description: string
@@ -1900,7 +1900,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-02-05 06:29:08.895917+00:00
+                    next_run: 2024-02-05 06:34:10.188216+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4144,7 +4144,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:29:08.899089Z'
+          default: '2024-02-05T06:34:10.191177Z'
           description: task time setting
     PatchedServicesRequest:
       type: object
@@ -4554,7 +4554,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:29:08.899089Z'
+          default: '2024-02-05T06:34:10.191177Z'
           description: task time setting
       required:
       - id
@@ -4580,7 +4580,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:29:08.899089Z'
+          default: '2024-02-05T06:34:10.191177Z'
           description: task time setting
     ScheduleTypeEnum:
       enum:
@@ -4917,7 +4917,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:29:08.899089Z'
+          default: '2024-02-05T06:34:10.191177Z'
           description: task time setting
       required:
       - id
@@ -4943,7 +4943,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:29:08.899089Z'
+          default: '2024-02-05T06:34:10.191177Z'
           description: task time setting
     Tag:
       type: object
