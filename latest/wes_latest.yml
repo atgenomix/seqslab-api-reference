@@ -341,7 +341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedRunList'
+                $ref: '#/components/schemas/PaginatedRunListList'
           description: ''
         '500':
           content:
@@ -1863,7 +1863,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-02-05 06:46:46.687352+00:00
+                    next_run: 2024-03-06 06:55:41.384322+00:00
                   request:
                     name: string
                     description: string
@@ -1900,7 +1900,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-02-05 06:46:46.687372+00:00
+                    next_run: 2024-03-06 06:55:41.384339+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -3947,7 +3947,7 @@ components:
           type: string
         detail:
           type: string
-    PaginatedRunList:
+    PaginatedRunListList:
       type: object
       properties:
         count:
@@ -3966,7 +3966,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Run'
+            $ref: '#/components/schemas/RunList'
     PaginatedRunOperatorPipelineList:
       type: object
       properties:
@@ -4144,7 +4144,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:46:46.690263Z'
+          default: '2024-03-06T06:55:41.386844Z'
           description: task time setting
     PatchedServicesRequest:
       type: object
@@ -4233,6 +4233,48 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RunLog'
+        state:
+          $ref: '#/components/schemas/StateEnum'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          description: Label name list e.g., ['TUMOR']
+        request:
+          $ref: '#/components/schemas/RunRequest'
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        compute_usage:
+          type: string
+          readOnly: true
+        data_usage:
+          type: string
+          readOnly: true
+        progress:
+          type: integer
+          default: 0
+      required:
+      - compute_usage
+      - data_usage
+      - request
+      - state
+    RunList:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          maxLength: 25
+        name:
+          type: string
+        outputs:
+          $ref: '#/components/schemas/Output'
         state:
           $ref: '#/components/schemas/StateEnum'
         tags:
@@ -4554,7 +4596,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:46:46.690263Z'
+          default: '2024-03-06T06:55:41.386844Z'
           description: task time setting
       required:
       - id
@@ -4580,7 +4622,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:46:46.690263Z'
+          default: '2024-03-06T06:55:41.386844Z'
           description: task time setting
     ScheduleTypeEnum:
       enum:
@@ -4917,7 +4959,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:46:46.690263Z'
+          default: '2024-03-06T06:55:41.386844Z'
           description: task time setting
       required:
       - id
@@ -4943,7 +4985,7 @@ components:
         next_run:
           type: string
           format: date-time
-          default: '2024-02-05T06:46:46.690263Z'
+          default: '2024-03-06T06:55:41.386844Z'
           description: task time setting
     Tag:
       type: object

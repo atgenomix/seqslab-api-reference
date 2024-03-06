@@ -1986,8 +1986,6 @@ components:
           type: string
           nullable: true
           minLength: 1
-          pattern: ^data:[\w/\-\.]+;\w+,.*$
-          format: uri
     PatchedSeqsLabUserRequest:
       type: object
       properties:
@@ -2081,8 +2079,6 @@ components:
         logo:
           type: string
           nullable: true
-          pattern: ^data:[\w/\-\.]+;\w+,.*$
-          format: uri
       required:
       - cus_id
       - tenant
@@ -2109,8 +2105,6 @@ components:
         logo:
           type: string
           nullable: true
-          pattern: ^data:[\w/\-\.]+;\w+,.*$
-          format: uri
       required:
       - cus_id
       - subscription_id
@@ -2130,8 +2124,6 @@ components:
           type: string
           nullable: true
           minLength: 1
-          pattern: ^data:[\w/\-\.]+;\w+,.*$
-          format: uri
     SeqsLabUser:
       type: object
       properties:
