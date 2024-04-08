@@ -8,10 +8,7 @@ paths:
   /ga4gh/drs/v1/contents/{object_id}/access/:
     post:
       operationId: ga4gh_drs_v1_contents_access_create
-      description: |-
-        Create Download link with Seqslab specific token.
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      description: Create Download link with Seqslab specific token.
       parameters:
       - in: path
         name: object_id
@@ -95,10 +92,7 @@ paths:
   /ga4gh/drs/v1/contents/{object_id}/stream/:
     get:
       operationId: ga4gh_drs_v1_contents_stream_retrieve
-      description: |-
-        Download Data with Seqslab specific token.
-
-        Role: All Allow
+      description: Download Data with Seqslab specific token.
       parameters:
       - in: path
         name: object_id
@@ -177,10 +171,7 @@ paths:
   /ga4gh/drs/v1/objects/:
     get:
       operationId: ga4gh_drs_v1_objects_list
-      description: |-
-        List DRS objects
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetViewer
+      description: List DRS objects
       parameters:
       - in: query
         name: expand
@@ -332,10 +323,7 @@ paths:
           description: ''
     post:
       operationId: create_drs_object
-      description: |-
-        Add DRS objects
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubWriter/ DataHubUploader
+      description: Add DRS objects
       tags:
       - ga4gh
       requestBody:
@@ -350,8 +338,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-03-14 12:13:21.620221+00:00'
-                  deleted_time: '2024-06-12'
+                  created_time: '2024-04-08 07:10:24.185082+00:00'
+                  deleted_time: '2024-07-07'
                   aliases: []
                   metadata: {}
                   tags:
@@ -375,8 +363,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-03-14 12:13:21.620559+00:00'
-                  deleted_time: '2024-06-12'
+                  created_time: '2024-04-08 07:10:24.185410+00:00'
+                  deleted_time: '2024-07-07'
                   aliases: []
                   metadata: {}
                   tags:
@@ -396,8 +384,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-03-14 12:13:21.620626+00:00'
-                  deleted_time: '2024-06-12'
+                  created_time: '2024-04-08 07:10:24.185460+00:00'
+                  deleted_time: '2024-07-07'
                   aliases: []
                   metadata: {}
                   tags:
@@ -452,10 +440,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-03-14 12:13:21.620485+00:00
-                    created_time: 2024-03-14 12:13:21.620487+00:00
+                    version: 2024-04-08 07:10:24.185353+00:00
+                    created_time: 2024-04-08 07:10:24.185354+00:00
                     updated_time: null
-                    deleted_time: 2024-06-12
+                    deleted_time: 2024-07-07
                     metadata:
                       investigation:
                         center: null
@@ -517,10 +505,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-03-14 12:13:21.620684+00:00
-                    created_time: 2024-03-14 12:13:21.620686+00:00
+                    version: 2024-04-08 07:10:24.185509+00:00
+                    created_time: 2024-04-08 07:10:24.185511+00:00
                     updated_time: null
-                    deleted_time: 2024-06-12
+                    deleted_time: 2024-07-07
                     metadata:
                       investigation:
                         center: null
@@ -578,10 +566,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-03-14 12:13:21.620739+00:00
-                    created_time: 2024-03-14 12:13:21.620741+00:00
+                    version: 2024-04-08 07:10:24.185558+00:00
+                    created_time: 2024-04-08 07:10:24.185560+00:00
                     updated_time: null
-                    deleted_time: 2024-06-12
+                    deleted_time: 2024-07-07
                     metadata:
                       investigation:
                         center: null
@@ -646,7 +634,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2024-06-12
+                    deleted_time: 2024-07-07
                     metadata:
                       investigation:
                         center: null
@@ -779,10 +767,8 @@ paths:
   /ga4gh/drs/v1/objects/{object_id}/:
     get:
       operationId: ga4gh_drs_v1_objects_retrieve
-      description: |-
-        Return object metadata and a list of access methods that can be used to fetch object bytes
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetViewer/ DatasetDownloader
+      description: Return object metadata and a list of access methods that can be
+        used to fetch object bytes
       parameters:
       - in: query
         name: expand
@@ -823,7 +809,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-03-14 12:13:21.620967+00:00
+                    version: 2024-04-08 07:10:24.185744+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -891,7 +877,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-03-14 12:13:21.620957+00:00
+                    version: 2024-04-08 07:10:24.185740+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1012,10 +998,8 @@ paths:
           description: ''
     put:
       operationId: ga4gh_drs_v1_objects_update
-      description: |-
-        Update a specific DRS object updated_time, metadata, tag, checksum,or created_time
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetInspector(Owner)
+      description: Update a specific DRS object updated_time, metadata, tag, checksum,or
+        created_time
       parameters:
       - in: path
         name: object_id
@@ -1047,9 +1031,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-03-14 12:13:21.620871+00:00
-                  updated_time: 2024-03-14 12:13:21.620872+00:00
-                  deleted_time: 2024-06-12
+                  created_time: 2024-04-08 07:10:24.185664+00:00
+                  updated_time: 2024-04-08 07:10:24.185666+00:00
+                  deleted_time: 2024-07-07
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1147,10 +1131,8 @@ paths:
           description: ''
     patch:
       operationId: ga4gh_drs_v1_objects_partial_update
-      description: |-
-        Partially modify a specific DRS object updated_time, metadata, tag, checksum, or created_time
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetDownloader(Owner)
+      description: Partially modify a specific DRS object updated_time, metadata,
+        tag, checksum, or created_time
       parameters:
       - in: path
         name: object_id
@@ -1182,9 +1164,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-03-14 12:13:21.620871+00:00
-                  updated_time: 2024-03-14 12:13:21.620872+00:00
-                  deleted_time: 2024-06-12
+                  created_time: 2024-04-08 07:10:24.185664+00:00
+                  updated_time: 2024-04-08 07:10:24.185666+00:00
+                  deleted_time: 2024-07-07
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1203,14 +1185,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-03-14 12:13:21.620931+00:00
+                  updated_time: 2024-04-08 07:10:24.185713+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-03-14 12:13:21.620929+00:00
+                  created_time: 2024-04-08 07:10:24.185711+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -1331,10 +1313,7 @@ paths:
           description: ''
     delete:
       operationId: ga4gh_drs_v1_objects_destroy
-      description: |-
-        Delete a DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubWriter(Owner)/ DataHubUploader(Owner)
+      description: Delete a DRS object
       parameters:
       - in: query
         name: backend_content
@@ -1436,10 +1415,7 @@ paths:
   /ga4gh/drs/v1/objects/{object_id}/download/:
     get:
       operationId: ga4gh_drs_v1_objects_download_retrieve
-      description: |-
-        Return a JSON list of Gen2 file information
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      description: Return a JSON list of Gen2 file information
       parameters:
       - in: query
         name: compressed
@@ -1538,10 +1514,7 @@ paths:
   /ga4gh/drs/v1/objects/{object_id}/labels/:
     get:
       operationId: ga4gh_drs_v1_objects_labels_retrieve
-      description: |-
-        List labels of a specific DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
+      description: List labels of a specific DRS object
       parameters:
       - in: path
         name: object_id
@@ -1623,10 +1596,7 @@ paths:
   /ga4gh/drs/v1/objects/{object_id}/labels/{label_id}/:
     delete:
       operationId: ga4gh_drs_v1_objects_labels_destroy
-      description: |-
-        Dissociate a specific label from a DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Dissociate a specific label from a DRS object
       parameters:
       - in: path
         name: label_id
@@ -1716,10 +1686,7 @@ paths:
   /ga4gh/drs/v1/objects/{objects_object_id}/access/:
     get:
       operationId: ga4gh_drs_v1_objects_access_list
-      description: |-
-        List access_id of a specific DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
+      description: List access_id of a specific DRS object
       parameters:
       - in: path
         name: objects_object_id
@@ -1812,10 +1779,7 @@ paths:
   /ga4gh/drs/v1/objects/{objects_object_id}/access/{access_id}/:
     get:
       operationId: ga4gh_drs_v1_objects_access_retrieve
-      description: |-
-        Get a specific access_id of a specific DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetViewer
+      description: Get a specific access_id of a specific DRS object
       parameters:
       - in: path
         name: access_id
@@ -1914,10 +1878,7 @@ paths:
           description: ''
     delete:
       operationId: ga4gh_drs_v1_objects_access_destroy
-      description: |-
-        Delete a specific access_id of a specific DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Delete a specific access_id of a specific DRS object
       parameters:
       - in: path
         name: access_id
@@ -2013,10 +1974,7 @@ paths:
   /ga4gh/drs/v1/objects/downloadfile/:
     post:
       operationId: ga4gh_drs_v1_objects_downloadfile_create
-      description: |-
-        Download files according to SAS token
-
-        Role: All Allow
+      description: Download files according to SAS token
       tags:
       - ga4gh
       requestBody:
@@ -2028,7 +1986,8 @@ paths:
                 $ref: '#/components/schemas/DrsFileDownloadRequest'
         required: true
       security:
-      - {}
+      - tokenAuth: []
+      - jwtAuth: []
       responses:
         '200':
           description: No response body
@@ -2049,13 +2008,58 @@ paths:
                   summary: Serializer format is not same as the RDB data
                   description: Serializer format is not the same as the RDB data
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
   /ga4gh/drs/v1/objects/downloads/:
     get:
       operationId: ga4gh_drs_v1_objects_downloads_retrieve
-      description: |-
-        Return a JSON list of Gen2 file information
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      description: Return a JSON list of Gen2 file information
       parameters:
       - in: query
         name: compressed
@@ -2157,10 +2161,7 @@ paths:
   /ga4gh/drs/v1/objects/labels/:
     patch:
       operationId: ga4gh_drs_v1_objects_labels_partial_update
-      description: |-
-        Update labels to a list of DRS objects
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
+      description: Update labels to a list of DRS objects
       tags:
       - Label
       requestBody:
@@ -2248,10 +2249,7 @@ paths:
   /ga4gh/drs/v1/objects/list_properties/:
     get:
       operationId: ga4gh_drs_v1_objects_list_properties_retrieve
-      description: |-
-        Return a JSON list of distinct information of DRS object
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetViewer
+      description: Return a JSON list of distinct information of DRS object
       tags:
       - ga4gh
       security:
@@ -2577,10 +2575,7 @@ paths:
   /ga4gh/drs/v1/objects/upload/refresh/:
     get:
       operationId: ga4gh_drs_v1_objects_upload_refresh_retrieve
-      description: |-
-        Return a SAS token with write permission
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      description: Return a SAS token with write permission
       parameters:
       - in: query
         name: upload_url
@@ -2664,10 +2659,7 @@ paths:
   /ga4gh/drs/v1/objects/upload/register/:
     get:
       operationId: ga4gh_drs_v1_objects_upload_register_retrieve
-      description: |-
-        Return a DRS object template with SAS token for upload and registration
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      description: Return a DRS object template with SAS token for upload and registration
       parameters:
       - in: query
         name: dir_name
@@ -2959,10 +2951,8 @@ paths:
   /ga4gh/drs/v1/service-info/:
     get:
       operationId: ga4gh_drs_v1_service_info_list
-      description: |-
-        List datahub repository service information including workspaces, container images, and managed clustersavailable in the service
-
-        Role: Always allow
+      description: List datahub repository service information including workspaces,
+        container images, and managed clustersavailable in the service
       tags:
       - service-info
       security:
@@ -3037,10 +3027,8 @@ paths:
           description: ''
     post:
       operationId: ga4gh_drs_v1_service_info_create
-      description: |-
-        Add datahub repository service information including workspaces,container images, and managed clusters available in the service
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Add datahub repository service information including workspaces,container
+        images, and managed clusters available in the service
       tags:
       - service-info
       requestBody:
@@ -3126,16 +3114,13 @@ paths:
   /ga4gh/drs/v1/service-info/{id}/:
     get:
       operationId: ga4gh_drs_v1_service_info_retrieve
-      description: |-
-        Get a specific datahub repository service information
-
-        Role: Always allow
+      description: Get a specific datahub repository service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-        description: A unique value identifying this service.
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -3222,16 +3207,13 @@ paths:
           description: ''
     put:
       operationId: ga4gh_drs_v1_service_info_update
-      description: |-
-        Update a specific datahub repository service information
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Update a specific datahub repository service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-        description: A unique value identifying this service.
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -3323,16 +3305,13 @@ paths:
           description: ''
     patch:
       operationId: ga4gh_drs_v1_service_info_partial_update
-      description: |-
-        Partially modify a specific datahub repository service information
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Partially modify a specific datahub repository service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-        description: A unique value identifying this service.
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -3423,16 +3402,13 @@ paths:
           description: ''
     delete:
       operationId: ga4gh_drs_v1_service_info_destroy
-      description: |-
-        Delete a specific datahub repository service information
-
-        Role: GlobalAdministrator/ DataHubAdministrator
+      description: Delete a specific datahub repository service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-        description: A unique value identifying this service.
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -3516,10 +3492,7 @@ paths:
   /ga4gh/drs/v1/service-info/workspaces/:
     get:
       operationId: ga4gh_drs_v1_service_info_workspaces_list
-      description: |-
-        List available workspaces in the service
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetDownloader/ DataHubUploader/ DataHubWriter
+      description: List available workspaces in the service
       parameters:
       - in: query
         name: expand
@@ -3648,10 +3621,7 @@ paths:
   /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
     get:
       operationId: ga4gh_drs_v1_service_info_workspaces_resources_list
-      description: |-
-        Obtain OAuth2 client credential token for a given workspace
-
-        Role: GlobalAdministrator/ DataHubAdministrator/ DatasetDownloader/ DataHubUploader/ DataHubWriter
+      description: Obtain OAuth2 client credential token for a given workspace
       parameters:
       - in: path
         name: name
@@ -3762,7 +3732,7 @@ components:
           type: integer
           readOnly: true
         type:
-          $ref: '#/components/schemas/TypeFc1Enum'
+          $ref: '#/components/schemas/TypeB25Enum'
         region:
           type: string
           nullable: true
@@ -3777,7 +3747,7 @@ components:
       description: Access method
       properties:
         type:
-          $ref: '#/components/schemas/TypeFc1Enum'
+          $ref: '#/components/schemas/TypeB25Enum'
         region:
           type: string
           nullable: true
@@ -4188,9 +4158,13 @@ components:
           type: string
           format: uri
           description: DRS object access URL
+        size:
+          type: integer
+          description: file size
       required:
       - access_url
       - self_uri
+      - size
     DrsFileDownloadRequest:
       type: object
       properties:
@@ -4207,9 +4181,13 @@ components:
           format: uri
           minLength: 1
           description: DRS object access URL
+        size:
+          type: integer
+          description: file size
       required:
       - access_url
       - self_uri
+      - size
     DrsSearchOutputExample:
       type: object
       properties:
@@ -4565,7 +4543,8 @@ components:
         id:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           minLength: 1
@@ -4619,7 +4598,9 @@ components:
       properties:
         id:
           type: string
-          maxLength: 255
+          maxLength: 64
+          minLength: 1
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           maxLength: 255
@@ -4666,7 +4647,8 @@ components:
         id:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           minLength: 1
@@ -4765,7 +4747,7 @@ components:
           maxLength: 255
       required:
       - name
-    TypeFc1Enum:
+    TypeB25Enum:
       enum:
       - s3
       - gs
@@ -4773,6 +4755,7 @@ components:
       - htsget
       - https
       - file
+      - oci
       type: string
       description: |-
         * `s3` - AWS S3
@@ -4781,6 +4764,7 @@ components:
         * `htsget` - Htsget retrieval API
         * `https` - HTTPS
         * `file` - Local file system
+        * `oci` - Oracle Cloud Infrastructure Object Storage
     Upload:
       type: object
       properties:
@@ -4795,7 +4779,7 @@ components:
           description: Upload token
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeFc1Enum'
+          - $ref: '#/components/schemas/TypeB25Enum'
           readOnly: true
         region:
           type: string
@@ -4830,7 +4814,7 @@ components:
           description: Upload token
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeFc1Enum'
+          - $ref: '#/components/schemas/TypeB25Enum'
           readOnly: true
         region:
           type: string

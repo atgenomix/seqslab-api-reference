@@ -583,8 +583,7 @@ paths:
   /operations/usages/:
     get:
       operationId: operations_usages_list
-      description: "List Usages. \n\nRole: GlobalAdministrator/ JobAdministrator/\
-        \ JobExecutor"
+      description: List Usages.
       parameters:
       - in: query
         name: cluster
@@ -699,10 +698,7 @@ paths:
   /operations/usages/statistics/:
     get:
       operationId: operations_usages_statistics_retrieve
-      description: |-
-        Get a specific Usage Static Data.
-
-        Role: GlobalAdministrator/ JobAdministrator/ JobExecutor
+      description: Get a specific Usage Static Data.
       parameters:
       - in: query
         name: cluster

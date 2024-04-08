@@ -393,10 +393,7 @@ paths:
   /management/v3/roles/:
     get:
       operationId: management_v3_roles_list
-      description: |-
-        List roles.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: List roles.
       tags:
       - Roles
       security:
@@ -471,10 +468,7 @@ paths:
           description: ''
     post:
       operationId: management_v3_roles_create
-      description: |-
-        Add a new role.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Add a new role.
       tags:
       - Roles
       requestBody:
@@ -560,10 +554,7 @@ paths:
   /management/v3/roles/{id}/:
     get:
       operationId: management_v3_roles_retrieve
-      description: |-
-        Get a specific role.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Get a specific role.
       parameters:
       - in: path
         name: id
@@ -656,10 +647,7 @@ paths:
           description: ''
     put:
       operationId: management_v3_roles_update
-      description: |-
-        Update a specific role.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Update a specific role.
       parameters:
       - in: path
         name: id
@@ -757,10 +745,7 @@ paths:
           description: ''
     patch:
       operationId: management_v3_roles_partial_update
-      description: |-
-        Partially modify a specific role.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Partially modify a specific role.
       parameters:
       - in: path
         name: id
@@ -857,10 +842,7 @@ paths:
           description: ''
     delete:
       operationId: management_v3_roles_destroy
-      description: |-
-        Delete a specific role.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Delete a specific role.
       parameters:
       - in: path
         name: id
@@ -1143,10 +1125,7 @@ paths:
   /management/v3/users/:
     get:
       operationId: management_v3_users_list
-      description: |-
-        List users.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: List users.
       tags:
       - Users
       security:
@@ -1221,10 +1200,7 @@ paths:
           description: ''
     post:
       operationId: management_v3_users_create
-      description: |-
-        Add a new user.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Add a new user.
       tags:
       - Users
       requestBody:
@@ -1310,10 +1286,7 @@ paths:
   /management/v3/users/{id}/:
     get:
       operationId: management_v3_users_retrieve
-      description: |-
-        Get a specific user.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Get a specific user.
       parameters:
       - in: path
         name: id
@@ -1406,10 +1379,7 @@ paths:
           description: ''
     put:
       operationId: management_v3_users_update
-      description: |-
-        Update a specific user.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Update a specific user.
       parameters:
       - in: path
         name: id
@@ -1507,10 +1477,7 @@ paths:
           description: ''
     patch:
       operationId: management_v3_users_partial_update
-      description: |-
-        Partially modify a specific user.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Partially modify a specific user.
       parameters:
       - in: path
         name: id
@@ -1607,10 +1574,7 @@ paths:
           description: ''
     delete:
       operationId: management_v3_users_destroy
-      description: |-
-        Delete a specific user.
-
-        Role: GlobalAdministrator/ UserAdministrator
+      description: Delete a specific user.
       parameters:
       - in: path
         name: id

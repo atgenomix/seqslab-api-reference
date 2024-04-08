@@ -866,10 +866,9 @@ paths:
   /trs/v2/service-info/:
     get:
       operationId: trs_v2_service_info_list
-      description: |-
-        List tool discovery service informationThis includes the ID, name, type, description, organization, contact URL, and documentation URL available in the service.
-
-        Role: Always allow
+      description: List tool discovery service informationThis includes the ID, name,
+        type, description, organization, contact URL, and documentation URL available
+        in the service.
       tags:
       - service-info
       security:
@@ -944,10 +943,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_service_info_create
-      description: |-
-        Create a tool discovery service information
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator
+      description: Create a tool discovery service information
       tags:
       - service-info
       requestBody:
@@ -1033,16 +1029,13 @@ paths:
   /trs/v2/service-info/{id}/:
     get:
       operationId: trs_v2_service_info_retrieve
-      description: |-
-        Get a specific tool discovery service information
-
-        Role: Always allow
+      description: Get a specific tool discovery service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-          pattern: ^[^/]+$
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -1129,16 +1122,13 @@ paths:
           description: ''
     put:
       operationId: trs_v2_service_info_update
-      description: |-
-        Update a specific tool discovery service information
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator
+      description: Update a specific tool discovery service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-          pattern: ^[^/]+$
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -1230,16 +1220,13 @@ paths:
           description: ''
     patch:
       operationId: trs_v2_service_info_partial_update
-      description: |-
-        Partially modify a specific tool discovery service information
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator
+      description: Partially modify a specific tool discovery service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-          pattern: ^[^/]+$
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -1330,16 +1317,13 @@ paths:
           description: ''
     delete:
       operationId: trs_v2_service_info_destroy
-      description: |-
-        Delete a specific tool discovery service information
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator
+      description: Delete a specific tool discovery service information
       parameters:
       - in: path
         name: id
         schema:
           type: string
-          pattern: ^[^/]+$
+          pattern: ^[\w*]*(\.[\w]+)+$
         required: true
       tags:
       - service-info
@@ -1609,10 +1593,7 @@ paths:
   /trs/v2/service-info/workspaces/:
     get:
       operationId: trs_v2_service_info_workspaces_list
-      description: |-
-        List available workspaces in the service
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter/ ToolDeveloper
+      description: List available workspaces in the service
       parameters:
       - in: query
         name: expand
@@ -1628,6 +1609,7 @@ paths:
       - service-info
       security:
       - jwtAuth: []
+      deprecated: true
       responses:
         '200':
           description: No response body
@@ -1693,10 +1675,8 @@ paths:
   /trs/v2/service-info/workspaces/{name}/:
     get:
       operationId: trs_v2_service_info_workspaces_name
-      description: |-
-        Obtain OAuth2 client credential tokens, resources, and containers for a given workspace
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter/ ToolDeveloper
+      description: Obtain OAuth2 client credential tokens, resources, and containers
+        for a given workspace
       parameters:
       - in: path
         name: name
@@ -1707,6 +1687,7 @@ paths:
       - service-info
       security:
       - jwtAuth: []
+      deprecated: true
       responses:
         '200':
           description: No response body
@@ -1772,10 +1753,7 @@ paths:
   /trs/v2/service-info/workspaces/{name}/container-registries/:
     get:
       operationId: trs_v2_service_info_workspaces_container_registries_retrieve
-      description: |-
-        List available container registries for a given workspace
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter/ ToolDeveloper
+      description: List available container registries for a given workspace
       parameters:
       - in: query
         name: expand
@@ -1888,10 +1866,7 @@ paths:
   /trs/v2/service-info/workspaces/{name}/resources/:
     get:
       operationId: trs_v2_service_info_workspaces_resources
-      description: |-
-        Obtain OAuth2 client credential token for a given workspace
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter/ ToolDeveloper
+      description: Obtain OAuth2 client credential token for a given workspace
       parameters:
       - in: path
         name: name
@@ -1902,6 +1877,7 @@ paths:
       - service-info
       security:
       - jwtAuth: []
+      deprecated: true
       responses:
         '200':
           description: No response body
@@ -1967,7 +1943,7 @@ paths:
   /trs/v2/toolclass/:
     get:
       operationId: trs_v2_toolclass_list
-      description: 'List tool classRole: Always allow'
+      description: List tool class
       tags:
       - ToolClass
       security:
@@ -2043,10 +2019,7 @@ paths:
   /trs/v2/tools/:
     get:
       operationId: trs_v2_tools_list
-      description: |-
-        List tools
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryViewer
+      description: List tools
       parameters:
       - name: page
         required: false
@@ -2137,10 +2110,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_create
-      description: |-
-        Create a tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter
+      description: Create a tool
       tags:
       - Tool
       requestBody:
@@ -2250,10 +2220,7 @@ paths:
   /trs/v2/tools/{id}/:
     get:
       operationId: trs_v2_tools_retrieve
-      description: |-
-        Get a specific tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryViewer
+      description: Get a specific tool
       parameters:
       - in: path
         name: id
@@ -2346,10 +2313,7 @@ paths:
           description: ''
     put:
       operationId: trs_v2_tools_update
-      description: |-
-        Update a specific tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter(Owner)
+      description: Update a specific tool
       parameters:
       - in: path
         name: id
@@ -2456,10 +2420,7 @@ paths:
           description: ''
     patch:
       operationId: trs_v2_tools_partial_update
-      description: |-
-        Partially modify a specific tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter(Owner)
+      description: Partially modify a specific tool
       parameters:
       - in: path
         name: id
@@ -2565,10 +2526,7 @@ paths:
           description: ''
     delete:
       operationId: trs_v2_tools_destroy
-      description: |-
-        Delete a specific tool discovery service information
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter(Owner)
+      description: Delete a specific tool discovery service information
       parameters:
       - in: path
         name: id
@@ -2658,10 +2616,7 @@ paths:
   /trs/v2/tools/{id}/versions/:
     get:
       operationId: trs_v2_tools_versions_retrieve
-      description: |-
-        List tool versions
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: List tool versions
       parameters:
       - in: path
         name: id
@@ -2741,10 +2696,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_create
-      description: |-
-        Create a tool version
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Create a tool version
       parameters:
       - in: path
         name: id
@@ -2868,10 +2820,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/:
     get:
       operationId: trs_v2_tools_versions_retrieve_2
-      description: |-
-        Get a specific tool version
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: Get a specific tool version
       parameters:
       - in: path
         name: id
@@ -2969,10 +2918,7 @@ paths:
           description: ''
     put:
       operationId: trs_v2_tools_versions_update
-      description: |-
-        Update a specific tool version
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Update a specific tool version
       parameters:
       - in: path
         name: id
@@ -3094,10 +3040,7 @@ paths:
           description: ''
     patch:
       operationId: trs_v2_tools_versions_partial_update
-      description: |-
-        Partially modify a specific tool version
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Partially modify a specific tool version
       parameters:
       - in: path
         name: id
@@ -3218,10 +3161,7 @@ paths:
           description: ''
     delete:
       operationId: trs_v2_tools_versions_destroy
-      description: |-
-        Delete a specific tool version
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Delete a specific tool version
       parameters:
       - in: path
         name: id
@@ -3316,10 +3256,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/:
     get:
       operationId: trs_v2_tools_versions_descriptor_retrieve
-      description: |-
-        Get a specific primary descriptor file for a specific tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: Get a specific primary descriptor file for a specific tool
       parameters:
       - in: path
         name: id
@@ -3415,10 +3352,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/descriptor/{relative_path}/:
     get:
       operationId: trs_v2_tools_versions_descriptor_retrieve_2
-      description: |-
-        Get additional descriptor files relative to the main file
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: Get additional descriptor files relative to the main file
       parameters:
       - in: path
         name: id
@@ -3520,10 +3454,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/execs/:
     get:
       operationId: trs_v2_tools_versions_execs_retrieve
-      description: |-
-        Retrieve a specific execution file for a specific tool
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: Retrieve a specific execution file for a specific tool
       parameters:
       - in: path
         name: id
@@ -3619,10 +3550,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/files/:
     get:
       operationId: trs_v2_tools_versions_files_retrieve
-      description: |-
-        List tool files
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: List tool files
       parameters:
       - in: query
         name: expand
@@ -3728,10 +3656,7 @@ paths:
           description: ''
     post:
       operationId: trs_v2_tools_versions_files_create
-      description: |-
-        Create a tool file
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Create a tool file
       parameters:
       - in: path
         name: id
@@ -3837,10 +3762,7 @@ paths:
           description: ''
     put:
       operationId: trs_v2_tools_versions_files_update
-      description: |-
-        Update specific tool files
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Update specific tool files
       parameters:
       - in: path
         name: id
@@ -3946,10 +3868,7 @@ paths:
           description: ''
     delete:
       operationId: trs_v2_tools_versions_files_destroy
-      description: |-
-        Delete tool files
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolDeveloper(Owner)
+      description: Delete tool files
       parameters:
       - in: path
         name: id
@@ -4046,10 +3965,7 @@ paths:
   /trs/v2/tools/{id}/versions/{version_id}/{type}/tests/:
     get:
       operationId: trs_v2_tools_versions_tests_retrieve
-      description: |-
-        List test files
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolUser
+      description: List test files
       parameters:
       - in: path
         name: id
@@ -4158,10 +4074,7 @@ paths:
   /trs/v2/tools/{type}/files/:
     post:
       operationId: trs_v2_tools_files_create
-      description: |-
-        Parse WDL or CWL zipfile
-
-        Role: GlobalAdministrator/ ToolRegistryAdministrator/ ToolRegistryWriter
+      description: Parse WDL or CWL zipfile
       parameters:
       - in: path
         name: type
@@ -4516,7 +4429,8 @@ components:
         id:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           minLength: 1
@@ -4674,7 +4588,9 @@ components:
       properties:
         id:
           type: string
-          maxLength: 255
+          maxLength: 64
+          minLength: 1
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           maxLength: 255
@@ -4723,7 +4639,8 @@ components:
         id:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
         name:
           type: string
           minLength: 1
