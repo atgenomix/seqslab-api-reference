@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-04-08 07:10:25.764774+00:00
+                    next_run: 2024-04-22 01:56:58.634809+00:00
                   request:
                     name: string
                     description: string
@@ -2800,7 +2800,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-04-08 07:10:25.764792+00:00
+                    next_run: 2024-04-22 01:56:58.634824+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4691,8 +4691,8 @@ components:
           type: string
         login_server:
           type: string
-        admin_user:
-          type: boolean
+        username:
+          type: string
         authorization:
           type: string
         repositories:
@@ -4700,10 +4700,10 @@ components:
           items: {}
           default: []
       required:
-      - admin_user
       - authorization
       - login_server
       - name
+      - username
     Files:
       type: object
       properties:

@@ -4206,8 +4206,8 @@ components:
           type: string
         login_server:
           type: string
-        admin_user:
-          type: boolean
+        username:
+          type: string
         authorization:
           type: string
         repositories:
@@ -4215,10 +4215,10 @@ components:
           items: {}
           default: []
       required:
-      - admin_user
       - authorization
       - login_server
       - name
+      - username
     ContainerRegistriesList:
       type: object
       properties:
@@ -4239,9 +4239,6 @@ components:
           readOnly: true
         login_server:
           type: string
-        admin_user:
-          type: boolean
-          readOnly: true
         authorization:
           type: string
           readOnly: true
@@ -4249,13 +4246,16 @@ components:
           type: array
           items: {}
           readOnly: true
+        username:
+          type: string
+          maxLength: 255
       required:
-      - admin_user
       - authorization
       - id
       - login_server
       - name
       - repositories
+      - username
     ContainerRegistryCreate:
       type: object
       properties:
@@ -4264,8 +4264,12 @@ components:
           readOnly: true
         login_server:
           type: string
+        username:
+          type: string
+          maxLength: 255
       required:
       - id
+      - username
     ContainerRegistryCreateDemoLoginServerRequest:
       type: object
       properties:
@@ -4274,7 +4278,6 @@ components:
           minLength: 1
         username:
           type: string
-          writeOnly: true
           minLength: 1
           maxLength: 255
         password:
@@ -4295,15 +4298,18 @@ components:
         login_server:
           type: string
           readOnly: true
+        username:
+          type: string
+          maxLength: 255
       required:
       - id
       - login_server
+      - username
     ContainerRegistryUpdateRequest:
       type: object
       properties:
         username:
           type: string
-          writeOnly: true
           minLength: 1
           maxLength: 255
         password:
@@ -4412,7 +4418,6 @@ components:
       properties:
         username:
           type: string
-          writeOnly: true
           minLength: 1
           maxLength: 255
         password:
