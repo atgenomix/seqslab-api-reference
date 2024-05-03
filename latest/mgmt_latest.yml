@@ -87,15 +87,110 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
+    post:
+      operationId: management_v3_organizations_create
+      description: Add a new customer.
+      parameters:
+      - in: query
+        name: trial
+        schema:
+          type: boolean
+        description: 'Whether create a trial customer.<br>Note: when creating a trial
+          customer, the customer will be deleted after trial_days(default is 3)'
+      - in: query
+        name: trial_days
+        schema:
+          type: integer
+          default: 3
+        description: How long the trial customer will be deleted after this number
+          of days.
+      tags:
+      - Organizations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SeqsLabCustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SeqsLabCustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SeqsLabCustomerRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeqsLabCustomer'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /management/v3/organizations/{cus_id}/:
     get:
       operationId: management_v3_organizations_retrieve
-      description: |-
-        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
-        deriving the permission type from the particular action to be performed..
-
-        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
-        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      description: Retrieve a specific customer.
       parameters:
       - in: path
         name: cus_id
@@ -188,12 +283,7 @@ paths:
           description: ''
     put:
       operationId: management_v3_organizations_update
-      description: |-
-        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
-        deriving the permission type from the particular action to be performed..
-
-        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
-        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      description: Update a specific customer.
       parameters:
       - in: path
         name: cus_id
@@ -290,12 +380,7 @@ paths:
           description: ''
     patch:
       operationId: management_v3_organizations_partial_update
-      description: |-
-        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
-        deriving the permission type from the particular action to be performed..
-
-        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
-        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      description: Partially modify a specific customer.
       parameters:
       - in: path
         name: cus_id
@@ -324,6 +409,187 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SeqsLabCustomerUpdate'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: management_v3_organizations_destroy
+      description: Delete a specific customer.
+      parameters:
+      - in: path
+        name: cus_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Organizations
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /management/v3/organizations/{cus_id}/status/:
+    patch:
+      operationId: management_v3_organizations_status_partial_update
+      description: Update a specific customer active status.
+      parameters:
+      - in: query
+        name: activation
+        schema:
+          type: boolean
+        description: Desired activation status.<br>
+      - in: path
+        name: cus_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Organizations
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeqsLabCustomer'
           description: ''
         '500':
           content:
@@ -2043,8 +2309,60 @@ components:
         logo:
           type: string
           nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
+          default: true
+          description: Whether the customer is active
       required:
       - cus_id
+      - is_active
+      - tenant
+    SeqsLabCustomerRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          writeOnly: true
+          minLength: 1
+          description: User id
+          maxLength: 255
+        username:
+          type: string
+          writeOnly: true
+          minLength: 1
+          description: User Name
+          maxLength: 64
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          minLength: 1
+          maxLength: 255
+        tenant:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 64
+        subscription_id:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 64
+        redirect_uris:
+          type: object
+          additionalProperties: {}
+        name:
+          type: string
+          nullable: true
+          description: Organization Name
+          maxLength: 255
+        logo:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - email
       - tenant
     SeqsLabCustomerUpdate:
       type: object
