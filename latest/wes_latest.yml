@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-05-03 09:56:01.818287+00:00
+                    next_run: 2024-05-07 14:16:35.253107+00:00
                   request:
                     name: string
                     description: string
@@ -2800,7 +2800,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-05-03 09:56:01.818308+00:00
+                    next_run: 2024-05-07 14:16:35.253129+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4984,6 +4984,9 @@ components:
         operators:
           type: object
           additionalProperties: {}
+        upstreams:
+          type: object
+          additionalProperties: {}
     PatchedRunRequestRequest:
       type: object
       description: Adds nested create feature
@@ -5337,6 +5340,9 @@ components:
         operators:
           type: object
           additionalProperties: {}
+        upstreams:
+          type: object
+          additionalProperties: {}
         version:
           type: string
           format: date
@@ -5362,6 +5368,9 @@ components:
         input:
           type: boolean
         operators:
+          type: object
+          additionalProperties: {}
+        upstreams:
           type: object
           additionalProperties: {}
         version:
@@ -5394,6 +5403,9 @@ components:
         operators:
           type: object
           additionalProperties: {}
+        upstreams:
+          type: object
+          additionalProperties: {}
       required:
       - description
       - file_type
@@ -5414,6 +5426,9 @@ components:
         input:
           type: boolean
         operators:
+          type: object
+          additionalProperties: {}
+        upstreams:
           type: object
           additionalProperties: {}
       required:
