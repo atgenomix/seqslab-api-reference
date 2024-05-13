@@ -1,0 +1,4871 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (drs-v1)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /ga4gh/drs/v1/contents/{object_id}/access/:
+    post:
+      operationId: ga4gh_drs_v1_contents_access_create
+      description: Create Download link with Seqslab specific token.
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - contents
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/contents/{object_id}/stream/:
+    get:
+      operationId: ga4gh_drs_v1_contents_stream_retrieve
+      description: Download Data with Seqslab specific token.
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - contents
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/:
+    get:
+      operationId: ga4gh_drs_v1_objects_list
+      description: List DRS objects
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: 'Define whether the ContentsObject of a DRS object is displayed.
+          Allowed: true | false'
+      - in: query
+        name: file_type
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter DRS objects according to file_type
+      - in: query
+        name: label
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter DRS objects by labels (ex. "label1, label2")
+      - in: query
+        name: location
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter DRS objects according to region
+      - in: query
+        name: order
+        schema:
+          enum:
+          - name
+          - file_type
+          - version
+          - user
+          - size
+          - updated_time
+          - deleted_time
+          - -name
+          - -file_type
+          - -version
+          - -user
+          - -size
+          - -updated_time
+          - -deleted_time
+        description: 'Order DRS objects according to one of the following: ''name'',
+          ''type'',  ''version'', ''user'', ''size'', ''updated_time,''-name'', ''-type'',   ''-version'',
+          ''-user'' ''-updated_time'' or ''-size'''
+      - in: query
+        name: owner
+        schema:
+          type: boolean
+        description: Filter DRS objects according to user (true or false)
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search DRS object according to the keyword
+      - in: query
+        name: user
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter DRS objects according to user
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBlobList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: create_drs_object
+      description: Add DRS objects
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drsObjectRequest'
+            examples:
+              CreateASingleBlob:
+                value:
+                  name: hic_pro_hg19_sh_files
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2024-05-13 04:48:09.027546+00:00'
+                  deleted_time: '2024-08-11'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: Create a single blob
+                description: Create a single blob <br>Serializers refer to DrsObjectSerializer.
+              CreateMultipleBlobs:
+                value:
+                - name: hic_pro_hg19_sh_files
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2024-05-13 04:48:09.027885+00:00'
+                  deleted_time: '2024-08-11'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                - name: hic_pro_hg19_sh_files1
+                  mime_type: string
+                  file_type: regular
+                  description: string
+                  created_time: '2024-05-13 04:48:09.027940+00:00'
+                  deleted_time: '2024-08-11'
+                  aliases: []
+                  metadata: {}
+                  tags:
+                  - tags1
+                  - tags2
+                  size: 3189
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg191.sh
+                      headers: {}
+                    region: westus2
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: Create multiple blobs
+                description: Create multiple blobs <br>Serializers refer to the DrsObjectSerializer.
+              CreateABundleWithDRSID:
+                value:
+                  name: hg19_files_bundle
+                  mime_type: string
+                  file_type: bundle
+                  description: string
+                  tags:
+                  - tags1
+                  - tags2
+                  aliases: []
+                  metadata: {}
+                  contents:
+                  - drs_id: drs_LpwyqpXXs6H0zds
+                  - drs_id: drs_h01oZinCqzYKDEl
+                summary: Create a bundle with DRS ID
+                description: 'Create a bundle with DRS ID. <br>Set bundle to true.
+                  <br>Note: It should contain at least two DRS objects.Serializers
+                  refer to the BundleObjectSerializer.'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blob'
+              examples:
+                CreateASingleBlob:
+                  value:
+                  - id: drs_1cu5pYmDJKRefG3
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
+                    size: 3189
+                    version: 2024-05-13 04:48:09.027820+00:00
+                    created_time: 2024-05-13 04:48:09.027822+00:00
+                    updated_time: null
+                    deleted_time: 2024-08-11
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - name: tags1
+                      color: null
+                    - name: tags2
+                      color: null
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                  summary: Create a single blob
+                  description: Create a single blob response
+                CreateMultipleBlobResponses:
+                  value:
+                  - id: drs_1cu5pYmDJKRefG3
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
+                    size: 3189
+                    version: 2024-05-13 04:48:09.027997+00:00
+                    created_time: 2024-05-13 04:48:09.027999+00:00
+                    updated_time: null
+                    deleted_time: 2024-08-11
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - name: tags1
+                      color: null
+                    - name: tags2
+                      color: null
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                  - id: drs_1cu5pYmDJKRefG4
+                    name: hic_pro_hg19_sh_files
+                    mime_type: string
+                    file_type: regular
+                    description: string
+                    self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
+                    size: 3189
+                    version: 2024-05-13 04:48:09.028049+00:00
+                    created_time: 2024-05-13 04:48:09.028051+00:00
+                    updated_time: null
+                    deleted_time: 2024-08-11
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - name: tags1
+                      color: null
+                    - name: tags2
+                      color: null
+                    checksums:
+                    - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                      type: md5
+                    access_methods:
+                    - id: 0
+                      type: abfss
+                      region: westus2
+                      access_url:
+                        headers:
+                          Authorization: {}
+                        url: abfss://container@storageaccount.dfs.core.windows.net/hg19/make_hg191.sh
+                  summary: Create multiple blob responses
+                  description: Create multiple blob responses
+                CreateABundleWithDRSIDResponse:
+                  value:
+                  - id: drs_WJ3DjHFj0ITLtFl
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_WJ3DjHFj0ITLtFl
+                    size: 3189
+                    version: '2021-09-11T03:11:37.673810Z'
+                    created_time: null
+                    updated_time: null
+                    deleted_time: 2024-08-11
+                    metadata:
+                      investigation:
+                        center: null
+                        internalReviewBoard: null
+                        project: null
+                      sample:
+                        specimen: null
+                        host: null
+                        phenotype: null
+                      sequence:
+                        readCoverage: null
+                        readCount: null
+                        library:
+                          name: null
+                          strategy: null
+                          layout: null
+                        platform:
+                          model: null
+                          udi: null
+                        referenceSeq:
+                          genomeBuild: null
+                          url: null
+                        quality:
+                          score: null
+                          method: null
+                          truthTP: null
+                          queryTP: null
+                          truthFN: null
+                          queryFP: null
+                          gtFP: null
+                          precision: null
+                          recall: null
+                          fscore: null
+                    aliases: []
+                    tags:
+                    - name: tags1
+                      color: null
+                    - name: tags2
+                      color: null
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                    contents:
+                    - id: 211
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/drs_h01oZinCqzYKDEl/
+                      drs_id: drs_h01oZinCqzYKDEl
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.blob.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                    - id: 213
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/drs_LpwyqpXXs6H0zds/
+                      drs_id: drs_LpwyqpXXs6H0zds
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.blob.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                  summary: Create a bundle with DRS ID response
+                  description: Create a bundle with DRS ID response
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/:
+    get:
+      operationId: ga4gh_drs_v1_objects_retrieve
+      description: Return object metadata and a list of access methods that can be
+        used to fetch object bytes
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: 'Define whether the ContentsObject of a DRS object is displayed.
+          Allowed: true | false'
+      - in: query
+        name: expiry_time
+        schema:
+          type: string
+          format: date-time
+        description: Set SAS sas token expiry time
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: DRS object ID
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blob'
+              examples:
+                GetDRSObjectWithExpand(true):
+                  value:
+                    id: drs_SfJ2ApkL3q7nJVT
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
+                    size: 3189
+                    version: 2024-05-13 04:48:09.028245+00:00
+                    created_time: null
+                    updated_time: null
+                    deleted_time: null
+                    metadata:
+                      sample:
+                        host: null
+                        specimen: null
+                        phenotype: null
+                      sequence:
+                        library:
+                          name: null
+                          layout: null
+                          strategy: null
+                        quality:
+                          gtFP: null
+                          score: null
+                          fscore: null
+                          method: null
+                          recall: null
+                          queryFP: null
+                          queryTP: null
+                          truthFN: null
+                          truthTP: null
+                          precision: null
+                        platform:
+                          udi: null
+                          model: null
+                        readCount: null
+                        readCoverage: null
+                        referenceSeq:
+                          url: null
+                          genomeBuild: null
+                      investigation:
+                        center: null
+                        project: null
+                        internalReviewBoard: null
+                    aliases: []
+                    tags:
+                    - tags1
+                    - tags2
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                    contents:
+                    - id: 211
+                      name: hic_pro_hg19_sh_files
+                      drs_uri: drs://localhost:8000/hic_pro_hg19_sh_files/
+                      drs_id: drs_h01oZinCqzYKDEl
+                      access_methods:
+                      - id: 0
+                        type: abfss
+                        region: westus2
+                        access_url:
+                          headers:
+                            Authorization: Authorization code
+                          url: https://storageaccount.dfs.core.windows.net/seqslab/drs/drs_h01oZinCqzYKDEl/
+                  summary: Get DRS object with expand(true)
+                  description: Get DRS object with expand(true)
+                GetDRSObjectWithExpand(false):
+                  value:
+                    id: drs_SfJ2ApkL3q7nJVT
+                    name: hg19_files_bundle
+                    mime_type: string
+                    file_type: bundle
+                    description: string
+                    self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
+                    size: 3189
+                    version: 2024-05-13 04:48:09.028240+00:00
+                    created_time: null
+                    updated_time: null
+                    deleted_time: null
+                    metadata:
+                      sample:
+                        host: null
+                        specimen: null
+                        phenotype: null
+                      sequence:
+                        library:
+                          name: null
+                          layout: null
+                          strategy: null
+                        quality:
+                          gtFP: null
+                          score: null
+                          fscore: null
+                          method: null
+                          recall: null
+                          queryFP: null
+                          queryTP: null
+                          truthFN: null
+                          truthTP: null
+                          precision: null
+                        platform:
+                          udi: null
+                          model: null
+                        readCount: null
+                        readCoverage: null
+                        referenceSeq:
+                          url: null
+                          genomeBuild: null
+                      investigation:
+                        center: null
+                        project: null
+                        internalReviewBoard: null
+                    aliases: []
+                    tags:
+                    - tags1
+                    - tags2
+                    checksums:
+                    - checksum: 58b496b0a82e6166a4018f7a894e5def
+                      type: md5
+                  summary: Get DRS object with expand(false)
+                  description: Get DRS object with expand(false)
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: ga4gh_drs_v1_objects_update
+      description: Update a specific DRS object updated_time, metadata, tag, checksum,or
+        created_time
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: DRS object ID
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/drsObjectUpdateRequest'
+            examples:
+              UpdateBlobDataAndContent:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    region: westus2
+                  created_time: 2024-05-13 04:48:09.028164+00:00
+                  updated_time: 2024-05-13 04:48:09.028165+00:00
+                  deleted_time: 2024-08-11
+                summary: Update blob data and content
+                description: 'Update name, tags, metadata and DRS object content <br>name:
+                  DRS object name <br>tags: DRS object label (Note: It will override
+                  the original tags)<br>metadata: DRS object metadata <br>created_time:
+                  data created time<br>updated_time: data updated time or deleted_time:
+                  auto-delete date or nulllast modified time <br>checksums: blob checksum
+                  (Note: It will override the original checksums)<br>Serializers refer
+                  to the BlobUpdateRequest. <br>access_methods: blob access method'
+              UpdateBundleData:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: Update bundle data
+                description: 'Update name, tags, and metadata <br>name: DRS object
+                  name <br>tags: DRS object label (Note: It will override the original
+                  tags.)<br>metadata: DRS object metadata <br>Serializers refer to
+                  BundleUpdateRequest.'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blob'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    patch:
+      operationId: ga4gh_drs_v1_objects_partial_update
+      description: Partially modify a specific DRS object updated_time, metadata,
+        tag, checksum, or created_time
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: DRS object ID
+        required: true
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatcheddrsObjectPartialUpdateRequest'
+            examples:
+              UpdateBlobDataAndContent:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    region: westus2
+                  created_time: 2024-05-13 04:48:09.028164+00:00
+                  updated_time: 2024-05-13 04:48:09.028165+00:00
+                  deleted_time: 2024-08-11
+                summary: Update blob data and content
+                description: 'Update name, tags, metadata and DRS object content <br>name:
+                  DRS object name <br>tags: DRS object label (Note: It will override
+                  the original tags)<br>metadata: DRS object metadata <br>created_time:
+                  data created time<br>updated_time: data updated time or deleted_time:
+                  auto-delete date or nulllast modified time <br>checksums: blob checksum
+                  (Note: It will override the original checksums)<br>Serializers refer
+                  to the BlobUpdateRequest. <br>access_methods: blob access method'
+              CreateOrUpdateBlobChecksums:
+                value:
+                  checksums:
+                  - checksum: 3d21be0454bb1dd3ac736344212a79ee
+                    type: md5
+                summary: Create or update blob checksums
+                description: 'Create or update DRS object checksum. (Note: It will
+                  override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
+              UpdateBlobContentUpdatedTime:
+                value:
+                  updated_time: 2024-05-13 04:48:09.028217+00:00
+                summary: Update blob content updated_time
+                description: Update DRS object content updated_time.This will connect
+                  to the data updated time <br>or last modified time. <br>Serializers
+                  refer to BlobUpdateRequest.
+              UpdateBlobContentCreatedTime:
+                value:
+                  created_time: 2024-05-13 04:48:09.028215+00:00
+                summary: Update blob content created_time
+                description: Update blob content created_time.This will connect to
+                  the data created time. <br>Serializers refer to BlobUpdateRequest.
+              CreateOrUpdateBlobAccessMethods:
+                value:
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
+                      headers: {}
+                    region: westus2
+                summary: Create or update blob access_methods
+                description: 'Add DRS object access_methods '
+              UpdateBundleData:
+                value:
+                  name: hg19
+                  metadata: {}
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: Update bundle data
+                description: 'Update name, tags, and metadata <br>name: DRS object
+                  name <br>tags: DRS object label (Note: It will override the original
+                  tags.)<br>metadata: DRS object metadata <br>Serializers refer to
+                  BundleUpdateRequest.'
+              UpdateName:
+                value:
+                  name: hg19
+                summary: update name
+                description: Update DRS object name<br>
+              UpdateTags:
+                value:
+                  tags:
+                  - fqn_label
+                  - fqn_label1
+                summary: Update tags
+                description: 'Update DRS object tags (Note: It will override the original
+                  tags) <br>'
+              UpdateMetadata:
+                value:
+                  metadata: {}
+                summary: Update metadata
+                description: Update DRS object metadata<br>
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blob'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1_objects_destroy
+      description: Delete a DRS object
+      parameters:
+      - in: query
+        name: backend_content
+        schema:
+          type: boolean
+        description: Choose whether or not to delete the backend files
+      - in: path
+        name: object_id
+        schema:
+          type: string
+        description: DRS object ID
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/download/:
+    get:
+      operationId: ga4gh_drs_v1_objects_download_retrieve
+      description: Return a JSON list of Gen2 file information
+      parameters:
+      - in: query
+        name: compressed
+        schema:
+          type: boolean
+        description: Whether to download the backend file compressed or not.
+      - in: query
+        name: expiry_time
+        schema:
+          type: string
+          format: date-time
+        description: Customized expiry time of SAS token for download usage
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsDownlaod'
+              examples:
+                ListGen2FileInformation:
+                  value:
+                  - contentLength: 0
+                    name: string1
+                  summary: List Gen2 File information
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/labels/:
+    get:
+      operationId: ga4gh_drs_v1_objects_labels_retrieve
+      description: List labels of a specific DRS object
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - Label
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagObject'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/labels/{label_id}/:
+    delete:
+      operationId: ga4gh_drs_v1_objects_labels_destroy
+      description: Dissociate a specific label from a DRS object
+      parameters:
+      - in: path
+        name: label_id
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - Label
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/{objects_object_id}/access/:
+    get:
+      operationId: ga4gh_drs_v1_objects_access_list
+      description: List access_id of a specific DRS object
+      parameters:
+      - in: path
+        name: objects_object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - AccessMethod
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAccessMethodList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/{objects_object_id}/access/{access_id}/:
+    get:
+      operationId: ga4gh_drs_v1_objects_access_retrieve
+      description: Get a specific access_id of a specific DRS object
+      parameters:
+      - in: path
+        name: access_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this access method.
+        required: true
+      - in: path
+        name: objects_object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - AccessMethod
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessMethod'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1_objects_access_destroy
+      description: Delete a specific access_id of a specific DRS object
+      parameters:
+      - in: path
+        name: access_id
+        schema:
+          type: integer
+        description: A unique integer value identifying this access method.
+        required: true
+      - in: path
+        name: objects_object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - AccessMethod
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /ga4gh/drs/v1/objects/downloadfile/:
+    post:
+      operationId: ga4gh_drs_v1_objects_downloadfile_create
+      description: Download files according to SAS token
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DrsFileDownloadRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/downloads/:
+    get:
+      operationId: ga4gh_drs_v1_objects_downloads_retrieve
+      description: Return a JSON list of Gen2 file information
+      parameters:
+      - in: query
+        name: compressed
+        schema:
+          type: boolean
+        description: Whether to download the backend file compressed or not.
+      - in: query
+        name: drs_objects
+        schema:
+          type: array
+          items:
+            type: string
+        description: Target DRS objects to download
+      - in: query
+        name: expiry_time
+        schema:
+          type: string
+          format: date-time
+        description: Customized expiry time of SAS token for download usage
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - tsv
+          - json
+        description: Returns a TSV or JSON file of all DRS Objects
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsFileDownload'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/labels/:
+    patch:
+      operationId: ga4gh_drs_v1_objects_labels_partial_update
+      description: Update labels to a list of DRS objects
+      tags:
+      - Label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDrsTagRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDrsTagRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDrsTagRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/list_properties/:
+    get:
+      operationId: ga4gh_drs_v1_objects_list_properties_retrieve
+      description: Return a JSON list of distinct information of DRS object
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Distinct'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/search/:
+    post:
+      operationId: ga4gh_drs_v1_objects_search_create
+      description: |-
+        Search DRS objects by keys and values
+
+        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubViewer
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+            examples:
+              SearchDRSObjectByTagsAndReturnLatestUploadData:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                  reverse: true
+                  top: 1
+                  order_by: created_time
+                summary: Search DRS object by tags and return latest upload data
+                description: Search DRS object by tags, order by created_time, and
+                  return latest upload data
+              SearchDRSObjectByTagsAndReturnTheFirst10UploadData:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                  reverse: false
+                  top: 10
+                  order_by: created_time
+                summary: Search DRS object by tags and return the first 10 upload
+                  data
+                description: Search DRS object by tags, order by created_time, and
+                  return the first 10 upload data
+              SearchDRSObjectByTags:
+                value:
+                  tags:
+                  - GRCH
+                  - '38'
+                  fields:
+                  - id
+                  - name
+                  - tags
+                  mode: exact
+                summary: Search DRS object by tags
+                description: Search DRS object by tags
+              SearchDRSObjectByNames:
+                value:
+                  names:
+                  - ref.fa
+                  - '38'
+                  fields:
+                  - all
+                  mode: exact
+                summary: Search DRS object by names
+                description: Search DRS object by DRS object names
+              SearchDRSObjectByPaths:
+                value:
+                  paths:
+                  - /usr/GRCH.fa
+                  - /usr/local/99.txt
+                  fields:
+                  - all
+                  mode: exact
+                summary: Search DRS object by paths
+                description: Search DRS object by file paths
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DrsSearchRequest'
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsSearchOutputExample'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/upload/:
+    get:
+      operationId: ga4gh_drs_v1_objects_upload_retrieve
+      description: |-
+        Return a SAS token with write permission
+
+        Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Display workspace name
+        required: true
+      - in: query
+        name: path
+        schema:
+          type: string
+        description: 'Get SAS token under drs/user_id/path '
+      tags:
+      - upload
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Upload'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/upload/refresh/:
+    get:
+      operationId: ga4gh_drs_v1_objects_upload_refresh_retrieve
+      description: Return a SAS token with write permission
+      parameters:
+      - in: query
+        name: upload_url
+        schema:
+          type: string
+          format: uri
+        description: Upload URL
+        required: true
+      tags:
+      - upload
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      deprecated: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadRefresh'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/objects/upload/register/:
+    get:
+      operationId: ga4gh_drs_v1_objects_upload_register_retrieve
+      description: Return a DRS object template with SAS token for upload and registration
+      parameters:
+      - in: query
+        name: dir_name
+        schema:
+          type: string
+        description: Planned upload dir name. <br>By default the file will be under
+          drs/user_id, if dir_name is provided, the file will be under drs/user_id/dir_name.
+      - in: query
+        name: expiry_time
+        schema:
+          type: string
+          format: date-time
+        description: Set SAS sas token expiry time
+      - in: query
+        name: file_name
+        schema:
+          type: string
+        description: Planned upload file name
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Display workspace name
+        required: true
+      tags:
+      - upload
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blob'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/service-info/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_list
+      description: List datahub repository service information including workspaces,
+        container images, and managed clustersavailable in the service
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: ga4gh_drs_v1_service_info_create
+      description: Add datahub repository service information including workspaces,container
+        images, and managed clusters available in the service
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/service-info/{id}/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_retrieve
+      description: Get a specific datahub repository service information
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[\w*]*(\.[\w]+)+$
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: ga4gh_drs_v1_service_info_update
+      description: Update a specific datahub repository service information
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[\w*]*(\.[\w]+)+$
+        required: true
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ServiceInfoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    patch:
+      operationId: ga4gh_drs_v1_service_info_partial_update
+      description: Partially modify a specific datahub repository service information
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[\w*]*(\.[\w]+)+$
+        required: true
+      tags:
+      - service-info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedServiceInfoRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1_service_info_destroy
+      description: Delete a specific datahub repository service information
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          pattern: ^[\w*]*(\.[\w]+)+$
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /ga4gh/drs/v1/service-info/workspaces/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_workspaces_list
+      description: List available workspaces in the service
+      parameters:
+      - in: query
+        name: expand
+        schema:
+          type: boolean
+        description: Display workspace resource list (true or false)
+      - in: query
+        name: force
+        schema:
+          type: boolean
+        description: Force reload system if cache exists
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspaces'
+              examples:
+                WorkspaceList(expand=false):
+                  value:
+                  - - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                      name: '{resourceGroups}'
+                      location: '{location}'
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                      name: '{resourceGroups1}'
+                      location: '{location1}'
+                  summary: Workspace list (expand=false)
+                  description: Workspace information list <br>Information includes
+                    the ID, name, and location.
+                WorkspaceList(expand=true):
+                  value:
+                  - - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                      name: '{resourceGroups}'
+                      location: '{location}'
+                      resources:
+                      - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                        name: '{resources_name}'
+                        type: storage_account_access_method
+                        location: '{location}'
+                        identity:
+                          type: None
+                        url: storage_account_url
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
+                      name: '{resourceGroups1}'
+                      location: '{location1}'
+                      resources:
+                      - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}/providers/{resources_type}/{resources_name}
+                        name: '{resources_name}'
+                        type: storage_account_access_method
+                        location: '{location}'
+                        identity:
+                          type: None
+                        url: storage_account_url
+                  summary: Workspace list (expand=true)
+                  description: Detailed workspace information list  <br>Information
+                    includes the ID, name, location and resources. <br>Resources include
+                    ID, name, type, sku, kind, location, and URL. <br>URL refers to
+                    the storage account endpoint URL. <br>Type refers to the storage
+                    account access method type (abfss, s3, and gs)
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_workspaces_resources_list
+      description: Obtain OAuth2 client credential token for a given workspace
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspacesResources'
+              examples:
+                ResourcesInformation:
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: storage_account_access_method
+                      location: '{location}'
+                      identity:
+                        type: None
+                      url: storage_account_url
+                    token: {}
+                  summary: Resources information
+                  description: Return resources information according to the workspace
+                    name. <br>Information includes ID, name, location, resources,
+                    and token.<br>Resources include ID, name, type, sku, kind, location,
+                    and URL. <br>URL refers to the storage account endpoint URL. <br>Type
+                    refers to the storage account access method type (abfss, s3, and
+                    gs).
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+components:
+  schemas:
+    AccessMethod:
+      type: object
+      description: Access method
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeE01Enum'
+        region:
+          type: string
+          nullable: true
+          maxLength: 16
+        access_url:
+          $ref: '#/components/schemas/AccessURL'
+      required:
+      - id
+      - type
+    AccessMethodRequest:
+      type: object
+      description: Access method
+      properties:
+        type:
+          $ref: '#/components/schemas/TypeE01Enum'
+        region:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 16
+        access_url:
+          $ref: '#/components/schemas/AccessURLRequest'
+      required:
+      - type
+    AccessURL:
+      type: object
+      properties:
+        headers:
+          type: object
+          additionalProperties: {}
+          description: URL authorization method and code. <br>If the 'AccessMethod'
+            is 'abfss', an Authorization key is created with the storage account access
+            token as its default value.
+        url:
+          type: string
+          nullable: true
+          format: uri
+      required:
+      - headers
+      - url
+    AccessURLRequest:
+      type: object
+      properties:
+        headers:
+          type: object
+          additionalProperties: {}
+          description: URL authorization method and code. <br>If the 'AccessMethod'
+            is 'abfss', an Authorization key is created with the storage account access
+            token as its default value.
+        url:
+          type: string
+          nullable: true
+          minLength: 1
+          format: uri
+      required:
+      - headers
+      - url
+    Blob:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._:]+$
+          maxLength: 255
+        name:
+          type: string
+          description: DrsObject name
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 255
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 128
+        size:
+          type: integer
+          minimum: 0
+          description: If the DRS object is a blob and a name is given, this field
+            is required.
+        version:
+          type: string
+          format: date-time
+          readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethod'
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/Checksum'
+        username:
+          type: string
+          readOnly: true
+      required:
+      - checksums
+      - name
+      - size
+      - username
+      - version
+    BlobRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          minLength: 1
+          pattern: ^[0-9a-zA-Z\-\._:]+$
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          description: DrsObject name
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 255
+        mime_type:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 512
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          minLength: 1
+          maxLength: 128
+        size:
+          type: integer
+          minimum: 0
+          description: If the DRS object is a blob and a name is given, this field
+            is required.
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagRequest'
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+      required:
+      - checksums
+      - name
+      - size
+    BlobUpdateRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: any string e.g., [''TUMOR''].'
+        name:
+          type: string
+          minLength: 1
+          description: Only use name or path to search for DRS objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+        size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          description: If not specified, this field will be empty.
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+    BundleObjectRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: DrsObject name
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 255
+        mime_type:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 512
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: {}
+        aliases:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagRequest'
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+      required:
+      - name
+    BundleUpdateRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: any string e.g., [''TUMOR''].'
+        name:
+          type: string
+          minLength: 1
+          description: Only use name or path to search for DRS objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+    Checksum:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ChecksumTypeEnum'
+        checksum:
+          type: string
+          pattern: ^[0-9a-fA-F]+$
+          maxLength: 256
+      required:
+      - checksum
+      - type
+    ChecksumRequest:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ChecksumTypeEnum'
+        checksum:
+          type: string
+          minLength: 1
+          pattern: ^[0-9a-fA-F]+$
+          maxLength: 256
+      required:
+      - checksum
+      - type
+    ChecksumTypeEnum:
+      enum:
+      - md5
+      - sha256
+      - sha512
+      - sha3_256
+      - sha3_512
+      - shake_256
+      type: string
+      description: |-
+        * `md5` - md5
+        * `sha256` - sha256
+        * `sha512` - sha512
+        * `sha3_256` - sha3_256
+        * `sha3_512` - sha3_512
+        * `shake_256` - shake_256
+    Distinct:
+      type: object
+      properties:
+        location:
+          type: object
+          additionalProperties: {}
+        user:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        file_type:
+          type: array
+          items:
+            type: string
+      required:
+      - file_type
+      - location
+      - user
+    DrsDownlaod:
+      type: object
+      properties:
+        access_url:
+          type: string
+          format: uri
+          description: DRS object access URL
+        headers:
+          type: object
+          additionalProperties: {}
+          description: The Authentication to access the download files
+        checksum:
+          type: string
+          description: DRS object checksum
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/Files'
+          description: file information
+      required:
+      - checksum
+      - files
+    DrsFileDownload:
+      type: object
+      properties:
+        name:
+          type: string
+          description: file name
+        self_uri:
+          type: string
+          description: DRS object self URL
+        access_url:
+          type: string
+          format: uri
+          description: DRS object access URL
+        size:
+          type: integer
+          description: file size
+      required:
+      - access_url
+      - self_uri
+      - size
+    DrsFileDownloadRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: file name
+        self_uri:
+          type: string
+          minLength: 1
+          description: DRS object self URL
+        access_url:
+          type: string
+          format: uri
+          minLength: 1
+          description: DRS object access URL
+        size:
+          type: integer
+          description: file size
+      required:
+      - access_url
+      - self_uri
+      - size
+    DrsSearchOutputExample:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrsSearchQuerySetExample'
+          description: 'search_key: User provided search optionsDrsSearchQuerySetExampleSerializer:
+            search result'
+      required:
+      - objects
+    DrsSearchQuerySetExample:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._:]+$
+          maxLength: 255
+        tags:
+          type: array
+          items:
+            type: string
+            description: 'Label name: any string e.g., ''TUMOR''.'
+          readOnly: true
+        name:
+          type: string
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 255
+        self_uri:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 128
+        size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          description: If not specified, this field will be empty.
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        version:
+          type: string
+          format: date-time
+          readOnly: true
+        mime_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        file_type:
+          type: string
+          nullable: true
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        aliases:
+          type: object
+          additionalProperties: {}
+        metadata:
+          type: object
+          additionalProperties: {}
+      required:
+      - name
+      - tags
+      - version
+    DrsSearchRequest:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            description: DRS object name
+            pattern: ^[0-9a-zA-Z\-\._]+$
+            maxLength: 512
+        paths:
+          type: array
+          items:
+            type: string
+            description: Local file path
+        tags:
+          type: array
+          items:
+            type: string
+            description: Search DRS object by tags
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          writeOnly: true
+          default: exact
+          description: |-
+            Search mode <br><li>exact <br><li>iexact(ignore case) <br>
+
+            * `exact` - exact
+            * `iexact` - iexact
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldsEnum'
+          writeOnly: true
+          default:
+          - all
+          description: 'A list of fields to return. Default: all'
+        order_by:
+          allOf:
+          - $ref: '#/components/schemas/OrderByEnum'
+          writeOnly: true
+          description: "Return queryset order \n\n* `id` - id\n* `name` - name\n*\
+            \ `self_uri` - self_uri\n* `size` - size\n* `created_time` - created_time\n\
+            * `updated_time` - updated_time\n* `version` - version\n* `mime_type`\
+            \ - mime_type\n* `file_type` - file_type\n* `description` - description\n\
+            * `aliases` - aliases\n* `metadata` - metadata\n* `tags` - tags"
+        reverse:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: 'Sort strategy (should be used with order_by) <br>True: descending
+            sort <br>False: ascending sort'
+        top:
+          type: integer
+          minimum: 0
+          writeOnly: true
+          default: 0
+          description: 'Display the number of Matching queries <br>0: Return all matching
+            queries <br>1: Return one of the matching queries <br>Note: If you pass
+            multiple values, it will not return the number of matched queries for
+            each condition. For example, if you set search condition name=["a", "b"]
+            and top=1, it will only return one matched query.'
+    FieldsEnum:
+      enum:
+      - all
+      - id
+      - name
+      - self_uri
+      - size
+      - created_time
+      - updated_time
+      - version
+      - mime_type
+      - file_type
+      - description
+      - aliases
+      - metadata
+      - tags
+      type: string
+      description: |-
+        * `all` - all
+        * `id` - id
+        * `name` - name
+        * `self_uri` - self_uri
+        * `size` - size
+        * `created_time` - created_time
+        * `updated_time` - updated_time
+        * `version` - version
+        * `mime_type` - mime_type
+        * `file_type` - file_type
+        * `description` - description
+        * `aliases` - aliases
+        * `metadata` - metadata
+        * `tags` - tags
+    Files:
+      type: object
+      properties:
+        size:
+          type: integer
+          description: file size
+        path:
+          type: string
+          description: file absolute URL
+        name:
+          type: string
+          description: file name
+      required:
+      - path
+      - size
+    ModeEnum:
+      enum:
+      - exact
+      - iexact
+      type: string
+      description: |-
+        * `exact` - exact
+        * `iexact` - iexact
+    OrderByEnum:
+      enum:
+      - id
+      - name
+      - self_uri
+      - size
+      - created_time
+      - updated_time
+      - version
+      - mime_type
+      - file_type
+      - description
+      - aliases
+      - metadata
+      - tags
+      type: string
+      description: |-
+        * `id` - id
+        * `name` - name
+        * `self_uri` - self_uri
+        * `size` - size
+        * `created_time` - created_time
+        * `updated_time` - updated_time
+        * `version` - version
+        * `mime_type` - mime_type
+        * `file_type` - file_type
+        * `description` - description
+        * `aliases` - aliases
+        * `metadata` - metadata
+        * `tags` - tags
+    PaginatedAccessMethodList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethod'
+    PaginatedBlobList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Blob'
+    PatchedBlobUpdateRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: any string e.g., [''TUMOR''].'
+        name:
+          type: string
+          minLength: 1
+          description: Only use name or path to search for DRS objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        checksums:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChecksumRequest'
+        size:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          description: If not specified, this field will be empty.
+        created_time:
+          type: string
+          format: date-time
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+        access_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMethodRequest'
+    PatchedBundleUpdateRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        metadata:
+          type: object
+          additionalProperties: {}
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: any string e.g., [''TUMOR''].'
+        name:
+          type: string
+          minLength: 1
+          description: Only use name or path to search for DRS objects
+          pattern: ^[0-9a-zA-Z\-\._]+$
+          maxLength: 64
+        deleted_time:
+          type: string
+          format: date
+          nullable: true
+    PatchedDrsTagRequest:
+      type: object
+      description: DrsTagSerializer is used in API /ga4gh/drs/v1/objects/labels
+      properties:
+        objects_object_id:
+          type: array
+          items: {}
+          description: 'DRS ID list: string e.g., [''id1'', ''id2'']'
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: string e.g., [''TUMOR''].'
+    PatchedServiceInfoRequest:
+      type: object
+      description: Serialize service information
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 255
+        version:
+          type: string
+          minLength: 1
+          maxLength: 16
+    PatcheddrsObjectPartialUpdateRequest:
+      oneOf:
+      - $ref: '#/components/schemas/PatchedBlobUpdateRequest'
+      - $ref: '#/components/schemas/PatchedBundleUpdateRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/PatchedBundleUpdateRequest'
+    ServiceInfo:
+      type: object
+      description: Serialize service information
+      properties:
+        id:
+          type: string
+          maxLength: 64
+          minLength: 1
+          pattern: '[\w*]*(\.[\w]+)+'
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          maxLength: 255
+        version:
+          type: string
+          maxLength: 16
+      required:
+      - created_at
+      - description
+      - id
+      - name
+      - updated_at
+    ServiceInfoRequest:
+      type: object
+      description: Serialize service information
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: '[\w*]*(\.[\w]+)+'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 1023
+        type:
+          type: object
+          additionalProperties: {}
+        organization:
+          type: object
+          additionalProperties: {}
+        contact_url:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 200
+        documentation_url:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        environment:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 255
+        version:
+          type: string
+          minLength: 1
+          maxLength: 16
+      required:
+      - created_at
+      - description
+      - id
+      - name
+      - updated_at
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+        color:
+          type: string
+          readOnly: true
+          description: Color of tag
+      required:
+      - color
+      - name
+    TagObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+      required:
+      - id
+      - name
+    TagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+      required:
+      - name
+    TypeE01Enum:
+      enum:
+      - s3a
+      - gs
+      - abfss
+      - htsget
+      - https
+      - file
+      - oci
+      type: string
+      description: |-
+        * `s3a` - Amazon S3A File System
+        * `gs` - Google Cloud Storage
+        * `abfss` - Azure Data Lake Storage
+        * `htsget` - Htsget retrieval API
+        * `https` - HTTPS
+        * `file` - Local file system
+        * `oci` - Oracle Cloud Infrastructure Object Storage
+    Upload:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: Upload URL
+        headers:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: Upload token
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeE01Enum'
+          readOnly: true
+        region:
+          type: string
+          readOnly: true
+          description: URL region
+        register_url:
+          type: string
+          readOnly: true
+          description: Registered Upload URL
+        AlreadyExists:
+          type: boolean
+          readOnly: true
+          description: Path already exists
+      required:
+      - AlreadyExists
+      - headers
+      - region
+      - register_url
+      - type
+      - url
+    UploadRefresh:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+          description: Upload URL
+        headers:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: Upload token
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeE01Enum'
+          readOnly: true
+        region:
+          type: string
+          readOnly: true
+          description: URL region
+      required:
+      - headers
+      - region
+      - type
+      - url
+    Workspaces:
+      type: object
+      properties:
+        workspaces:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - workspaces
+    WorkspacesResources:
+      type: object
+      properties:
+        resources:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - resources
+    drsObjectRequest:
+      oneOf:
+      - $ref: '#/components/schemas/BlobRequest'
+      - $ref: '#/components/schemas/BundleObjectRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/BundleObjectRequest'
+    drsObjectUpdateRequest:
+      oneOf:
+      - $ref: '#/components/schemas/BlobUpdateRequest'
+      - $ref: '#/components/schemas/BundleUpdateRequest'
+      discriminator:
+        propertyName: name
+        mapping:
+          None: '#/components/schemas/BundleUpdateRequest'
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
