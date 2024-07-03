@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-06-06 04:29:06.402153+00:00
+                    next_run: 2024-07-03 02:52:59.457945+00:00
                   request:
                     name: string
                     description: string
@@ -2800,7 +2800,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-06-06 04:29:06.402171+00:00
+                    next_run: 2024-07-03 02:52:59.457964+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -5748,7 +5748,6 @@ components:
         id:
           type: string
           readOnly: true
-          pattern: ^[0-9a-zA-Z_]+$
         username:
           type: string
           maxLength: 64
@@ -5766,6 +5765,7 @@ components:
         organization:
           type: string
           readOnly: true
+          description: Organization ID.
       required:
       - email
       - id

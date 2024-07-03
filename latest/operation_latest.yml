@@ -600,6 +600,13 @@ paths:
         description: Search Usages by end_time which should be less than the provided
           value (e.g., 2022-04-29 06:18:19.000000)
       - in: query
+        name: organization
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to organization
+      - in: query
         name: owner
         schema:
           type: boolean
@@ -725,9 +732,17 @@ paths:
             - user
             - cluster
             - workspace
+            - organization
         description: A list of fields to return top information  in descending order
           of quantity.<br>For the each field, we will provide a dictionary containing
           the quantity and field.
+      - in: query
+        name: organization
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to organization
       - in: query
         name: owner
         schema:
@@ -980,7 +995,11 @@ components:
     ServiceStatisticsFields:
       type: object
       properties:
-        cluster:
+        organization:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticFields'
+        user:
           type: array
           items:
             $ref: '#/components/schemas/StatisticFields'
@@ -988,7 +1007,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatisticFields'
-        user:
+        cluster:
           type: array
           items:
             $ref: '#/components/schemas/StatisticFields'
@@ -1030,10 +1049,15 @@ components:
         username:
           type: string
           readOnly: true
+          description: User Name
+        organization:
+          type: string
+          readOnly: true
+          description: Organization Name
         unit:
           type: string
           readOnly: true
-          description: dimension unit
+          description: Dimension Unit
         user_id:
           type: string
           maxLength: 255
@@ -1054,6 +1078,7 @@ components:
       required:
       - cluster
       - cus_id
+      - organization
       - start_time
       - unit
       - user_id
