@@ -338,8 +338,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-03 02:52:57.624972+00:00'
-                  deleted_time: '2024-10-01'
+                  created_time: '2024-07-26 01:25:36.864026+00:00'
+                  deleted_time: '2024-10-24'
                   aliases: []
                   metadata: {}
                   tags:
@@ -363,8 +363,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-03 02:52:57.625234+00:00'
-                  deleted_time: '2024-10-01'
+                  created_time: '2024-07-26 01:25:36.864285+00:00'
+                  deleted_time: '2024-10-24'
                   aliases: []
                   metadata: {}
                   tags:
@@ -384,8 +384,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-03 02:52:57.625289+00:00'
-                  deleted_time: '2024-10-01'
+                  created_time: '2024-07-26 01:25:36.864341+00:00'
+                  deleted_time: '2024-10-24'
                   aliases: []
                   metadata: {}
                   tags:
@@ -440,10 +440,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-07-03 02:52:57.625177+00:00
-                    created_time: 2024-07-03 02:52:57.625179+00:00
+                    version: 2024-07-26 01:25:36.864224+00:00
+                    created_time: 2024-07-26 01:25:36.864226+00:00
                     updated_time: null
-                    deleted_time: 2024-10-01
+                    deleted_time: 2024-10-24
                     metadata:
                       investigation:
                         center: null
@@ -505,10 +505,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-07-03 02:52:57.625336+00:00
-                    created_time: 2024-07-03 02:52:57.625338+00:00
+                    version: 2024-07-26 01:25:36.864391+00:00
+                    created_time: 2024-07-26 01:25:36.864393+00:00
                     updated_time: null
-                    deleted_time: 2024-10-01
+                    deleted_time: 2024-10-24
                     metadata:
                       investigation:
                         center: null
@@ -566,10 +566,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-07-03 02:52:57.625381+00:00
-                    created_time: 2024-07-03 02:52:57.625383+00:00
+                    version: 2024-07-26 01:25:36.864438+00:00
+                    created_time: 2024-07-26 01:25:36.864442+00:00
                     updated_time: null
-                    deleted_time: 2024-10-01
+                    deleted_time: 2024-10-24
                     metadata:
                       investigation:
                         center: null
@@ -634,7 +634,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2024-10-01
+                    deleted_time: 2024-10-24
                     metadata:
                       investigation:
                         center: null
@@ -809,7 +809,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-07-03 02:52:57.625689+00:00
+                    version: 2024-07-26 01:25:36.864627+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -877,7 +877,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-07-03 02:52:57.625682+00:00
+                    version: 2024-07-26 01:25:36.864622+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1031,9 +1031,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-07-03 02:52:57.625546+00:00
-                  updated_time: 2024-07-03 02:52:57.625548+00:00
-                  deleted_time: 2024-10-01
+                  created_time: 2024-07-26 01:25:36.864549+00:00
+                  updated_time: 2024-07-26 01:25:36.864551+00:00
+                  deleted_time: 2024-10-24
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1164,9 +1164,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-07-03 02:52:57.625546+00:00
-                  updated_time: 2024-07-03 02:52:57.625548+00:00
-                  deleted_time: 2024-10-01
+                  created_time: 2024-07-26 01:25:36.864549+00:00
+                  updated_time: 2024-07-26 01:25:36.864551+00:00
+                  deleted_time: 2024-10-24
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1185,14 +1185,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-07-03 02:52:57.625599+00:00
+                  updated_time: 2024-07-26 01:25:36.864600+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-07-03 02:52:57.625597+00:00
+                  created_time: 2024-07-26 01:25:36.864598+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -3865,7 +3865,7 @@ components:
         seqslabsas:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/ContentsAccess'
           readOnly: true
       required:
       - checksums
@@ -3933,10 +3933,6 @@ components:
         aliases:
           type: object
           additionalProperties: {}
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagRequest'
         access_methods:
           type: array
           items:
@@ -4032,10 +4028,6 @@ components:
         aliases:
           type: object
           additionalProperties: {}
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagRequest'
         access_methods:
           type: array
           items:
@@ -4110,6 +4102,87 @@ components:
         * `sha3_256` - sha3_256
         * `sha3_512` - sha3_512
         * `shake_256` - shake_256
+    ContentsAccess:
+      type: object
+      description: ContentsAccessSerializer is used in API /ga4gh/drs/v1/contents/${DRS_ID}/access
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        content_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: SeqsLab Download URL.
+        key:
+          type: string
+          nullable: true
+          maxLength: 255
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        times:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        expiry_time:
+          type: string
+          format: date-time
+        download_dates:
+          type: object
+          additionalProperties: {}
+        raw_token:
+          type: string
+          nullable: true
+          maxLength: 255
+        user:
+          type: string
+        object:
+          type: string
+          nullable: true
+      required:
+      - content_url
+      - created
+      - expiry_time
+      - id
+      - times
+      - user
+    ContentsAccessRequest:
+      type: object
+      description: ContentsAccessSerializer is used in API /ga4gh/drs/v1/contents/${DRS_ID}/access
+      properties:
+        key:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 255
+        times:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        expiry_time:
+          type: string
+          format: date-time
+        download_dates:
+          type: object
+          additionalProperties: {}
+        raw_token:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 255
+        user:
+          type: string
+          minLength: 1
+        object:
+          type: string
+          minLength: 1
+          nullable: true
+      required:
+      - expiry_time
+      - times
+      - user
     Distinct:
       type: object
       properties:
@@ -4721,8 +4794,8 @@ components:
       properties:
         name:
           type: string
+          readOnly: true
           description: 'Label name: any string e.g., TUMOR.'
-          maxLength: 255
         color:
           type: string
           readOnly: true
@@ -4742,16 +4815,6 @@ components:
           maxLength: 255
       required:
       - id
-      - name
-    TagRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-          description: 'Label name: any string e.g., TUMOR.'
-          maxLength: 255
-      required:
       - name
     TypeE01Enum:
       enum:

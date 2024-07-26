@@ -743,8 +743,8 @@ paths:
           description: ''
   /auth/v3/signin/{backend}/{cus_id}/:
     get:
-      operationId: auth_v3_signin_retrieve_2
-      description: Login with org. This api will redirect to  /auth/v3/signin/<backend_name>/
+      operationId: auth_v3_signin_org_retrieve
+      description: Login with specific organization. This api will redirect to  /auth/v3/signin/{backend}/
       parameters:
       - in: path
         name: backend

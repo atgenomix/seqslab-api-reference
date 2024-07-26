@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-07-03 02:52:59.457945+00:00
+                    next_run: 2024-07-26 01:25:38.603810+00:00
                   request:
                     name: string
                     description: string
@@ -2800,7 +2800,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-07-03 02:52:59.457964+00:00
+                    next_run: 2024-07-26 01:25:38.603825+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -5050,11 +5050,6 @@ components:
           type: array
           items: {}
           description: 'Run ID list: string e.g., [''id1'', ''id2'']'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagRequest'
-          description: 'Label name list: string e.g., [''TUMOR''].'
     PatchedScheduleRequest:
       type: object
       properties:
@@ -6094,24 +6089,14 @@ components:
       properties:
         name:
           type: string
+          readOnly: true
           description: 'Label name: any string e.g., TUMOR.'
-          maxLength: 255
         color:
           type: string
           readOnly: true
           description: Color of tag
       required:
       - color
-      - name
-    TagRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-          description: 'Label name: any string e.g., TUMOR.'
-          maxLength: 255
-      required:
       - name
     Workers:
       type: object

@@ -2629,7 +2629,8 @@ components:
           description: Organization ID.
         organizations:
           type: object
-          additionalProperties: {}
+          additionalProperties:
+            $ref: '#/components/schemas/UserOrganizationField'
           readOnly: true
           description: The organization that the email belongs to.
         roles:
@@ -2735,6 +2736,32 @@ components:
       required:
       - code
       - detail
+    UserOrganizationField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Organization name
+        backend:
+          type: string
+          description: The backend of Organization
+      required:
+      - backend
+      - name
+    UserOrganizationFieldRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Organization name
+        backend:
+          type: string
+          minLength: 1
+          description: The backend of Organization
+      required:
+      - backend
+      - name
   securitySchemes:
     jwtAuth:
       type: http

@@ -8,10 +8,7 @@ paths:
   /label/v3/labels/:
     get:
       operationId: list label under user
-      description: |-
-        List the User Label
-
-        Role : LabelViewer/ LabelAdministrator/ GlobalAdministrator
+      description: List Labels
       parameters:
       - in: query
         name: order
@@ -62,18 +59,18 @@ paths:
                           name: LabelName
                           extra:
                             color: hex code
-                        id: 20
+                        id: 65
                         children:
                         - data:
                             name: LabelName
                             extra:
                               color: hex code
-                          id: 54
+                          id: 11
                       - data:
                           name: LabelName1
                           extra:
                             color: hex code
-                        id: 38
+                        id: 10
                   summary: Return the Label under user
                   description: Return the label tree under user The return list will
                     appear under the data.
@@ -139,10 +136,7 @@ paths:
           description: ''
     post:
       operationId: create label by user
-      description: |-
-        Create the Label under the User root
-
-        Role : LabelWriter/ LabelAdministrator/ GlobalAdministrator
+      description: Create the Label under a root
       tags:
       - label
       requestBody:
@@ -306,10 +300,7 @@ paths:
   /label/v3/labels/{id}/:
     get:
       operationId: label_v3_labels_list
-      description: |-
-        Return the Label tree by the label ID
-
-        Role : LabelViewer/ LabelAdministrator/ GlobalAdministrator
+      description: Return the Label tree by the label ID
       parameters:
       - in: path
         name: id
@@ -336,13 +327,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 40
+                    id: 3
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 48
+                      id: 30
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -421,10 +412,7 @@ paths:
           description: ''
     post:
       operationId: label_v3_labels_create
-      description: |-
-        Add the Label under the specified label ID
-
-        Role : LabelWriter(Owner) / LabelAdministrator/ GlobalAdministrator
+      description: Add a Label under the specified Label ID
       parameters:
       - in: path
         name: id
@@ -607,10 +595,7 @@ paths:
           description: ''
     put:
       operationId: label_v3_labels_update
-      description: |-
-        Move source node to target node.
-
-        Role : LabelWriter(Owner)/ LabelAdministrator/ GlobalAdministrator
+      description: Move source node to target node.
       parameters:
       - in: path
         name: id
@@ -648,13 +633,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 40
+                    id: 3
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 48
+                      id: 30
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -739,10 +724,8 @@ paths:
           description: ''
     patch:
       operationId: label_v3_labels_partial_update
-      description: |-
-        Update the Label for the pk, including the name and other details of the specified label.
-
-        Role : LabelWriter(Owner)/ LabelAdministrator/ GlobalAdministrator
+      description: Update the Label for the pk, including the name and other details
+        of the specified label.
       parameters:
       - in: path
         name: id
@@ -781,13 +764,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 40
+                    id: 3
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 48
+                      id: 30
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -879,10 +862,7 @@ paths:
           description: ''
     delete:
       operationId: label_v3_labels_destroy
-      description: |-
-        Delete the Label by the label ID
-
-        Role : LabelWriter(Owner)/ LabelAdministrator/ GlobalAdministrator
+      description: Delete the Label by the label ID
       parameters:
       - in: path
         name: id
