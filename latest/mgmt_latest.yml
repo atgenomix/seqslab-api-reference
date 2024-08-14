@@ -750,6 +750,12 @@ paths:
       operationId: management_v3_roles_list
       description: List roles.
       parameters:
+      - in: query
+        name: organization
+        schema:
+          type: string
+        description: List role by organization in the API.  <br>This parameter is
+          only useful when the user is a `Global Administrator`.<br>
       - name: page
         required: false
         in: query
@@ -2745,8 +2751,12 @@ components:
         backend:
           type: string
           description: The backend of Organization
+        logo:
+          type: string
+          description: The logo of Organization
       required:
       - backend
+      - logo
       - name
     UserOrganizationFieldRequest:
       type: object
@@ -2759,8 +2769,13 @@ components:
           type: string
           minLength: 1
           description: The backend of Organization
+        logo:
+          type: string
+          minLength: 1
+          description: The logo of Organization
       required:
       - backend
+      - logo
       - name
   securitySchemes:
     jwtAuth:

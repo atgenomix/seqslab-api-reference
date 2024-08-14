@@ -5,6 +5,402 @@ info:
   description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
     cloud-native enterprise biomedical informatics platform.
 paths:
+  /ga4gh/drs/v1/_metastore/:
+    get:
+      operationId: ga4gh_drs_v1__metastore_list
+      description: List Metastore Databases
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search Database
+      tags:
+      - Metastore
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMetastoreDatabaseList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/_metastore/{db_id}/:
+    get:
+      operationId: ga4gh_drs_v1__metastore_list_2
+      description: List table from a specific database
+      parameters:
+      - in: path
+        name: db_id
+        schema:
+          type: string
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search Table under specified Database
+      - in: query
+        name: tbl_type
+        schema:
+          enum:
+          - MANAGED_TABLE
+          - EXTERNAL_TABLE
+          - VIRTUAL_VIEW
+        description: Search Table by specified tbl_type
+      tags:
+      - Metastore
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMetastoreDatabaseTableList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    delete:
+      operationId: ga4gh_drs_v1__metastore_destroy
+      description: Delete a Metastore Database
+      parameters:
+      - in: query
+        name: cascade
+        schema:
+          type: boolean
+          default: false
+        description: Delete Database even if tables in this database.
+      - in: path
+        name: db_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Metastore
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /ga4gh/drs/v1/_metastore/{db_id}/tables/{tbl_id}/:
+    delete:
+      operationId: ga4gh_drs_v1__metastore_tables_destroy
+      description: Delete a table from an specific database
+      parameters:
+      - in: path
+        name: db_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: tbl_id
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - Metastore
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
   /ga4gh/drs/v1/contents/{object_id}/access/:
     post:
       operationId: ga4gh_drs_v1_contents_access_create
@@ -338,8 +734,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-26 01:25:36.864026+00:00'
-                  deleted_time: '2024-10-24'
+                  created_time: '2024-08-14 10:11:46.021823+00:00'
+                  deleted_time: '2024-11-12'
                   aliases: []
                   metadata: {}
                   tags:
@@ -363,8 +759,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-26 01:25:36.864285+00:00'
-                  deleted_time: '2024-10-24'
+                  created_time: '2024-08-14 10:11:46.022103+00:00'
+                  deleted_time: '2024-11-12'
                   aliases: []
                   metadata: {}
                   tags:
@@ -384,8 +780,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-07-26 01:25:36.864341+00:00'
-                  deleted_time: '2024-10-24'
+                  created_time: '2024-08-14 10:11:46.022163+00:00'
+                  deleted_time: '2024-11-12'
                   aliases: []
                   metadata: {}
                   tags:
@@ -440,10 +836,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-07-26 01:25:36.864224+00:00
-                    created_time: 2024-07-26 01:25:36.864226+00:00
+                    version: 2024-08-14 10:11:46.022043+00:00
+                    created_time: 2024-08-14 10:11:46.022045+00:00
                     updated_time: null
-                    deleted_time: 2024-10-24
+                    deleted_time: 2024-11-12
                     metadata:
                       investigation:
                         center: null
@@ -505,10 +901,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-07-26 01:25:36.864391+00:00
-                    created_time: 2024-07-26 01:25:36.864393+00:00
+                    version: 2024-08-14 10:11:46.022216+00:00
+                    created_time: 2024-08-14 10:11:46.022218+00:00
                     updated_time: null
-                    deleted_time: 2024-10-24
+                    deleted_time: 2024-11-12
                     metadata:
                       investigation:
                         center: null
@@ -566,10 +962,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-07-26 01:25:36.864438+00:00
-                    created_time: 2024-07-26 01:25:36.864442+00:00
+                    version: 2024-08-14 10:11:46.022264+00:00
+                    created_time: 2024-08-14 10:11:46.022265+00:00
                     updated_time: null
-                    deleted_time: 2024-10-24
+                    deleted_time: 2024-11-12
                     metadata:
                       investigation:
                         center: null
@@ -634,7 +1030,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2024-10-24
+                    deleted_time: 2024-11-12
                     metadata:
                       investigation:
                         center: null
@@ -809,7 +1205,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-07-26 01:25:36.864627+00:00
+                    version: 2024-08-14 10:11:46.022531+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -877,7 +1273,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-07-26 01:25:36.864622+00:00
+                    version: 2024-08-14 10:11:46.022527+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1031,9 +1427,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-07-26 01:25:36.864549+00:00
-                  updated_time: 2024-07-26 01:25:36.864551+00:00
-                  deleted_time: 2024-10-24
+                  created_time: 2024-08-14 10:11:46.022451+00:00
+                  updated_time: 2024-08-14 10:11:46.022452+00:00
+                  deleted_time: 2024-11-12
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1164,9 +1560,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-07-26 01:25:36.864549+00:00
-                  updated_time: 2024-07-26 01:25:36.864551+00:00
-                  deleted_time: 2024-10-24
+                  created_time: 2024-08-14 10:11:46.022451+00:00
+                  updated_time: 2024-08-14 10:11:46.022452+00:00
+                  deleted_time: 2024-11-12
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1185,14 +1581,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-07-26 01:25:36.864600+00:00
+                  updated_time: 2024-08-14 10:11:46.022503+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-07-26 01:25:36.864598+00:00
+                  created_time: 2024-08-14 10:11:46.022500+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -1315,11 +1711,6 @@ paths:
       operationId: ga4gh_drs_v1_objects_destroy
       description: Delete a DRS object
       parameters:
-      - in: query
-        name: backend_content
-        schema:
-          type: boolean
-        description: Choose whether or not to delete the backend files
       - in: path
         name: object_id
         schema:
@@ -1682,6 +2073,88 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /ga4gh/drs/v1/objects/{object_id}/metastore/:
+    get:
+      operationId: ga4gh_drs_v1_objects_metastore_retrieve
+      description: List Related Metastore of DRS object
+      parameters:
+      - in: path
+        name: object_id
+        schema:
+          type: string
+          pattern: ^[^\/\\]{1,256}$
+        required: true
+      tags:
+      - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsObjectMetastore'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
           description: ''
   /ga4gh/drs/v1/objects/{objects_object_id}/access/:
     get:
@@ -4267,6 +4740,53 @@ components:
       - access_url
       - self_uri
       - size
+    DrsObjectMetastore:
+      type: object
+      properties:
+        latest:
+          type: boolean
+          description: Whether matching to Latest Metastore
+        version:
+          type: integer
+          description: Metastore version. -1 means no metastore matched
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DrsObjectMetastoreResult'
+      required:
+      - latest
+      - results
+      - version
+    DrsObjectMetastoreResult:
+      type: object
+      properties:
+        tbl_id:
+          type: integer
+          description: Metastore Table ID
+        tbl_name:
+          type: string
+          description: Metastore Table name
+        tbl_type:
+          allOf:
+          - $ref: '#/components/schemas/TblTypeEnum'
+          description: |-
+            Metastore Table type
+
+            * `MANAGED_TABLE` - MANAGED_TABLE
+            * `EXTERNAL_TABLE` - EXTERNAL_TABLE
+            * `VIRTUAL_VIEW` - VIRTUAL_VIEW
+        db_id:
+          type: integer
+          description: Metastore DB ID
+        db_name:
+          type: string
+          description: Metastore DB NAME
+      required:
+      - db_id
+      - db_name
+      - tbl_id
+      - tbl_name
+      - tbl_type
     DrsSearchOutputExample:
       type: object
       properties:
@@ -4455,6 +4975,44 @@ components:
       required:
       - path
       - size
+    MetastoreDatabase:
+      type: object
+      properties:
+        db_id:
+          type: integer
+          description: Metastore DB ID
+        name:
+          type: string
+          description: Metastore DB name
+        description:
+          type: string
+          description: Metastore DB description
+      required:
+      - db_id
+      - description
+      - name
+    MetastoreDatabaseTable:
+      type: object
+      properties:
+        tbl_id:
+          type: integer
+          description: Metastore Table ID
+        tbl_name:
+          type: string
+          description: Metastore Table name
+        tbl_type:
+          allOf:
+          - $ref: '#/components/schemas/TblTypeEnum'
+          description: |-
+            Metastore Table type
+
+            * `MANAGED_TABLE` - MANAGED_TABLE
+            * `EXTERNAL_TABLE` - EXTERNAL_TABLE
+            * `VIRTUAL_VIEW` - VIRTUAL_VIEW
+      required:
+      - tbl_id
+      - tbl_name
+      - tbl_type
     ModeEnum:
       enum:
       - exact
@@ -4533,6 +5091,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Blob'
+    PaginatedMetastoreDatabaseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetastoreDatabase'
+    PaginatedMetastoreDatabaseTableList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetastoreDatabaseTable'
     PatchedBlobUpdateRequest:
       type: object
       description: Adds nested create feature
@@ -4816,6 +5414,16 @@ components:
       required:
       - id
       - name
+    TblTypeEnum:
+      enum:
+      - MANAGED_TABLE
+      - EXTERNAL_TABLE
+      - VIRTUAL_VIEW
+      type: string
+      description: |-
+        * `MANAGED_TABLE` - MANAGED_TABLE
+        * `EXTERNAL_TABLE` - EXTERNAL_TABLE
+        * `VIRTUAL_VIEW` - VIRTUAL_VIEW
     TypeE01Enum:
       enum:
       - s3a

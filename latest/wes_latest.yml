@@ -2051,6 +2051,7 @@ paths:
       security:
       - jwtAuth: []
       - tokenAuth: []
+      deprecated: true
       responses:
         '200':
           content:
@@ -2763,7 +2764,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-07-26 01:25:38.603810+00:00
+                    next_run: 2024-08-14 10:11:47.904178+00:00
                   request:
                     name: string
                     description: string
@@ -2800,7 +2801,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-07-26 01:25:38.603825+00:00
+                    next_run: 2024-08-14 10:11:47.904199+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3

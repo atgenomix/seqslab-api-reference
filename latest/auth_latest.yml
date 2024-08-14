@@ -763,6 +763,12 @@ paths:
       - tokenAuth: []
       - {}
       responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+          description: ''
         '202':
           content:
             application/json:
@@ -935,6 +941,8 @@ paths:
         The app can decode the segments of this token to request information about the user who signed in.
         This token must have an audience (aud) claim and a client secret (scrt) claim of the app making this request.
         When id_token is not available (e.g. client credential auth flow), this field must be present.
+
+        - `cus_id`: (optional) The ID of the Organization you want signed in.
       parameters:
       - in: path
         name: backend
@@ -1140,6 +1148,9 @@ components:
           type: string
           minLength: 1
         assertion:
+          type: string
+          minLength: 1
+        cus_id:
           type: string
           minLength: 1
         scope:
