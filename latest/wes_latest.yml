@@ -2764,7 +2764,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-08-14 10:11:47.904178+00:00
+                    next_run: 2024-09-10 09:13:05.868272+00:00
                   request:
                     name: string
                     description: string
@@ -2801,7 +2801,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-08-14 10:11:47.904199+00:00
+                    next_run: 2024-09-10 09:13:05.868289+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4295,7 +4295,37 @@ paths:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+              examples:
+                WorkspaceList(expand=false):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                  summary: Workspace list (expand=false)
+                  description: Workspace information list <br>Information includes
+                    the ID, name, and location.
+                WorkspaceList(expand=true):
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                  summary: workspace list (expand=true)
+                  description: Detailed workspace information list  <br>Information
+                    includes ID, name, location and resources list.
+          description: ''
         '500':
           content:
             application/json:
@@ -4357,7 +4387,7 @@ paths:
           description: ''
   /wes/v1/service-info/workspaces/{name}/:
     get:
-      operationId: wes_v1_service_info_workspaces_name
+      operationId: wes_v1_service_info_workspaces_retrieve
       description: Obtain OAuth2 client credential token, resources, and container
         for a given workspace
       parameters:
@@ -4378,119 +4408,29 @@ paths:
       - tokenAuth: []
       responses:
         '200':
-          description: No response body
-        '500':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StandardSerializers'
+                $ref: '#/components/schemas/Workspace'
               examples:
-                SerializerFormatIsNotSameAsTheRDBData:
+                WorkspaceInformation:
                   value:
-                    detail: 'Received a KeyError when attempting to get a value for
-                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
-                      The serializer field might be named incorrectly and does not
-                      match any attribute or key on the `dict` instance. Original
-                      exception text was: ''workspace''.'
-                    code: internal_server_error
-                  summary: Serializer format is not same as the RDB data
-                  description: Serializer format is not the same as the RDB data
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-              examples:
-                AuthenticationCredentialsWereNotProvided:
-                  value:
-                    detail: Authentication credentials were not provided
-                    code: not_authenticated
-                  summary: Authentication credentials were not provided
-                  description: Authentication credentials were not provided
-                GivenTokenIsNotValidForAnyTokenType:
-                  value:
-                    detail: Given token is not valid for any token type
-                    messages:
-                    - token_class: AccessToken
-                      token_type: access
-                      message: Token is invalid or expired
-                    code: token_not_valid
-                  summary: Given token is not valid for any token type
-                  description: Given token is not valid for any token type
-                GivenTokenNotValidForAPI:
-                  value:
-                    detail: User not found
-                    code: user_not_found
-                  summary: Given token not valid for API
-                  description: Given token is not valid for API
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-              examples:
-                YouDoNotHavePermissionToPerformThisAction:
-                  value:
-                    detail: You do not have permission to perform this action
-                    code: permission_denied
-                  summary: You do not have permission to perform this action
-                  description: You do not have permission to perform this action
-          description: ''
-  /wes/v1/service-info/workspaces/{name}/container-registries/:
-    get:
-      operationId: wes_v1_service_info_workspaces_container_registries_retrieve
-      description: List available container registries for a given workspace
-      parameters:
-      - in: query
-        name: expand
-        schema:
-          type: boolean
-        description: Expand repositories of given workspace
-      - in: path
-        name: name
-        schema:
-          type: string
-        required: true
-      tags:
-      - service-info
-      security:
-      - jwtAuth: []
-      deprecated: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContainerRegistries'
-              examples:
-                ContainerRegistries:
-                  value:
-                    name: acr name
-                    login_server: login server
-                    admin_user: true
-                    authorization: authorization code
-                    repositories:
-                    - name: image name
-                      tags:
-                      - name: latest
-                        digest: digest
-                        created: '2021-08-10T09:52:49.1368541Z'
-                        last_updated: '2021-08-10T09:52:49.1368541Z'
-                        size: size
-                        type: image type
-                  summary: container_registries
-                  description: Return container_registries according to the workspace
-                    name
-                ContainerRegistriesEmpty_:
-                  value:
-                    name: acr name
-                    login_server: login server
-                    admin_user: true
-                    authorization: authorization code
-                  summary: 'container_registries_empty '
-                  description: container_registries do not have any images
+                    id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                      name: '{resources_name}'
+                      type: '{resources_type}'
+                      location: '{location'
+                      identity:
+                        type: None
+                    insights: []
+                    tokens:
+                      management.azure.com: ''
+                      batch.core.windows.net: ''
+                  summary: workspace information
+                  description: Workspace information includes resources, and token
           description: ''
         '500':
           content:
@@ -4553,7 +4493,7 @@ paths:
           description: ''
   /wes/v1/service-info/workspaces/{name}/resources/:
     get:
-      operationId: wes_v1_service_info_workspaces_resources
+      operationId: wes_v1_service_info_workspaces_resources_list
       description: Obtain OAuth2 client credential token for a given workspace
       parameters:
       - in: path
@@ -4567,7 +4507,26 @@ paths:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspaceResource'
+              examples:
+                ResourcesInformation:
+                  value:
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                    name: '{resources_name}'
+                    type: '{resources_type}'
+                    location: '{location'
+                    identity:
+                      type: None
+                  summary: resources information
+                  description: Return resources information according to the workspace
+                    name <br>Information includes ID, name, location, resources, and
+                    token.
+          description: ''
         '500':
           content:
             application/json:
@@ -4685,26 +4644,6 @@ components:
       - name
       - options
       - settings
-    ContainerRegistries:
-      type: object
-      properties:
-        name:
-          type: string
-        login_server:
-          type: string
-        username:
-          type: string
-        authorization:
-          type: string
-        repositories:
-          type: array
-          items: {}
-          default: []
-      required:
-      - authorization
-      - login_server
-      - name
-      - username
     Files:
       type: object
       properties:
@@ -6215,6 +6154,41 @@ components:
         * `DataFile` - Regular and shared file
         * `DataframeFile` - File-based workloads with dataframe transformation
         * `DataframeTable` - Table-based workloads with dataframe transformation
+    Workspace:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+          description: Workspace name
+        location:
+          type: string
+          readOnly: true
+          description: Workspace location
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkspaceResource'
+          readOnly: true
+          description: Workspace resources
+      required:
+      - location
+      - name
+      - resources
+    WorkspaceResource:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+          description: Resource name
+        location:
+          type: string
+          readOnly: true
+          description: Resource location
+      required:
+      - location
+      - name
   securitySchemes:
     jwtAuth:
       type: http

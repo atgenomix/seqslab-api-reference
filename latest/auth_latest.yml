@@ -258,6 +258,81 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
+  /auth/v3/profile/:
+    get:
+      operationId: auth_v3_profile_retrieve
+      description: Provide User Auth Profile
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /auth/v3/schema/:
     get:
       operationId: root_retrieve
@@ -1080,8 +1155,115 @@ paths:
                   summary: Serializer format is not same as the RDB data
                   description: Serializer format is not the same as the RDB data
           description: ''
+  /auth/v3/user-permissions/:
+    get:
+      operationId: auth_v3_user_permissions_retrieve
+      description: Provide User Permissions
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPermissions'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
 components:
   schemas:
+    AddViewActionPermission:
+      type: object
+      properties:
+        view:
+          type: boolean
+          description: You can perform view action
+        add:
+          type: boolean
+          description: You can perform add action.
+      required:
+      - add
+      - view
+    AllActionPermission:
+      type: object
+      properties:
+        change:
+          type: boolean
+          description: You can perform update action.
+        add:
+          type: boolean
+          description: You can perform add action.
+        view:
+          type: boolean
+          description: You can perform view action
+        delete:
+          type: boolean
+          description: You can perform delete action.
+      required:
+      - add
+      - change
+      - delete
+      - view
     AuthCodeRequest:
       type: object
       description: |-
@@ -1159,6 +1341,22 @@ components:
       required:
       - access_token
       - expires_in
+    ChangeAddViewActionPermission:
+      type: object
+      properties:
+        change:
+          type: boolean
+          description: You can perform update action.
+        add:
+          type: boolean
+          description: You can perform add action.
+        view:
+          type: boolean
+          description: You can perform view action
+      required:
+      - add
+      - change
+      - view
     ConsentResponse:
       type: object
       properties:
@@ -1174,6 +1372,23 @@ components:
       - redirect_uri
       - state
       - url
+    DRSPermission:
+      type: object
+      description: Serializer for Dataset and DataHub permissions.
+      properties:
+        dataset:
+          allOf:
+          - $ref: '#/components/schemas/AddViewActionPermission'
+          readOnly: true
+          description: DataSet Permissions
+        datahub:
+          allOf:
+          - $ref: '#/components/schemas/AllActionPermission'
+          readOnly: true
+          description: DataHub Permissions
+      required:
+      - datahub
+      - dataset
     DeviceCodeToken:
       type: object
       properties:
@@ -1210,6 +1425,21 @@ components:
           description: Device code
       required:
       - device_code
+    ManagementPermission:
+      type: object
+      description: Serializer for Management permissions.
+      properties:
+        organization:
+          allOf:
+          - $ref: '#/components/schemas/ChangeAddViewActionPermission'
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/ChangeAddViewActionPermission'
+          readOnly: true
+      required:
+      - organization
+      - user
     OAuth2 login redirect URL:
       type: object
       properties:
@@ -1218,6 +1448,20 @@ components:
           format: uri
       required:
       - url
+    Permission:
+      type: object
+      description: Top-level serializer for all permissions.
+      properties:
+        drs:
+          $ref: '#/components/schemas/DRSPermission'
+        job:
+          $ref: '#/components/schemas/WESPermission'
+        management:
+          $ref: '#/components/schemas/ManagementPermission'
+      required:
+      - drs
+      - job
+      - management
     StandardSerializers:
       type: object
       properties:
@@ -1261,6 +1505,99 @@ components:
       required:
       - access
       - refresh
+    UserOrganizationField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Organization name
+        backend:
+          type: string
+          description: The backend of Organization
+        logo:
+          type: string
+          description: The logo of Organization
+      required:
+      - backend
+      - logo
+      - name
+    UserPermissions:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        permissions:
+          allOf:
+          - $ref: '#/components/schemas/Permission'
+          readOnly: true
+          description: The Permission of login user
+      required:
+      - id
+      - permissions
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        username:
+          type: string
+          maxLength: 64
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRoleField'
+          description: Roles List
+        organization:
+          type: string
+          readOnly: true
+          description: The Organization you login.
+        organizations:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UserOrganizationField'
+          readOnly: true
+          description: The organization that the user can login.
+      required:
+      - email
+      - id
+      - last_login
+      - organization
+      - organizations
+      - roles
+    UserRoleField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Role name
+        description:
+          type: string
+          description: Role Descriptions
+      required:
+      - description
+      - name
+    WESPermission:
+      type: object
+      description: Serializer for Job permissions.
+      properties:
+        job:
+          allOf:
+          - $ref: '#/components/schemas/AllActionPermission'
+          readOnly: true
+          description: Job Permissions
+      required:
+      - job
   securitySchemes:
     jwtAuth:
       type: http

@@ -734,8 +734,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-08-14 10:11:46.021823+00:00'
-                  deleted_time: '2024-11-12'
+                  created_time: '2024-09-10 09:13:04.082467+00:00'
+                  deleted_time: '2024-12-09'
                   aliases: []
                   metadata: {}
                   tags:
@@ -759,8 +759,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-08-14 10:11:46.022103+00:00'
-                  deleted_time: '2024-11-12'
+                  created_time: '2024-09-10 09:13:04.082734+00:00'
+                  deleted_time: '2024-12-09'
                   aliases: []
                   metadata: {}
                   tags:
@@ -780,8 +780,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-08-14 10:11:46.022163+00:00'
-                  deleted_time: '2024-11-12'
+                  created_time: '2024-09-10 09:13:04.082792+00:00'
+                  deleted_time: '2024-12-09'
                   aliases: []
                   metadata: {}
                   tags:
@@ -836,10 +836,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-08-14 10:11:46.022043+00:00
-                    created_time: 2024-08-14 10:11:46.022045+00:00
+                    version: 2024-09-10 09:13:04.082672+00:00
+                    created_time: 2024-09-10 09:13:04.082674+00:00
                     updated_time: null
-                    deleted_time: 2024-11-12
+                    deleted_time: 2024-12-09
                     metadata:
                       investigation:
                         center: null
@@ -901,10 +901,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-08-14 10:11:46.022216+00:00
-                    created_time: 2024-08-14 10:11:46.022218+00:00
+                    version: 2024-09-10 09:13:04.082844+00:00
+                    created_time: 2024-09-10 09:13:04.082845+00:00
                     updated_time: null
-                    deleted_time: 2024-11-12
+                    deleted_time: 2024-12-09
                     metadata:
                       investigation:
                         center: null
@@ -962,10 +962,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-08-14 10:11:46.022264+00:00
-                    created_time: 2024-08-14 10:11:46.022265+00:00
+                    version: 2024-09-10 09:13:04.082891+00:00
+                    created_time: 2024-09-10 09:13:04.082897+00:00
                     updated_time: null
-                    deleted_time: 2024-11-12
+                    deleted_time: 2024-12-09
                     metadata:
                       investigation:
                         center: null
@@ -1030,7 +1030,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2024-11-12
+                    deleted_time: 2024-12-09
                     metadata:
                       investigation:
                         center: null
@@ -1205,7 +1205,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-08-14 10:11:46.022531+00:00
+                    version: 2024-09-10 09:13:04.083091+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1273,7 +1273,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-08-14 10:11:46.022527+00:00
+                    version: 2024-09-10 09:13:04.083087+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1427,9 +1427,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-08-14 10:11:46.022451+00:00
-                  updated_time: 2024-08-14 10:11:46.022452+00:00
-                  deleted_time: 2024-11-12
+                  created_time: 2024-09-10 09:13:04.083014+00:00
+                  updated_time: 2024-09-10 09:13:04.083016+00:00
+                  deleted_time: 2024-12-09
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1560,9 +1560,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-08-14 10:11:46.022451+00:00
-                  updated_time: 2024-08-14 10:11:46.022452+00:00
-                  deleted_time: 2024-11-12
+                  created_time: 2024-09-10 09:13:04.083014+00:00
+                  updated_time: 2024-09-10 09:13:04.083016+00:00
+                  deleted_time: 2024-12-09
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1581,14 +1581,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-08-14 10:11:46.022503+00:00
+                  updated_time: 2024-09-10 09:13:04.083065+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-08-14 10:11:46.022500+00:00
+                  created_time: 2024-09-10 09:13:04.083063+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -2964,6 +2964,14 @@ paths:
         Role: GlobalAdministrator/ DataHubAdministrator/ DataHubUploader
       parameters:
       - in: query
+        name: files
+        schema:
+          type: array
+          items:
+            type: string
+        description: Get Authorization for specified files. </br>  Useful only when
+          your backend is `aws`.
+      - in: query
         name: name
         schema:
           type: string
@@ -2973,7 +2981,7 @@ paths:
         name: path
         schema:
           type: string
-        description: 'Get SAS token under drs/user_id/path '
+        description: 'Get Authorization under drs/user_id/path '
       tags:
       - upload
       security:
@@ -3988,37 +3996,27 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Workspaces'
+                  $ref: '#/components/schemas/Workspace'
               examples:
                 WorkspaceList(expand=false):
                   value:
-                  - - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
-                      name: '{resourceGroups}'
-                      location: '{location}'
-                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
-                      name: '{resourceGroups1}'
-                      location: '{location1}'
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
                   summary: Workspace list (expand=false)
                   description: Workspace information list <br>Information includes
                     the ID, name, and location.
                 WorkspaceList(expand=true):
                   value:
-                  - - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    name: '{resourceGroups}'
+                    location: '{location}'
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
                       name: '{resourceGroups}'
                       location: '{location}'
                       resources:
                       - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
-                        name: '{resources_name}'
-                        type: storage_account_access_method
-                        location: '{location}'
-                        identity:
-                          type: None
-                        url: storage_account_url
-                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}
-                      name: '{resourceGroups1}'
-                      location: '{location1}'
-                      resources:
-                      - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups1}/providers/{resources_type}/{resources_name}
                         name: '{resources_name}'
                         type: storage_account_access_method
                         location: '{location}'
@@ -4091,10 +4089,11 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-  /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
+  /ga4gh/drs/v1/service-info/workspaces/{name}/:
     get:
-      operationId: ga4gh_drs_v1_service_info_workspaces_resources_list
-      description: Obtain OAuth2 client credential token for a given workspace
+      operationId: ga4gh_drs_v1_service_info_workspaces_retrieve
+      description: Obtain OAuth2 client credential token, resources, and container
+        for a given workspace
       parameters:
       - in: path
         name: name
@@ -4105,18 +4104,120 @@ paths:
       - service-info
       security:
       - jwtAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/WorkspacesResources'
+                $ref: '#/components/schemas/Workspace'
+              examples:
+                WorkspaceInformation:
+                  value:
+                    id: str
+                    name: workspace name
+                    location: str
+                    resources:
+                    - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                      name: '{resourceGroups}'
+                      location: '{location}'
+                      resources:
+                      - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}/providers/{resources_type}/{resources_name}
+                        name: '{resources_name}'
+                        type: storage_account_access_method
+                        location: '{location}'
+                        identity:
+                          type: None
+                        url: storage_account_url
+                    tokens: {}
+                  summary: workspace information
+                  description: Workspace information includes resources, and token
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /ga4gh/drs/v1/service-info/workspaces/{name}/resources/:
+    get:
+      operationId: ga4gh_drs_v1_service_info_workspaces_resources_retrieve
+      description: Obtain OAuth2 client credential token for a given workspace. This
+        url will be replaced by `/ga4gh/drs/v1/service-info/workspaces/{name}/`
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - service-info
+      security:
+      - jwtAuth: []
+      deprecated: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
               examples:
                 ResourcesInformation:
                   value:
-                  - id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
+                    id: /subscriptions/{subscription}/resourceGroups/{resourceGroups}
                     name: '{resourceGroups}'
                     location: '{location}'
                     resources:
@@ -5453,7 +5554,9 @@ components:
           type: object
           additionalProperties: {}
           readOnly: true
-          description: Upload token
+          description: 'Upload token. </br>`azure`: {''Authorization'': ''sas_token''}
+            </br>`aws`: {''Authorization'': {''key of url'':''signature of presigned_url''}}
+            </br>'
         type:
           allOf:
           - $ref: '#/components/schemas/TypeE01Enum'
@@ -5488,7 +5591,9 @@ components:
           type: object
           additionalProperties: {}
           readOnly: true
-          description: Upload token
+          description: 'Upload token. </br>`azure`: {''Authorization'': ''sas_token''}
+            </br>`aws`: {''Authorization'': {''key of url'':''signature of presigned_url''}}
+            </br>'
         type:
           allOf:
           - $ref: '#/components/schemas/TypeE01Enum'
@@ -5502,24 +5607,41 @@ components:
       - region
       - type
       - url
-    Workspaces:
+    Workspace:
       type: object
       properties:
-        workspaces:
-          type: object
-          additionalProperties: {}
+        name:
+          type: string
           readOnly: true
-      required:
-      - workspaces
-    WorkspacesResources:
-      type: object
-      properties:
+          description: Workspace name
+        location:
+          type: string
+          readOnly: true
+          description: Workspace location
         resources:
-          type: object
-          additionalProperties: {}
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkspaceResource'
           readOnly: true
+          description: Workspace resources
       required:
+      - location
+      - name
       - resources
+    WorkspaceResource:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+          description: Resource name
+        location:
+          type: string
+          readOnly: true
+          description: Resource location
+      required:
+      - location
+      - name
     drsObjectRequest:
       oneOf:
       - $ref: '#/components/schemas/BlobRequest'

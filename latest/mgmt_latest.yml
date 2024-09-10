@@ -105,6 +105,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search organization by `name` that contains keyword
       tags:
       - Organizations
       security:
@@ -768,6 +773,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search user by `username` or `email` that contains keyword
       tags:
       - Roles
       security:
@@ -1511,6 +1521,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search user by `username` or `email` that contains keyword
       tags:
       - Users
       security:
@@ -2069,6 +2084,11 @@ paths:
                   location: string
                   insight: false
                 description: 'Schema: AzureSeqsLabWorkSpaceSerializer'
+              AWS:
+                value:
+                  workspace: string
+                  location: string
+                description: 'Schema: AzureSeqsLabWorkSpaceSerializer'
       security:
       - jwtAuth: []
       responses:
@@ -2267,6 +2287,67 @@ paths:
           description: ''
 components:
   schemas:
+    AwsIAMUser:
+      type: object
+      description: Mange IAM user for Azure
+      properties:
+        email:
+          type: string
+          format: email
+          description: User Email
+        user_principal_name:
+          type: string
+          format: email
+          description: AWS Login Email. <br>A unique string used to identify the user.
+            The length limit is 128 characters. This value can consist of letters,
+            accented characters, symbols, numbers, and punctuation. This value is
+            specified at the time the user is created and stored as an attribute of
+            the user object in the identity store.
+        username:
+          type: string
+          description: User DisplayName
+      required:
+      - email
+      - user_principal_name
+      - username
+    AwsSeqsLabWorkSpaceRequest:
+      type: object
+      description: Deploy workspace to Aws services
+      properties:
+        workspace:
+          type: string
+          minLength: 1
+          description: Only alphanumeric lowercase characters are allowed in the Workspace
+            name
+          maxLength: 12
+          pattern: ^[a-z0-9]*$
+        location:
+          type: string
+          minLength: 1
+          description: Region for your services
+        redis:
+          type: string
+          description: 'Redis Information. CACHE ARN or redis connection uri(`redis://:{password}@{host}:{port}/{db}`)
+            <br>When running a job, the system will prioritize Redis connections in
+            the following order:<br>1. <b>Provide Your Own Redis Configuration:</b>
+            <br> You can either supply the ARN of an existing Elasticache instance
+            or provide Redis credentials using a URI in the following format: `redis://:{password}@{host}:{port}/{db}`.<br>2.
+            <b>Create New ECS Instance:</b> <br>If no Redis instance is accessible,
+            a new Elastic Cahce will be created when the workspace is created. Note
+            that this will incur a monthly cost.'
+          maxLength: 128
+          minLength: 1
+        eks:
+          type: string
+          description: EKS information.(EKS ARN)<br>When running a job, the system
+            will prioritize eks in the following order:<br>If you have the eks in
+            the same region, you can provide eks information.The eks of arn when you
+            want to create workspace
+          maxLength: 128
+          minLength: 1
+      required:
+      - location
+      - workspace
     AzureIAMUser:
       type: object
       description: Mange IAM user for Azure
@@ -2328,10 +2409,11 @@ components:
     IAMUser:
       oneOf:
       - $ref: '#/components/schemas/AzureIAMUser'
+      - $ref: '#/components/schemas/AwsIAMUser'
       discriminator:
         propertyName: email
         mapping:
-          None: '#/components/schemas/AzureIAMUser'
+          None: '#/components/schemas/AwsIAMUser'
     PaginatedRoleList:
       type: object
       properties:
@@ -2456,10 +2538,20 @@ components:
           items:
             type: string
             description: role name
+        editable:
+          type: boolean
+          description: Whether you can modify this role.
+          readOnly: true
+        restricted:
+          type: boolean
+          description: Whether you can create role based on this role.
+          readOnly: true
       required:
       - description
+      - editable
       - id
       - name
+      - restricted
       - roles
     RoleRequest:
       type: object
@@ -2513,8 +2605,13 @@ components:
           readOnly: true
           default: true
           description: Whether the customer is active.
+        editable:
+          type: boolean
+          description: Whether you can modify this organization.
+          readOnly: true
       required:
       - cus_id
+      - editable
       - is_active
       - tenant
     SeqsLabCustomerRequest:
@@ -2646,7 +2743,12 @@ components:
             additionalProperties: {}
             description: Role Attribute
           description: Roles List
+        editable:
+          type: boolean
+          readOnly: true
+          description: Whether you can modify this user.
       required:
+      - editable
       - email
       - id
       - last_login
@@ -2704,10 +2806,11 @@ components:
     SeqsLabWorkSpaceRequest:
       oneOf:
       - $ref: '#/components/schemas/AzureSeqsLabWorkSpaceRequest'
+      - $ref: '#/components/schemas/AwsSeqsLabWorkSpaceRequest'
       discriminator:
         propertyName: workspace
         mapping:
-          None: '#/components/schemas/AzureSeqsLabWorkSpaceRequest'
+          None: '#/components/schemas/AwsSeqsLabWorkSpaceRequest'
     SeqsLabWorkSpaceStatus:
       type: object
       properties:
