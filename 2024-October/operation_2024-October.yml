@@ -1,0 +1,1218 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (operation-v3)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /operations/{backend}/ama/resource:
+    post:
+      operationId: operations_ama_resource_create
+      parameters:
+      - in: path
+        name: backend
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: sig
+        schema:
+          type: string
+        description: sig will be displayed with the correct secret access
+        required: true
+      tags:
+      - azure
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureManagedOperationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureManagedOperationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureManagedOperationRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureManagedOperation'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /operations/credit/:
+    get:
+      operationId: operations_credit_list
+      description: Usage Credit
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - Credit
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUsageCreditList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /operations/credit/{id}/:
+    get:
+      operationId: operations_credit_retrieve
+      description: Usage Credit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usage credit.
+        required: true
+      tags:
+      - Credit
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageCredit'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    patch:
+      operationId: operations_credit_partial_update
+      description: Usage Credit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usage credit.
+        required: true
+      tags:
+      - Credit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUsageCreditUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUsageCreditUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUsageCreditUpdateRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageCreditUpdate'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+          description: ''
+  /operations/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /operations/usages/:
+    get:
+      operationId: operations_usages_list
+      description: List Usages.
+      parameters:
+      - in: query
+        name: cluster
+        schema:
+          type: array
+          items:
+            type: string
+        description: Search Usages by cluster
+      - in: query
+        name: end_time
+        schema:
+          type: string
+          format: date-time
+        description: Search Usages by end_time which should be less than the provided
+          value (e.g., 2022-04-29 06:18:19.000000)
+      - in: query
+        name: organization
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to organization
+      - in: query
+        name: owner
+        schema:
+          type: boolean
+        description: Filter Usages according to user (true or false)
+      - in: query
+        name: start_time
+        schema:
+          type: string
+          format: date-time
+        description: Search Usages by start_time greater or equal than provided value
+          (e.g., 2022-04-29 06:18:19.000000)
+      - in: query
+        name: user
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to user
+      - in: query
+        name: workspace
+        schema:
+          type: string
+        description: Search Usages by workspace
+      tags:
+      - Usages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usage'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /operations/usages/statistics/:
+    get:
+      operationId: operations_usages_statistics_retrieve
+      description: Get a specific Usage Static Data.
+      parameters:
+      - in: query
+        name: cluster
+        schema:
+          type: array
+          items:
+            type: string
+        description: Search Usages by cluster
+      - in: query
+        name: end_time
+        schema:
+          type: string
+          format: date-time
+        description: Search Usages by end_time which should be less than the provided
+          value (e.g., 2022-04-29 06:18:19.000000)
+      - in: query
+        name: fields
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - all
+            - user
+            - cluster
+            - workspace
+            - organization
+        description: A list of fields to return top information  in descending order
+          of quantity.<br>For the each field, we will provide a dictionary containing
+          the quantity and field.
+      - in: query
+        name: organization
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to organization
+      - in: query
+        name: owner
+        schema:
+          type: boolean
+        description: Filter Usages according to user (true or false)
+      - in: query
+        name: start_time
+        schema:
+          type: string
+          format: date-time
+        description: Search Usages by start_time greater or equal than provided value
+          (e.g., 2022-04-29 06:18:19.000000)
+      - in: query
+        name: user
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter Usages according to user
+      - in: query
+        name: workspace
+        schema:
+          type: string
+        description: Search Usages by workspace
+      tags:
+      - Usages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageStatistic'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+components:
+  schemas:
+    AzureManagedOperation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        applicationId:
+          type: string
+          maxLength: 255
+        billingDetails:
+          type: object
+          additionalProperties: {}
+        plan:
+          type: object
+          additionalProperties: {}
+        eventType:
+          $ref: '#/components/schemas/EventTypeEnum'
+        eventTime:
+          type: string
+          format: date-time
+        provisioningState:
+          $ref: '#/components/schemas/ProvisioningStateEnum'
+        error:
+          type: object
+          additionalProperties: {}
+      required:
+      - applicationId
+      - eventTime
+      - eventType
+      - id
+      - provisioningState
+    AzureManagedOperationRequest:
+      type: object
+      properties:
+        applicationId:
+          type: string
+          minLength: 1
+          maxLength: 255
+        billingDetails:
+          type: object
+          additionalProperties: {}
+        plan:
+          type: object
+          additionalProperties: {}
+        eventType:
+          $ref: '#/components/schemas/EventTypeEnum'
+        eventTime:
+          type: string
+          format: date-time
+        provisioningState:
+          $ref: '#/components/schemas/ProvisioningStateEnum'
+        error:
+          type: object
+          additionalProperties: {}
+      required:
+      - applicationId
+      - eventTime
+      - eventType
+      - provisioningState
+    EventTypeEnum:
+      enum:
+      - PUT
+      - PATCH
+      - DELETE
+      type: string
+      description: |-
+        * `PUT` - Put
+        * `PATCH` - Patch
+        * `DELETE` - Delete
+    PaginatedUsageCreditList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsageCredit'
+    PatchedUsageCreditUpdateRequest:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+          description: Credit Start Time
+        end_time:
+          type: string
+          format: date-time
+          description: Credit Expiration Time
+        credit:
+          type: number
+          format: double
+          description: Original Credit
+    ProvisioningStateEnum:
+      enum:
+      - Accepted
+      - Succeeded
+      - Failed
+      - Deleting
+      - Deleted
+      type: string
+      description: |-
+        * `Accepted` - Accepted
+        * `Succeeded` - Succeeded
+        * `Failed` - Failed
+        * `Deleting` - Deleting
+        * `Deleted` - Deleted
+    ServiceStatistic:
+      type: object
+      properties:
+        fields:
+          allOf:
+          - $ref: '#/components/schemas/ServiceStatisticsFields'
+          readOnly: true
+          description: Return Field
+        unit:
+          type: string
+          description: Service Unit
+        daily:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceStatisticDaily'
+          readOnly: true
+          description: daily quantity
+      required:
+      - daily
+      - fields
+      - unit
+    ServiceStatisticDaily:
+      type: object
+      properties:
+        x:
+          type: string
+          format: date
+          description: Quantity Time
+        y:
+          type: number
+          format: double
+          description: Quantity
+        z:
+          type: number
+          format: double
+          description: Hour
+      required:
+      - x
+      - y
+      - z
+    ServiceStatisticsFields:
+      type: object
+      properties:
+        organization:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticFields'
+        user:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticFields'
+        workspace:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticFields'
+        cluster:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticFields'
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+    StatisticFields:
+      type: object
+      properties:
+        name:
+          type: string
+          description: field name
+        quantity:
+          type: number
+          format: double
+          description: quantity
+        hour:
+          type: number
+          format: double
+          description: hour
+      required:
+      - hour
+      - name
+      - quantity
+    Usage:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date
+        username:
+          type: string
+          readOnly: true
+          description: User Name
+        organization:
+          type: string
+          readOnly: true
+          description: Organization Name
+        unit:
+          type: string
+          readOnly: true
+          description: Dimension Unit
+        user_id:
+          type: string
+          maxLength: 255
+        cus_id:
+          type: string
+          maxLength: 255
+        cluster:
+          type: string
+          maxLength: 64
+        quantity:
+          type: number
+          format: double
+        hour:
+          type: number
+          format: double
+          description: Time usage of the compute cluster.
+        workspace:
+          type: string
+          maxLength: 32
+        livemode:
+          type: boolean
+      required:
+      - cluster
+      - cus_id
+      - organization
+      - start_time
+      - unit
+      - user_id
+      - username
+      - workspace
+    UsageCredit:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        cus_id:
+          type: string
+          maxLength: 255
+        start_time:
+          type: string
+          format: date-time
+          description: Credit Start Time
+        end_time:
+          type: string
+          format: date-time
+          description: Credit Expiration Time
+        use_start_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Credit Start Use Time
+        use_end_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Credit End Use Time
+        credit:
+          type: number
+          format: double
+          description: Original Credit
+        remaining:
+          type: number
+          format: double
+          readOnly: true
+          description: Remaining Credit
+      required:
+      - cus_id
+      - end_time
+      - id
+      - remaining
+      - start_time
+      - use_end_time
+      - use_start_time
+    UsageCreditUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          description: Credit Start Time
+        end_time:
+          type: string
+          format: date-time
+          description: Credit Expiration Time
+        use_start_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Credit Start Use Time
+        use_end_time:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Credit End Use Time
+        credit:
+          type: number
+          format: double
+          description: Original Credit
+        remaining:
+          type: number
+          format: double
+          readOnly: true
+          description: Remaining Credit
+      required:
+      - end_time
+      - id
+      - remaining
+      - start_time
+      - use_end_time
+      - use_start_time
+    UsageStatistic:
+      type: object
+      properties:
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        statistics:
+          allOf:
+          - $ref: '#/components/schemas/ServiceStatistic'
+          readOnly: true
+        table_filter:
+          type: object
+          additionalProperties:
+            type: array
+            items: {}
+          readOnly: true
+      required:
+      - end_time
+      - start_time
+      - statistics
+      - table_filter
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
