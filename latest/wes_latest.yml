@@ -2764,7 +2764,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-09-10 09:13:05.868272+00:00
+                    next_run: 2024-10-07 00:51:35.929978+00:00
                   request:
                     name: string
                     description: string
@@ -2801,7 +2801,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-09-10 09:13:05.868289+00:00
+                    next_run: 2024-10-07 00:51:35.929997+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4767,6 +4767,16 @@ components:
         OutputSerializer aims to validate data with only
         'outputs', 'datasets', 'nb_endpoint', 'lab_endpoint' as key
       properties:
+        code:
+          type: string
+        detail:
+          type: string
+        stdout:
+          type: string
+          readOnly: true
+        stderr:
+          type: string
+          readOnly: true
         outputs:
           type: object
           additionalProperties: {}
@@ -4779,10 +4789,12 @@ components:
         sql_endpoint:
           type: string
           format: uri
-        code:
+        shiny_endpoint:
           type: string
-        detail:
-          type: string
+          format: uri
+      required:
+      - stderr
+      - stdout
     PaginatedRunFlexScheduleList:
       type: object
       properties:

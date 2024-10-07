@@ -190,13 +190,14 @@ paths:
         schema:
           type: boolean
         description: 'Whether create a trial customer.<br>Note: when creating a trial
-          customer, the customer will be deleted after trial_days(default is 3)'
+          organization, the organization will be deleted after trial_days(default
+          is 3)'
       - in: query
         name: trial_days
         schema:
           type: integer
           default: 3
-        description: How long the trial customer will be deleted after this number
+        description: How long the trial organization will be deleted after this number
           of days.
       tags:
       - Organizations

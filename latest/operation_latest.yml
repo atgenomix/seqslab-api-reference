@@ -989,9 +989,14 @@ components:
           type: number
           format: double
           description: Quantity
+        z:
+          type: number
+          format: double
+          description: Hour
       required:
       - x
       - y
+      - z
     ServiceStatisticsFields:
       type: object
       properties:
@@ -1037,7 +1042,12 @@ components:
           type: number
           format: double
           description: quantity
+        hour:
+          type: number
+          format: double
+          description: hour
       required:
+      - hour
       - name
       - quantity
     Usage:
@@ -1070,6 +1080,10 @@ components:
         quantity:
           type: number
           format: double
+        hour:
+          type: number
+          format: double
+          description: Time usage of the compute cluster.
         workspace:
           type: string
           maxLength: 32
