@@ -2764,7 +2764,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-10-07 00:51:35.929978+00:00
+                    next_run: 2024-10-31 13:03:48.892129+00:00
                   request:
                     name: string
                     description: string
@@ -2801,7 +2801,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-10-07 00:51:35.929997+00:00
+                    next_run: 2024-10-31 13:03:48.892147+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3

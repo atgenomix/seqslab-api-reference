@@ -2089,7 +2089,9 @@ paths:
                 value:
                   workspace: string
                   location: string
-                description: 'Schema: AzureSeqsLabWorkSpaceSerializer'
+                  redis: ''
+                  eks: ''
+                description: 'Schema: AwsSeqsLabWorkSpaceSerializer'
       security:
       - jwtAuth: []
       responses:
@@ -2340,10 +2342,11 @@ components:
           minLength: 1
         eks:
           type: string
-          description: EKS information.(EKS ARN)<br>When running a job, the system
-            will prioritize eks in the following order:<br>If you have the eks in
-            the same region, you can provide eks information.The eks of arn when you
-            want to create workspace
+          description: EKS Name <br>1. Do not provide this field if you desire SeqsLab
+            to create a new EKS for each Run.<br>2. Leave this field empty if you
+            desire SeqsLab to create a long-running EKS for this workspace. <br>3.
+            Provide the EKS name or ARN if you want to use an existing EKS cluster.
+            Ensure that the EKS is in the same region.
           maxLength: 128
           minLength: 1
       required:
@@ -2395,6 +2398,14 @@ components:
       required:
       - location
       - workspace
+    BackendEnum:
+      enum:
+      - aws
+      - azure
+      type: string
+      description: |-
+        * `aws` - aws
+        * `azure` - azure
     CreateRequest:
       type: object
       properties:
@@ -2508,6 +2519,11 @@ components:
           type: string
           nullable: true
           minLength: 1
+        config:
+          type: object
+          additionalProperties: {}
+          title: Organization config
+          description: Organization Backend Configs
     PatchedSeqsLabUserUpdateRequest:
       type: object
       properties:
@@ -2610,6 +2626,15 @@ components:
           type: boolean
           description: Whether you can modify this organization.
           readOnly: true
+        backend:
+          allOf:
+          - $ref: '#/components/schemas/BackendEnum'
+          default: azure
+        config:
+          type: object
+          additionalProperties: {}
+          title: Organization config
+          description: Organization Backend Configs
       required:
       - cus_id
       - editable
@@ -2661,6 +2686,15 @@ components:
           type: string
           nullable: true
           minLength: 1
+        backend:
+          allOf:
+          - $ref: '#/components/schemas/BackendEnum'
+          default: azure
+        config:
+          type: object
+          additionalProperties: {}
+          title: Organization config
+          description: Organization Backend Configs
       required:
       - tenant
     SeqsLabCustomerUpdate:
@@ -2687,7 +2721,17 @@ components:
         logo:
           type: string
           nullable: true
+        backend:
+          allOf:
+          - $ref: '#/components/schemas/BackendEnum'
+          readOnly: true
+        config:
+          type: object
+          additionalProperties: {}
+          title: Organization config
+          description: Organization Backend Configs
       required:
+      - backend
       - cus_id
       - subscription_id
       - tenant
@@ -2707,6 +2751,11 @@ components:
           type: string
           nullable: true
           minLength: 1
+        config:
+          type: object
+          additionalProperties: {}
+          title: Organization config
+          description: Organization Backend Configs
     SeqsLabUser:
       type: object
       properties:
