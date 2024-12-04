@@ -734,8 +734,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-10-31 13:03:47.008177+00:00'
-                  deleted_time: '2025-01-29'
+                  created_time: '2024-12-04 17:03:45.147404+00:00'
+                  deleted_time: '2025-03-04'
                   aliases: []
                   metadata: {}
                   tags:
@@ -759,8 +759,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-10-31 13:03:47.008568+00:00'
-                  deleted_time: '2025-01-29'
+                  created_time: '2024-12-04 17:03:45.147747+00:00'
+                  deleted_time: '2025-03-04'
                   aliases: []
                   metadata: {}
                   tags:
@@ -780,8 +780,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2024-10-31 13:03:47.008622+00:00'
-                  deleted_time: '2025-01-29'
+                  created_time: '2024-12-04 17:03:45.147807+00:00'
+                  deleted_time: '2025-03-04'
                   aliases: []
                   metadata: {}
                   tags:
@@ -797,6 +797,18 @@ paths:
                   checksums:
                   - checksum: 3d21be0454bb1dd3ac736344212a79ee
                     type: md5
+                - id: drs_HG002:GermlineAnalysis.ScatterCalling.Calling.HaplotypeCaller.outFileGvcfIdx_run_PFlKpbwRc61NlS7_Dwux
+                  name: HG002.g.vcf.gz.tbi
+                  size: 0
+                  created_time: '2024-12-01T07:24:16'
+                  updated_time: '2024-12-01T07:24:16'
+                  checksums: []
+                  access_methods:
+                  - type: abfss
+                    access_url:
+                      url: abfss://cus-ejajocvzumxvupd@batchws262fccstorage.dfs.core.windows.net/outputs/GermlineAnalysis/26ebea1f-85ab-43c9-827e-6d6e9e282370/call-ScatterCalling/ScatterGATK4HC/03f5029a-f6b8-485c-aec7-3e81d7996f63/call-Calling/shard-0/GATK4HC/65f434fb-ba5a-4a4d-bd3f-171b1119fff2/call-HaplotypeCaller/HG002.g.vcf.gz.tbi/
+                      headers: {}
+                    region: westus2
                 summary: Create multiple blobs
                 description: Create multiple blobs <br>Serializers refer to the DrsObjectSerializer.
               CreateABundleWithDRSID:
@@ -836,10 +848,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-10-31 13:03:47.008514+00:00
-                    created_time: 2024-10-31 13:03:47.008515+00:00
+                    version: 2024-12-04 17:03:45.147691+00:00
+                    created_time: 2024-12-04 17:03:45.147692+00:00
                     updated_time: null
-                    deleted_time: 2025-01-29
+                    deleted_time: 2025-03-04
                     metadata:
                       investigation:
                         center: null
@@ -901,10 +913,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2024-10-31 13:03:47.008673+00:00
-                    created_time: 2024-10-31 13:03:47.008675+00:00
+                    version: 2024-12-04 17:03:45.147860+00:00
+                    created_time: 2024-12-04 17:03:45.147861+00:00
                     updated_time: null
-                    deleted_time: 2025-01-29
+                    deleted_time: 2025-03-04
                     metadata:
                       investigation:
                         center: null
@@ -962,10 +974,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2024-10-31 13:03:47.008718+00:00
-                    created_time: 2024-10-31 13:03:47.008720+00:00
+                    version: 2024-12-04 17:03:45.147907+00:00
+                    created_time: 2024-12-04 17:03:45.147908+00:00
                     updated_time: null
-                    deleted_time: 2025-01-29
+                    deleted_time: 2025-03-04
                     metadata:
                       investigation:
                         center: null
@@ -1030,7 +1042,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2025-01-29
+                    deleted_time: 2025-03-04
                     metadata:
                       investigation:
                         center: null
@@ -1205,7 +1217,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-10-31 13:03:47.008904+00:00
+                    version: 2024-12-04 17:03:45.148137+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1273,7 +1285,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2024-10-31 13:03:47.008899+00:00
+                    version: 2024-12-04 17:03:45.148130+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1427,9 +1439,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-10-31 13:03:47.008826+00:00
-                  updated_time: 2024-10-31 13:03:47.008827+00:00
-                  deleted_time: 2025-01-29
+                  created_time: 2024-12-04 17:03:45.148036+00:00
+                  updated_time: 2024-12-04 17:03:45.148037+00:00
+                  deleted_time: 2025-03-04
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1560,9 +1572,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2024-10-31 13:03:47.008826+00:00
-                  updated_time: 2024-10-31 13:03:47.008827+00:00
-                  deleted_time: 2025-01-29
+                  created_time: 2024-12-04 17:03:45.148036+00:00
+                  updated_time: 2024-12-04 17:03:45.148037+00:00
+                  deleted_time: 2025-03-04
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1581,14 +1593,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2024-10-31 13:03:47.008877+00:00
+                  updated_time: 2024-12-04 17:03:45.148112+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2024-10-31 13:03:47.008875+00:00
+                  created_time: 2024-12-04 17:03:45.148110+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -3261,6 +3273,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -3313,6 +3326,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -4718,6 +4732,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         times:
           type: integer
           maximum: 2147483647
@@ -5176,6 +5191,9 @@ components:
         * `tags` - tags
     PaginatedAccessMethodList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -5196,6 +5214,9 @@ components:
             $ref: '#/components/schemas/AccessMethod'
     PaginatedBlobList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -5216,6 +5237,9 @@ components:
             $ref: '#/components/schemas/Blob'
     PaginatedMetastoreDatabaseList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -5236,6 +5260,9 @@ components:
             $ref: '#/components/schemas/MetastoreDatabase'
     PaginatedMetastoreDatabaseTableList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer

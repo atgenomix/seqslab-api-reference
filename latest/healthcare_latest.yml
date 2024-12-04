@@ -998,6 +998,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -1050,6 +1051,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -1255,6 +1257,7 @@ components:
         user:
           type: string
           readOnly: true
+          nullable: true
       required:
       - charts
       - id
@@ -1282,6 +1285,9 @@ components:
       - name
     PaginatedPagesList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer

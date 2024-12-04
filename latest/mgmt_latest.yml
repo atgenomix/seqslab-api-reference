@@ -1337,6 +1337,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -1389,6 +1390,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -2060,6 +2062,93 @@ paths:
                   summary: Not found
                   description: Not found
           description: ''
+  /management/v3/users/{id}/role/{role_name}/:
+    get:
+      operationId: management_v3_users_role_retrieve
+      description: Get whether user contains the given role
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this user.
+        required: true
+      - in: path
+        name: role_name
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - Users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserContainsRole'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /management/v3/workspaces/:
     put:
       operationId: create_workspace
@@ -2428,6 +2517,9 @@ components:
           None: '#/components/schemas/AwsIAMUser'
     PaginatedRoleList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -2448,6 +2540,9 @@ components:
             $ref: '#/components/schemas/Role'
     PaginatedSeqsLabCustomerList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -2468,6 +2563,9 @@ components:
             $ref: '#/components/schemas/SeqsLabCustomer'
     PaginatedSeqsLabUserList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -2703,9 +2801,11 @@ components:
         subscription_id:
           type: string
           readOnly: true
+          nullable: true
         tenant:
           type: string
           readOnly: true
+          nullable: true
         cus_id:
           type: string
           readOnly: true
@@ -2776,6 +2876,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         organization:
           type: string
           readOnly: true
@@ -2895,6 +2996,14 @@ components:
       required:
       - code
       - detail
+    UserContainsRole:
+      type: object
+      properties:
+        contains:
+          type: boolean
+          description: Whether user contains the given role
+      required:
+      - contains
     UserOrganizationField:
       type: object
       properties:

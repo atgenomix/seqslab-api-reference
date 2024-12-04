@@ -695,6 +695,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -747,6 +748,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -3830,6 +3832,9 @@ components:
         * `Singularity` - Singularity
     PaginatedToolList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -4401,6 +4406,7 @@ components:
         description:
           type: string
           readOnly: true
+          nullable: true
         meta_version:
           type: string
           format: date-time
@@ -4423,6 +4429,7 @@ components:
           type: string
           format: uri
           readOnly: true
+          nullable: true
         versions:
           type: array
           items:

@@ -2764,7 +2764,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-10-31 13:03:48.892129+00:00
+                    next_run: 2024-12-04 17:03:47.479992+00:00
                   request:
                     name: string
                     description: string
@@ -2801,7 +2801,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2024-10-31 13:03:48.892147+00:00
+                    next_run: 2024-12-04 17:03:47.480013+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -3565,6 +3565,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -3617,6 +3618,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -4678,14 +4680,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron
@@ -4804,6 +4808,9 @@ components:
             $ref: '#/components/schemas/RunFlexSchedule'
     PaginatedRunListList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -4824,6 +4831,9 @@ components:
             $ref: '#/components/schemas/RunList'
     PaginatedRunOperatorPipelineList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -4844,6 +4854,9 @@ components:
             $ref: '#/components/schemas/RunOperatorPipeline'
     PaginatedRunRuntimeOptionList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -4949,8 +4962,7 @@ components:
           default: ''
         description:
           type: string
-          nullable: true
-          maxLength: 1023
+          default: ''
         workflow_type:
           allOf:
           - $ref: '#/components/schemas/WorkflowTypeEnum'
@@ -4958,7 +4970,7 @@ components:
         workflow_type_version:
           type: string
           minLength: 1
-          maxLength: 15
+          default: '1.0'
         tags:
           type: array
           items:
@@ -4966,6 +4978,7 @@ components:
             minLength: 1
             description: Label name list e.g., ['TUMOR']
           writeOnly: true
+          default: []
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParamsRequest'
@@ -5010,14 +5023,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron
@@ -5393,15 +5408,14 @@ components:
           default: ''
         description:
           type: string
-          nullable: true
-          maxLength: 1023
+          default: ''
         workflow_type:
           allOf:
           - $ref: '#/components/schemas/WorkflowTypeEnum'
           default: WDL
         workflow_type_version:
           type: string
-          maxLength: 15
+          default: '1.0'
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParams'
@@ -5434,8 +5448,7 @@ components:
           default: ''
         description:
           type: string
-          nullable: true
-          maxLength: 1023
+          default: ''
         workflow_type:
           allOf:
           - $ref: '#/components/schemas/WorkflowTypeEnum'
@@ -5443,7 +5456,7 @@ components:
         workflow_type_version:
           type: string
           minLength: 1
-          maxLength: 15
+          default: '1.0'
         tags:
           type: array
           items:
@@ -5451,6 +5464,7 @@ components:
             minLength: 1
             description: Label name list e.g., ['TUMOR']
           writeOnly: true
+          default: []
         workflow_params:
           allOf:
           - $ref: '#/components/schemas/WorkflowParamsRequest'
@@ -5622,14 +5636,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron
@@ -5649,14 +5665,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron
@@ -5674,7 +5692,9 @@ components:
       - H
       - D
       - W
+      - BW
       - M
+      - BM
       - Q
       - Y
       - C
@@ -5685,7 +5705,9 @@ components:
         * `H` - Hourly
         * `D` - Daily
         * `W` - Weekly
+        * `BW` - Biweekly
         * `M` - Monthly
+        * `BM` - Bimonthly
         * `Q` - Quarterly
         * `Y` - Yearly
         * `C` - Cron
@@ -5709,6 +5731,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         organization:
           type: string
           readOnly: true
@@ -5991,14 +6014,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron
@@ -6018,14 +6043,16 @@ components:
           - $ref: '#/components/schemas/ScheduleTypeEnum'
           default: O
           description: |-
-            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('M', 'Monthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
+            schedule type: (('O', 'Once'), ('I', 'Minutes'), ('H', 'Hourly'), ('D', 'Daily'), ('W', 'Weekly'), ('BW', 'Biweekly'), ('M', 'Monthly'), ('BM', 'Bimonthly'), ('Q', 'Quarterly'), ('Y', 'Yearly'), ('C', 'Cron'))<br>
 
             * `O` - Once
             * `I` - Minutes
             * `H` - Hourly
             * `D` - Daily
             * `W` - Weekly
+            * `BW` - Biweekly
             * `M` - Monthly
+            * `BM` - Bimonthly
             * `Q` - Quarterly
             * `Y` - Yearly
             * `C` - Cron

@@ -412,6 +412,7 @@ paths:
           - br
           - bs
           - ca
+          - ckb
           - cs
           - cy
           - da
@@ -464,6 +465,7 @@ paths:
           - ml
           - mn
           - mr
+          - ms
           - my
           - nb
           - ne
@@ -910,6 +912,9 @@ components:
         * `DELETE` - Delete
     PaginatedUsageCreditList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1119,11 +1124,13 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
           description: Credit Start Use Time
         use_end_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
           description: Credit End Use Time
         credit:
           type: number
@@ -1160,11 +1167,13 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
           description: Credit Start Use Time
         use_end_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
           description: Credit End Use Time
         credit:
           type: number
