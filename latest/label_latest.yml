@@ -59,18 +59,18 @@ paths:
                           name: LabelName
                           extra:
                             color: hex code
-                        id: 54
+                        id: 86
                         children:
                         - data:
                             name: LabelName
                             extra:
                               color: hex code
-                          id: 42
+                          id: 93
                       - data:
                           name: LabelName1
                           extra:
                             color: hex code
-                        id: 53
+                        id: 51
                   summary: Return the Label under user
                   description: Return the label tree under user The return list will
                     appear under the data.
@@ -327,13 +327,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 2
+                    id: 46
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 72
+                      id: 1
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -633,13 +633,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 2
+                    id: 46
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 72
+                      id: 1
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -764,13 +764,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 2
+                    id: 46
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 72
+                      id: 1
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
