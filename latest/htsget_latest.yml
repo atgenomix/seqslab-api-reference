@@ -182,12 +182,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /htsget/v1/reads/service-info/:
     get:
       operationId: htsget_v1_reads_service_info_retrieve
@@ -634,12 +628,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /htsget/v1/variants/service-info/:
     get:

@@ -59,18 +59,18 @@ paths:
                           name: LabelName
                           extra:
                             color: hex code
-                        id: 86
+                        id: 64
                         children:
                         - data:
                             name: LabelName
                             extra:
                               color: hex code
-                          id: 93
+                          id: 88
                       - data:
                           name: LabelName1
                           extra:
                             color: hex code
-                        id: 51
+                        id: 26
                   summary: Return the Label under user
                   description: Return the label tree under user The return list will
                     appear under the data.
@@ -211,18 +211,6 @@ paths:
       security:
       - jwtAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Duplicate'
-              examples:
-                DuplicateLabel:
-                  value:
-                    detail: A root node with the same name(tags) already exists.
-                  summary: Duplicate label
-                  description: 200 Duplicate Label
-          description: ''
         '201':
           description: No response body
         '500':
@@ -284,19 +272,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-              examples:
-                InvalidLabelName:
-                  value:
-                    detail: The label name(tag/a) can only contain alphanumeric characters.
-                    code: bad_request
-                  summary: Invalid label name
-                  description: 400 Bad Request
-          description: ''
   /label/v3/labels/{id}/:
     get:
       operationId: label_v3_labels_list
@@ -327,13 +302,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 46
+                    id: 90
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 1
+                      id: 64
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -494,18 +469,6 @@ paths:
       security:
       - jwtAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Duplicate'
-              examples:
-                DuplicateLabel:
-                  value:
-                    detail: A descendant node with the same name(tags) already exists.
-                  summary: Duplicate label
-                  description: 200 Duplicate Label
-          description: ''
         '201':
           description: No response body
         '404':
@@ -580,19 +543,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-              examples:
-                InvalidLabelName:
-                  value:
-                    detail: The label name(tag/a) can only contain alphanumeric characters.
-                    code: bad_request
-                  summary: Invalid label name
-                  description: 400 Bad Request
-          description: ''
     put:
       operationId: label_v3_labels_update
       description: Move source node to target node.
@@ -633,13 +583,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 46
+                    id: 90
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 1
+                      id: 64
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -715,12 +665,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     patch:
       operationId: label_v3_labels_partial_update
@@ -764,13 +708,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 46
+                    id: 90
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 1
+                      id: 64
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -846,19 +790,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-              examples:
-                BadRequest:
-                  value:
-                    detail: The target node is source node descendant
-                    code: bad_request
-                  summary: Bad Request
-                  description: Bad Request
           description: ''
     delete:
       operationId: label_v3_labels_destroy
@@ -948,12 +879,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /label/v3/schema/:
     get:
@@ -1152,14 +1077,6 @@ paths:
           description: ''
 components:
   schemas:
-    Duplicate:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: The detailed information.
-      required:
-      - detail
     Label:
       type: object
       properties:

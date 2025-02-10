@@ -103,12 +103,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /operations/credit/:
     get:
       operationId: operations_credit_list
@@ -380,12 +374,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /operations/schema/:
     get:

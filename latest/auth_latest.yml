@@ -164,12 +164,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /auth/v3/permissions/{backend}/:
     get:
       operationId: auth_v3_permissions_retrieve
@@ -812,12 +806,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /auth/v3/signin/{backend}/{cus_id}/:
     get:
       operationId: auth_v3_signin_org_retrieve
@@ -987,12 +975,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /auth/v3/token/{backend}/:
     post:
       operationId: auth_v3_token_create
@@ -1106,12 +1088,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /auth/v3/token/refresh/:
     post:

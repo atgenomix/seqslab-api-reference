@@ -467,12 +467,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: management_v3_organizations_partial_update
       description: Partially modify a specific organization.
@@ -563,12 +557,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: management_v3_organizations_destroy
@@ -744,12 +732,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /management/v3/roles/:
     get:
@@ -1120,12 +1102,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: management_v3_roles_partial_update
       description: Partially modify a specific role.
@@ -1216,12 +1192,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: management_v3_roles_destroy
@@ -1870,12 +1840,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: management_v3_users_partial_update
       description: Partially modify a specific user.
@@ -1966,12 +1930,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: management_v3_users_destroy
@@ -2264,12 +2222,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /management/v3/workspaces/status/{task_id}/:
     get:

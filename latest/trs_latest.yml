@@ -386,12 +386,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: trs_v2_container_registry_partial_update
       description: Update username or password for specified Container Registry
@@ -482,12 +476,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: trs_v2_container_registry_destroy
@@ -1214,12 +1202,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: trs_v2_service_info_partial_update
       description: Partially modify a specific tool discovery service information
@@ -1310,12 +1292,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: trs_v2_service_info_destroy
@@ -1878,12 +1854,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: trs_v2_tools_partial_update
       description: Partially modify a specific tool
@@ -1983,12 +1953,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: trs_v2_tools_destroy
@@ -2277,12 +2241,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /trs/v2/tools/{id}/versions/{version_id}/:
     get:
       operationId: trs_v2_tools_versions_retrieve_2
@@ -2498,12 +2456,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: trs_v2_tools_versions_partial_update
       description: Partially modify a specific tool version
@@ -2618,12 +2570,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: trs_v2_tools_versions_destroy
@@ -3220,12 +3166,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     put:
       operationId: trs_v2_tools_versions_files_update
       description: Update specific tool files
@@ -3326,12 +3266,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     delete:
       operationId: trs_v2_tools_versions_files_destroy
       description: Delete tool files
@@ -3421,12 +3355,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /trs/v2/tools/{id}/versions/{version_id}/{type}/tests/:
     get:
@@ -3626,12 +3554,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
 components:
   schemas:

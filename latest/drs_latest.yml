@@ -395,12 +395,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /ga4gh/drs/v1/contents/{object_id}/access/:
     post:
       operationId: ga4gh_drs_v1_contents_access_create
@@ -478,12 +472,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /ga4gh/drs/v1/contents/{object_id}/stream/:
     get:
@@ -734,8 +722,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-01-05 23:39:22.084930+00:00'
-                  deleted_time: '2025-04-05'
+                  created_time: '2025-02-10 03:33:49.268406+00:00'
+                  deleted_time: '2025-05-11'
                   aliases: []
                   metadata: {}
                   tags:
@@ -759,8 +747,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-01-05 23:39:22.085310+00:00'
-                  deleted_time: '2025-04-05'
+                  created_time: '2025-02-10 03:33:49.268754+00:00'
+                  deleted_time: '2025-05-11'
                   aliases: []
                   metadata: {}
                   tags:
@@ -780,8 +768,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-01-05 23:39:22.085370+00:00'
-                  deleted_time: '2025-04-05'
+                  created_time: '2025-02-10 03:33:49.268812+00:00'
+                  deleted_time: '2025-05-11'
                   aliases: []
                   metadata: {}
                   tags:
@@ -848,10 +836,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2025-01-05 23:39:22.085252+00:00
-                    created_time: 2025-01-05 23:39:22.085253+00:00
+                    version: 2025-02-10 03:33:49.268695+00:00
+                    created_time: 2025-02-10 03:33:49.268696+00:00
                     updated_time: null
-                    deleted_time: 2025-04-05
+                    deleted_time: 2025-05-11
                     metadata:
                       investigation:
                         center: null
@@ -913,10 +901,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2025-01-05 23:39:22.085428+00:00
-                    created_time: 2025-01-05 23:39:22.085429+00:00
+                    version: 2025-02-10 03:33:49.268864+00:00
+                    created_time: 2025-02-10 03:33:49.268865+00:00
                     updated_time: null
-                    deleted_time: 2025-04-05
+                    deleted_time: 2025-05-11
                     metadata:
                       investigation:
                         center: null
@@ -974,10 +962,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2025-01-05 23:39:22.085481+00:00
-                    created_time: 2025-01-05 23:39:22.085482+00:00
+                    version: 2025-02-10 03:33:49.268918+00:00
+                    created_time: 2025-02-10 03:33:49.268919+00:00
                     updated_time: null
-                    deleted_time: 2025-04-05
+                    deleted_time: 2025-05-11
                     metadata:
                       investigation:
                         center: null
@@ -1042,7 +1030,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2025-04-05
+                    deleted_time: 2025-05-11
                     metadata:
                       investigation:
                         center: null
@@ -1217,7 +1205,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2025-01-05 23:39:22.085668+00:00
+                    version: 2025-02-10 03:33:49.269125+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1285,7 +1273,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2025-01-05 23:39:22.085663+00:00
+                    version: 2025-02-10 03:33:49.269098+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1439,9 +1427,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2025-01-05 23:39:22.085589+00:00
-                  updated_time: 2025-01-05 23:39:22.085590+00:00
-                  deleted_time: 2025-04-05
+                  created_time: 2025-02-10 03:33:49.269030+00:00
+                  updated_time: 2025-02-10 03:33:49.269031+00:00
+                  deleted_time: 2025-05-11
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1531,12 +1519,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: ga4gh_drs_v1_objects_partial_update
       description: Partially modify a specific DRS object updated_time, metadata,
@@ -1572,9 +1554,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2025-01-05 23:39:22.085589+00:00
-                  updated_time: 2025-01-05 23:39:22.085590+00:00
-                  deleted_time: 2025-04-05
+                  created_time: 2025-02-10 03:33:49.269030+00:00
+                  updated_time: 2025-02-10 03:33:49.269031+00:00
+                  deleted_time: 2025-05-11
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1593,14 +1575,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2025-01-05 23:39:22.085640+00:00
+                  updated_time: 2025-02-10 03:33:49.269078+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2025-01-05 23:39:22.085639+00:00
+                  created_time: 2025-02-10 03:33:49.269077+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -1712,12 +1694,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: ga4gh_drs_v1_objects_destroy
@@ -2079,12 +2055,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /ga4gh/drs/v1/objects/{object_id}/metastore/:
     get:
@@ -2535,12 +2505,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /ga4gh/drs/v1/objects/downloads/:
     get:
       operationId: ga4gh_drs_v1_objects_downloads_retrieve
@@ -2724,12 +2688,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /ga4gh/drs/v1/objects/list_properties/:
     get:
@@ -2960,12 +2918,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /ga4gh/drs/v1/objects/upload/:
     get:
@@ -3792,12 +3744,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: ga4gh_drs_v1_service_info_partial_update
       description: Partially modify a specific datahub repository service information
@@ -3888,12 +3834,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: ga4gh_drs_v1_service_info_destroy
@@ -4357,7 +4297,7 @@ components:
         url:
           type: string
           nullable: true
-          format: uri
+          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
       required:
       - headers
       - url
@@ -4374,7 +4314,7 @@ components:
           type: string
           nullable: true
           minLength: 1
-          format: uri
+          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
       required:
       - headers
       - url
@@ -4590,6 +4530,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccessMethodRequest'
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 512
     BundleObjectRequest:
       type: object
       description: Adds nested create feature
@@ -5336,6 +5281,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccessMethodRequest'
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 512
     PatchedBundleUpdateRequest:
       type: object
       description: Adds nested create feature

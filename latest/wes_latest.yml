@@ -485,12 +485,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: wes_v1_operator_pipelines_partial_update
       description: Patch a specific operator pipeline
@@ -620,12 +614,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: wes_v1_operator_pipelines_destroy
@@ -1238,12 +1226,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/runs/{run_id}/files/:
     get:
       operationId: wes_v1_runs_files_retrieve
@@ -1672,12 +1654,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/runs/{run_id}/stop/:
     delete:
       operationId: wes_v1_runs_stop_destroy
@@ -1757,12 +1733,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /wes/v1/runs/dryrun/:
     post:
@@ -1856,12 +1826,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/runs/labels/:
     patch:
       operationId: wes_v1_runs_labels_partial_update
@@ -1940,12 +1904,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /wes/v1/runs/logs/{run_log_id}/:
     get:
@@ -2480,12 +2438,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: wes_v1_runtime_options_partial_update
       description: Patch a specific runtime option
@@ -2577,12 +2529,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: wes_v1_runtime_options_destroy
@@ -2764,7 +2710,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-01-05 23:39:24.682616+00:00
+                    next_run: 2025-02-10 03:33:51.671000+00:00
                   request:
                     name: string
                     description: string
@@ -2801,7 +2747,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-01-05 23:39:24.682638+00:00
+                    next_run: 2025-02-10 03:33:51.671025+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -3177,12 +3123,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/schedules/{id}/schedule/:
     patch:
       operationId: wes_v1_schedules_schedule_partial_update
@@ -3270,12 +3210,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/schedules/graph/:
     post:
       operationId: wes_v1_schedules_graph_create
@@ -3360,12 +3294,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/schedules/parameters/:
     patch:
       operationId: wes_v1_schedules_parameters_partial_update
@@ -3447,12 +3375,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
   /wes/v1/schedules/stop/:
     post:
       operationId: wes_v1_schedules_stop_create
@@ -3533,12 +3455,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
   /wes/v1/schema/:
     get:
@@ -4084,12 +4000,6 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
-          description: ''
     patch:
       operationId: wes_v1_service_info_partial_update
       description: Partially modify a specific workflow execution service information
@@ -4180,12 +4090,6 @@ paths:
                     code: permission_denied
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StandardSerializers'
           description: ''
     delete:
       operationId: wes_v1_service_info_destroy
@@ -5259,7 +5163,7 @@ components:
         storage_url:
           type: string
           nullable: true
-          format: uri
+          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
           maxLength: 500
         exit_code:
           type: integer
