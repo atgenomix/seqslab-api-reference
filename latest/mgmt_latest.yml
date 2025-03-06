@@ -2570,10 +2570,10 @@ components:
           nullable: true
           minLength: 1
         config:
-          type: object
-          additionalProperties: {}
-          title: Organization config
-          description: Organization Backend Configs
+          allOf:
+          - $ref: '#/components/schemas/SeqsLabCustomerConfigRequest'
+          default: {}
+          description: Additional backend information.
     PatchedSeqsLabUserUpdateRequest:
       type: object
       properties:
@@ -2641,6 +2641,32 @@ components:
       - description
       - name
       - roles
+    SeqsLabBeeGFS:
+      type: object
+      properties:
+        server:
+          type: string
+        password:
+          type: string
+        nfs:
+          $ref: '#/components/schemas/SeqsLabNfs'
+      required:
+      - password
+      - server
+    SeqsLabBeeGFSRequest:
+      type: object
+      properties:
+        server:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+        nfs:
+          $ref: '#/components/schemas/SeqsLabNfsRequest'
+      required:
+      - password
+      - server
     SeqsLabCustomer:
       type: object
       properties:
@@ -2681,15 +2707,31 @@ components:
           - $ref: '#/components/schemas/BackendEnum'
           default: azure
         config:
-          type: object
-          additionalProperties: {}
-          title: Organization config
-          description: Organization Backend Configs
+          allOf:
+          - $ref: '#/components/schemas/SeqsLabCustomerConfig'
+          default: {}
+          description: Additional backend information.
       required:
       - cus_id
       - editable
       - is_active
       - tenant
+    SeqsLabCustomerConfig:
+      type: object
+      properties:
+        local:
+          $ref: '#/components/schemas/SeqsLabLocal'
+        roles:
+          type: object
+          additionalProperties: {}
+    SeqsLabCustomerConfigRequest:
+      type: object
+      properties:
+        local:
+          $ref: '#/components/schemas/SeqsLabLocalRequest'
+        roles:
+          type: object
+          additionalProperties: {}
     SeqsLabCustomerRequest:
       type: object
       properties:
@@ -2741,10 +2783,10 @@ components:
           - $ref: '#/components/schemas/BackendEnum'
           default: azure
         config:
-          type: object
-          additionalProperties: {}
-          title: Organization config
-          description: Organization Backend Configs
+          allOf:
+          - $ref: '#/components/schemas/SeqsLabCustomerConfigRequest'
+          default: {}
+          description: Additional backend information.
       required:
       - tenant
     SeqsLabCustomerUpdate:
@@ -2778,10 +2820,10 @@ components:
           - $ref: '#/components/schemas/BackendEnum'
           readOnly: true
         config:
-          type: object
-          additionalProperties: {}
-          title: Organization config
-          description: Organization Backend Configs
+          allOf:
+          - $ref: '#/components/schemas/SeqsLabCustomerConfig'
+          default: {}
+          description: Additional backend information.
       required:
       - backend
       - cus_id
@@ -2804,10 +2846,172 @@ components:
           nullable: true
           minLength: 1
         config:
-          type: object
-          additionalProperties: {}
-          title: Organization config
-          description: Organization Backend Configs
+          allOf:
+          - $ref: '#/components/schemas/SeqsLabCustomerConfigRequest'
+          default: {}
+          description: Additional backend information.
+    SeqsLabFileSystem:
+      type: object
+      properties:
+        mount_path:
+          type: string
+        beegfs:
+          $ref: '#/components/schemas/SeqsLabBeeGFS'
+        nfs:
+          $ref: '#/components/schemas/SeqsLabNfs'
+    SeqsLabFileSystemRequest:
+      type: object
+      properties:
+        mount_path:
+          type: string
+          minLength: 1
+        beegfs:
+          $ref: '#/components/schemas/SeqsLabBeeGFSRequest'
+        nfs:
+          $ref: '#/components/schemas/SeqsLabNfsRequest'
+    SeqsLabKubeCluster:
+      type: object
+      properties:
+        name:
+          type: string
+        server:
+          type: string
+          format: uri
+        certificate_authority_data:
+          type: string
+      required:
+      - certificate_authority_data
+      - name
+      - server
+    SeqsLabKubeClusterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        server:
+          type: string
+          format: uri
+          minLength: 1
+        certificate_authority_data:
+          type: string
+          minLength: 1
+      required:
+      - certificate_authority_data
+      - name
+      - server
+    SeqsLabKubeConfig:
+      type: object
+      properties:
+        name:
+          type: string
+        cluster:
+          $ref: '#/components/schemas/SeqsLabKubeCluster'
+        user:
+          $ref: '#/components/schemas/SeqsLabKubeUser'
+      required:
+      - cluster
+      - name
+      - user
+    SeqsLabKubeConfigRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        cluster:
+          $ref: '#/components/schemas/SeqsLabKubeClusterRequest'
+        user:
+          $ref: '#/components/schemas/SeqsLabKubeUserRequest'
+      required:
+      - cluster
+      - name
+      - user
+    SeqsLabKubeUser:
+      type: object
+      properties:
+        name:
+          type: string
+        client_certificate_data:
+          type: string
+        client_key_data:
+          type: string
+        token:
+          type: string
+      required:
+      - client_certificate_data
+      - client_key_data
+      - name
+      - token
+    SeqsLabKubeUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        client_certificate_data:
+          type: string
+          minLength: 1
+        client_key_data:
+          type: string
+          minLength: 1
+        token:
+          type: string
+          minLength: 1
+      required:
+      - client_certificate_data
+      - client_key_data
+      - name
+      - token
+    SeqsLabLocal:
+      type: object
+      properties:
+        workspace:
+          type: string
+        filesystem:
+          $ref: '#/components/schemas/SeqsLabFileSystem'
+        kube_config:
+          $ref: '#/components/schemas/SeqsLabKubeConfig'
+      required:
+      - filesystem
+      - kube_config
+      - workspace
+    SeqsLabLocalRequest:
+      type: object
+      properties:
+        workspace:
+          type: string
+          minLength: 1
+        filesystem:
+          $ref: '#/components/schemas/SeqsLabFileSystemRequest'
+        kube_config:
+          $ref: '#/components/schemas/SeqsLabKubeConfigRequest'
+      required:
+      - filesystem
+      - kube_config
+      - workspace
+    SeqsLabNfs:
+      type: object
+      properties:
+        server:
+          type: string
+        path:
+          type: string
+      required:
+      - path
+      - server
+    SeqsLabNfsRequest:
+      type: object
+      properties:
+        server:
+          type: string
+          minLength: 1
+        path:
+          type: string
+          minLength: 1
+      required:
+      - path
+      - server
     SeqsLabUser:
       type: object
       properties:
