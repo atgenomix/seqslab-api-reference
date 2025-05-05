@@ -722,8 +722,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-04-01 04:02:26.918027+00:00'
-                  deleted_time: '2025-06-30'
+                  created_time: '2025-05-05 23:36:52.379320+00:00'
+                  deleted_time: '2025-08-03'
                   aliases: []
                   metadata: {}
                   tags:
@@ -747,8 +747,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-04-01 04:02:26.918381+00:00'
-                  deleted_time: '2025-06-30'
+                  created_time: '2025-05-05 23:36:52.379710+00:00'
+                  deleted_time: '2025-08-03'
                   aliases: []
                   metadata: {}
                   tags:
@@ -768,8 +768,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2025-04-01 04:02:26.918438+00:00'
-                  deleted_time: '2025-06-30'
+                  created_time: '2025-05-05 23:36:52.379764+00:00'
+                  deleted_time: '2025-08-03'
                   aliases: []
                   metadata: {}
                   tags:
@@ -836,10 +836,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2025-04-01 04:02:26.918326+00:00
-                    created_time: 2025-04-01 04:02:26.918327+00:00
+                    version: 2025-05-05 23:36:52.379651+00:00
+                    created_time: 2025-05-05 23:36:52.379652+00:00
                     updated_time: null
-                    deleted_time: 2025-06-30
+                    deleted_time: 2025-08-03
                     metadata:
                       investigation:
                         center: null
@@ -901,10 +901,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2025-04-01 04:02:26.918489+00:00
-                    created_time: 2025-04-01 04:02:26.918490+00:00
+                    version: 2025-05-05 23:36:52.379816+00:00
+                    created_time: 2025-05-05 23:36:52.379817+00:00
                     updated_time: null
-                    deleted_time: 2025-06-30
+                    deleted_time: 2025-08-03
                     metadata:
                       investigation:
                         center: null
@@ -962,10 +962,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2025-04-01 04:02:26.918538+00:00
-                    created_time: 2025-04-01 04:02:26.918539+00:00
+                    version: 2025-05-05 23:36:52.379894+00:00
+                    created_time: 2025-05-05 23:36:52.379896+00:00
                     updated_time: null
-                    deleted_time: 2025-06-30
+                    deleted_time: 2025-08-03
                     metadata:
                       investigation:
                         center: null
@@ -1030,7 +1030,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2025-06-30
+                    deleted_time: 2025-08-03
                     metadata:
                       investigation:
                         center: null
@@ -1205,7 +1205,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2025-04-01 04:02:26.918719+00:00
+                    version: 2025-05-05 23:36:52.380107+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1273,7 +1273,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2025-04-01 04:02:26.918711+00:00
+                    version: 2025-05-05 23:36:52.380100+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1427,9 +1427,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2025-04-01 04:02:26.918644+00:00
-                  updated_time: 2025-04-01 04:02:26.918645+00:00
-                  deleted_time: 2025-06-30
+                  created_time: 2025-05-05 23:36:52.380029+00:00
+                  updated_time: 2025-05-05 23:36:52.380030+00:00
+                  deleted_time: 2025-08-03
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1554,9 +1554,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2025-04-01 04:02:26.918644+00:00
-                  updated_time: 2025-04-01 04:02:26.918645+00:00
-                  deleted_time: 2025-06-30
+                  created_time: 2025-05-05 23:36:52.380029+00:00
+                  updated_time: 2025-05-05 23:36:52.380030+00:00
+                  deleted_time: 2025-08-03
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1575,14 +1575,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2025-04-01 04:02:26.918692+00:00
+                  updated_time: 2025-05-05 23:36:52.380077+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2025-04-01 04:02:26.918691+00:00
+                  created_time: 2025-05-05 23:36:52.380075+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -4260,7 +4260,7 @@ components:
           type: integer
           readOnly: true
         type:
-          $ref: '#/components/schemas/TypeE01Enum'
+          $ref: '#/components/schemas/Type7d9Enum'
         region:
           type: string
           nullable: true
@@ -4275,7 +4275,7 @@ components:
       description: Access method
       properties:
         type:
-          $ref: '#/components/schemas/TypeE01Enum'
+          $ref: '#/components/schemas/Type7d9Enum'
         region:
           type: string
           nullable: true
@@ -4297,7 +4297,7 @@ components:
         url:
           type: string
           nullable: true
-          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
+          pattern: ^(?:[a-z0-9.+-:]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#;][^\s]*)?$
       required:
       - headers
       - url
@@ -4314,7 +4314,7 @@ components:
           type: string
           nullable: true
           minLength: 1
-          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
+          pattern: ^(?:[a-z0-9.+-:]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#;][^\s]*)?$
       required:
       - headers
       - url
@@ -5544,7 +5544,7 @@ components:
         * `MANAGED_TABLE` - MANAGED_TABLE
         * `EXTERNAL_TABLE` - EXTERNAL_TABLE
         * `VIRTUAL_VIEW` - VIRTUAL_VIEW
-    TypeE01Enum:
+    Type7d9Enum:
       enum:
       - s3a
       - gs
@@ -5553,6 +5553,7 @@ components:
       - https
       - file
       - oci
+      - jdbc
       type: string
       description: |-
         * `s3a` - Amazon S3A File System
@@ -5562,6 +5563,7 @@ components:
         * `https` - HTTPS
         * `file` - Local file system
         * `oci` - Oracle Cloud Infrastructure Object Storage
+        * `jdbc` - Java Database Connectivity
     Upload:
       type: object
       properties:
@@ -5578,7 +5580,7 @@ components:
             </br>'
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeE01Enum'
+          - $ref: '#/components/schemas/Type7d9Enum'
           readOnly: true
         region:
           type: string
@@ -5615,7 +5617,7 @@ components:
             </br>'
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeE01Enum'
+          - $ref: '#/components/schemas/Type7d9Enum'
           readOnly: true
         region:
           type: string

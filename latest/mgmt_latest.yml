@@ -2942,7 +2942,6 @@ components:
       - client_certificate_data
       - client_key_data
       - name
-      - token
     SeqsLabKubeUserRequest:
       type: object
       properties:
@@ -2962,7 +2961,6 @@ components:
       - client_certificate_data
       - client_key_data
       - name
-      - token
     SeqsLabLocal:
       type: object
       properties:

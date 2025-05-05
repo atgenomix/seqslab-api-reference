@@ -1238,6 +1238,13 @@ paths:
           enum:
           - zip
         description: Returns a ZIP file of all files when format=zip is specified
+      - in: query
+        name: mgmt
+        schema:
+          type: boolean
+          default: false
+        description: Returns files related to Run management. Otherwise files for
+          Run initialization.
       - in: path
         name: run_id
         schema:
@@ -2710,7 +2717,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-04-01 04:02:29.359467+00:00
+                    next_run: 2025-05-05 23:36:54.917929+00:00
                   request:
                     name: string
                     description: string
@@ -2747,7 +2754,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-04-01 04:02:29.359484+00:00
+                    next_run: 2025-05-05 23:36:54.917947+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -5163,7 +5170,7 @@ components:
         storage_url:
           type: string
           nullable: true
-          pattern: ^(?:[a-z0-9.+-]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?$
+          pattern: ^(?:[a-z0-9.+-:]*):(//|///)(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)(?:\.(?:0|25[0-5]|2[0-4]\d|1\d?\d?|[1-9]\d?)){3}|\[[0-9a-f:.]+\]|([a-z\u00a1-\uffff0-9](?:[a-z\u00a1-\uffff0-9-]{0,61}[a-z\u00a1-\uffff0-9])?(?:\.(?!-)[a-z\u00a1-\uffff0-9-]{1,63}(?<!-))*(?!-)(?:[a-z\u00a1-\uffff-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#;][^\s]*)?$
           maxLength: 500
         exit_code:
           type: integer
