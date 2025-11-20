@@ -5,6 +5,113 @@ info:
   description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
     cloud-native enterprise biomedical informatics platform.
 paths:
+  /healthcare/v3/collections/phenotypic_features/:
+    post:
+      operationId: healthcare_v3_collections_phenotypic_features_create
+      description: Query phenotypic features using semantic search with ChromaDB.
+        Supports filtering by metadata (where), document content (where_document),
+        and customizable result inclusion. Returns results in PhenotypicFeature-compatible
+        format.
+      summary: Semantic query for phenotypic features
+      tags:
+      - collections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticQueryRequestRequest'
+            examples:
+              PhenotypicFeaturesQueryExample:
+                value:
+                  query_texts:
+                  - HP:0001250
+                  - seizure
+                  n_results: 10
+                  where:
+                    $and:
+                    - color: red
+                    - price:
+                        $gte: 4.2
+                  where_document:
+                    $contains: epilepsy
+                  include:
+                  - documents
+                  - embeddings
+                  - metadatas
+                  - distances
+                summary: Phenotypic Features Query Example
+                description: Example query searching for seizure-related phenotypic
+                  features for a specific patient, filtering documents containing
+                  'epilepsy'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticQueryResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /healthcare/v3/pages/:
     get:
       operationId: healthcare_v3_pages_list
@@ -1192,6 +1299,18 @@ components:
       - model
       - query
       - variables
+    IncludeEnum:
+      enum:
+      - documents
+      - embeddings
+      - metadatas
+      - distances
+      type: string
+      description: |-
+        * `documents` - documents
+        * `embeddings` - embeddings
+        * `metadatas` - metadatas
+        * `distances` - distances
     ModelEnum:
       enum:
       - Phenopacket
@@ -1313,6 +1432,92 @@ components:
           type: string
           nullable: true
           minLength: 1
+    PhenotypicFeatureSearchResult:
+      type: object
+      description: |-
+        Serializer for individual phenotypic feature search result.
+        Contains the ontology class (id and label) extracted from ChromaDB.
+      properties:
+        type:
+          type: object
+          additionalProperties: {}
+          description: 'OntologyClass with ''id'' and ''label'' fields (e.g., {''id'':
+            ''HP:0001250'', ''label'': ''Seizure''})'
+      required:
+      - type
+    SemanticQueryRequestRequest:
+      type: object
+      properties:
+        query_texts:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 512
+          minItems: 1
+        n_results:
+          type: integer
+          default: 5
+        where:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        where_document:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        include:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncludeEnum'
+      required:
+      - query_texts
+    SemanticQueryResponse:
+      type: object
+      description: |-
+        Response serializer for semantic query results.
+        Returns transformed phenotypic features, raw ChromaDB results, and query parameters.
+      properties:
+        phenotypicFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeatureSearchResult'
+          description: Transformed list of phenotypic features with OntologyClass
+            structure
+        result:
+          type: object
+          additionalProperties: {}
+          description: Raw ChromaDB query results (structure depends on 'include'
+            parameter)
+        query_texts:
+          type: array
+          items:
+            type: string
+          description: The query texts used for semantic search
+        n_results:
+          type: integer
+          description: Number of results requested per query
+        where:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Metadata filter conditions applied to the search
+        where_document:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Document content filter conditions applied to the search
+        include:
+          type: array
+          items:
+            type: string
+          description: Fields included in the raw ChromaDB result (documents, embeddings,
+            metadatas, distances)
+      required:
+      - n_results
+      - phenotypicFeatures
+      - query_texts
+      - result
     StandardSerializers:
       type: object
       properties:
