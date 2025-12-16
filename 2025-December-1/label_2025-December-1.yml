@@ -1,0 +1,1248 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (label-v3)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /label/v3/labels/:
+    get:
+      operationId: list label under user
+      description: List Labels
+      parameters:
+      - in: query
+        name: order
+        schema:
+          enum:
+          - name
+          - -name
+        description: Order label by one of 'name', '-name'
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search labels according to the keyword
+      tags:
+      - label
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLabelResponseList'
+              examples:
+                ReturnTheLabelUnderUser:
+                  value:
+                    count: 123
+                    next: http://api.example.org/accounts/?page=4
+                    previous: http://api.example.org/accounts/?page=2
+                    results:
+                    - count: 123
+                      next: http://localhost:8000/label/v3/labels/?page=2
+                      previous: null
+                      results:
+                      - data:
+                          name: LabelName
+                          extra:
+                            color: hex code
+                        id: 21
+                        children:
+                        - data:
+                            name: LabelName
+                            extra:
+                              color: hex code
+                          id: 59
+                      - data:
+                          name: LabelName1
+                          extra:
+                            color: hex code
+                        id: 63
+                  summary: Return the Label under user
+                  description: Return the label tree under user The return list will
+                    appear under the data.
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: create label by user
+      description: Create the Label under a root
+      tags:
+      - label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelRequest'
+            examples:
+              SingleTree:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                summary: Single Tree
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+              SingleTreeWithChildren:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                  children:
+                  - data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                summary: Single Tree With Children
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+              MultipleTreeWithChildren:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                  children:
+                  - data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                - data:
+                    name: LabelName1
+                    extra:
+                      color: hex code
+                summary: Multiple Tree With Children
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /label/v3/labels/{id}/:
+    get:
+      operationId: label_v3_labels_list
+      description: Return the Label tree by the label ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this label.
+        required: true
+      tags:
+      - label
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LabelResponse'
+              examples:
+                ReturnTheLabelTreeByTheLabelId:
+                  value:
+                  - data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                    id: 20
+                    children:
+                    - data:
+                        name: LabelName
+                        extra:
+                          color: hex code
+                      id: 76
+                  summary: Return the Label tree by the label id
+                  description: Return the label tree by label ID The return list will
+                    appear under the data.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found
+                    status: 404
+                  summary: Not Found
+                  description: 404 Not Found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: label_v3_labels_create
+      description: Add a Label under the specified Label ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this label.
+        required: true
+      tags:
+      - label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelIDPostRequest'
+            examples:
+              SingleTree:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                summary: Single Tree
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+              SingleTreeWithChildren:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                  children:
+                  - data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                summary: Single Tree With Children
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+              MultipleTreeWithChildren:
+                value:
+                - data:
+                    name: LabelName
+                    extra:
+                      color: hex code
+                  children:
+                  - data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                - data:
+                    name: LabelName1
+                    extra:
+                      color: hex code
+                summary: Multiple Tree With Children
+                description: 'This request body is in JSON format. For this JSON,
+                  it is a list. <br/>Each list contains many dictionaries of data.
+                  <br/>Each dictionary of data refers to one root tree.  Each root
+                  tree must contain data. <br/>When the root tree has children nodes,
+                  the children must pass through the dictionary. <br/>The data is
+                  a dictionary. Each dictionary of data must contain two parameters,
+                  name (string) and extra (dictionary). <br/>Children refers to the
+                  children of the data, which is a list. One child can contain many
+                  dictionaries of data. '
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          description: No response body
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found
+                    status: 404
+                  summary: Not Found
+                  description: 404 Not Found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    put:
+      operationId: label_v3_labels_update
+      description: Move source node to target node.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this label.
+        required: true
+      tags:
+      - label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelIDMoveRequest'
+            examples:
+              MoveNodeToTargetNode:
+                value:
+                  target: node_id
+                summary: Move node to target node
+                description: 'Move node to target node target node id: 0 refers to
+                  the root, other is the default node ID'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelResponse'
+              examples:
+                ReturnTheLabelTreeByTheLabelId:
+                  value:
+                    data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                    id: 20
+                    children:
+                    - data:
+                        name: LabelName
+                        extra:
+                          color: hex code
+                      id: 76
+                  summary: Return the Label tree by the label id
+                  description: Return the label tree by label ID The return list will
+                    appear under the data.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found
+                    status: 404
+                  summary: Not Found
+                  description: 404 Not Found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    patch:
+      operationId: label_v3_labels_partial_update
+      description: Update the Label for the pk, including the name and other details
+        of the specified label.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this label.
+        required: true
+      tags:
+      - label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLabelIDRequest'
+            examples:
+              UpdateTheValueForTheNode:
+                value:
+                  name: LabelName
+                  extra:
+                    color: hex code
+                summary: Update the value for the node
+                description: Update the value for the node The return list will appear
+                  under the data.
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelResponse'
+              examples:
+                ReturnTheLabelTreeByTheLabelId:
+                  value:
+                    data:
+                      name: LabelName
+                      extra:
+                        color: hex code
+                    id: 20
+                    children:
+                    - data:
+                        name: LabelName
+                        extra:
+                          color: hex code
+                      id: 76
+                  summary: Return the Label tree by the label id
+                  description: Return the label tree by label ID The return list will
+                    appear under the data.
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found
+                    status: 404
+                  summary: Not Found
+                  description: 404 Not Found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: label_v3_labels_destroy
+      description: Delete the Label by the label ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this label.
+        required: true
+      tags:
+      - label
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found
+                    status: 404
+                  summary: Not Found
+                  description: 404 Not Found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /label/v3/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+components:
+  schemas:
+    Label:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        data:
+          allOf:
+          - $ref: '#/components/schemas/LabelData'
+          description: 'The data uses the dictionary format. <br/>Each data must contain
+            two parameters: name (string) and extra (dictionary). '
+        children:
+          type: object
+          additionalProperties: {}
+          description: 'Children refers to child data objects.<br/> Each child may
+            either contain a single data or a list of dictionaries. '
+      required:
+      - data
+      - id
+    LabelData:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+        extra:
+          type: object
+          additionalProperties: {}
+          description: 'Optional, dictionary includes color key, Use hex code to represent
+            color <br/>e.g. {"color": "#000000"}'
+      required:
+      - name
+    LabelDataRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+        extra:
+          type: object
+          additionalProperties: {}
+          description: 'Optional, dictionary includes color key, Use hex code to represent
+            color <br/>e.g. {"color": "#000000"}'
+      required:
+      - name
+    LabelIDMoveRequest:
+      type: object
+      properties:
+        target:
+          type: integer
+          writeOnly: true
+          description: Target node ID. <br/>Using 0 moves the node to root. Otherwise,
+            it is moved to another node based on the node ID.
+      required:
+      - target
+    LabelIDPostRequest:
+      type: object
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/LabelDataRequest'
+          description: 'The data uses the dictionary format. <br/>Each data must contain
+            two parameters: name (string) and extra (dictionary). '
+        children:
+          type: object
+          additionalProperties: {}
+          description: 'Children refers to child data objects.<br/> Each child may
+            either contain a single data or a list of dictionaries. '
+      required:
+      - data
+    LabelRequest:
+      type: object
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/LabelDataRequest'
+          description: 'The data uses the dictionary format. <br/>Each data must contain
+            two parameters: name (string) and extra (dictionary). '
+        children:
+          type: object
+          additionalProperties: {}
+          description: 'Children refers to child data objects.<br/> Each child may
+            either contain a single data or a list of dictionaries. '
+      required:
+      - data
+    LabelResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Label'
+        count:
+          type: integer
+          description: Number of the data under this root node, includes self
+      required:
+      - count
+      - data
+    NotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error.
+      required:
+      - detail
+    PaginatedLabelResponseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelResponse'
+    PatchedLabelIDRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: 'Label name: any string e.g., TUMOR.'
+          maxLength: 255
+        extra:
+          type: object
+          additionalProperties: {}
+          description: 'Optional, dictionary includes color key, Use hex code to represent
+            color <br/>e.g. {"color": "#000000"}'
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
