@@ -1,0 +1,4951 @@
+openapi: 3.0.3
+info:
+  title: Atgenomix SeqsLab V3 platform API
+  version: 3.0.0 (healthcare-v3)
+  description: GA4GH-compliant RESTful API apps in Atgenomix SeqsLab platform, the
+    cloud-native enterprise biomedical informatics platform.
+paths:
+  /healthcare/v3/collections/phenotypic_features/:
+    post:
+      operationId: healthcare_v3_collections_phenotypic_features_create
+      description: Query phenotypic features using semantic search with ChromaDB.
+        Supports filtering by metadata (where), document content (where_document),
+        and customizable result inclusion. Returns results in PhenotypicFeature-compatible
+        format.
+      summary: Semantic query for phenotypic features
+      tags:
+      - collections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemanticQueryRequestRequest'
+            examples:
+              PhenotypicFeaturesQueryExample:
+                value:
+                  query_texts:
+                  - HP:0001250
+                  - seizure
+                  n_results: 10
+                  where:
+                    $and:
+                    - color: red
+                    - price:
+                        $gte: 4.2
+                  where_document:
+                    $contains: epilepsy
+                  include:
+                  - documents
+                  - embeddings
+                  - metadatas
+                  - distances
+                summary: Phenotypic Features Query Example
+                description: Example query searching for seizure-related phenotypic
+                  features for a specific patient, filtering documents containing
+                  'epilepsy'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemanticQueryResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/pages/:
+    get:
+      operationId: healthcare_v3_pages_list
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - pages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPagesList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: healthcare_v3_pages_create
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      tags:
+      - pages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagesRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pages'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/pages/{pages_pk}/charts/{id}/:
+    get:
+      operationId: healthcare_v3_pages_charts_retrieve
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this charts.
+        required: true
+      - in: path
+        name: pages_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - charts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charts'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: healthcare_v3_pages_charts_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this charts.
+        required: true
+      - in: path
+        name: pages_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - charts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChartsRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charts'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    patch:
+      operationId: healthcare_v3_pages_charts_partial_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this charts.
+        required: true
+      - in: path
+        name: pages_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - charts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedChartsRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charts'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: healthcare_v3_pages_charts_destroy
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this charts.
+        required: true
+      - in: path
+        name: pages_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - charts
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /healthcare/v3/pages/{id}/:
+    get:
+      operationId: healthcare_v3_pages_retrieve
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pages.
+        required: true
+      tags:
+      - pages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pages'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: healthcare_v3_pages_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pages.
+        required: true
+      tags:
+      - pages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagesRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pages'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    patch:
+      operationId: healthcare_v3_pages_partial_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pages.
+        required: true
+      tags:
+      - pages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPagesRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pages'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: healthcare_v3_pages_destroy
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pages.
+        required: true
+      tags:
+      - pages
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /healthcare/v3/reports/:
+    get:
+      operationId: healthcare_v3_reports_list
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PhenopacketReport'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: healthcare_v3_reports_create
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      tags:
+      - reports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhenopacketReportRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhenopacketReport'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reports/{id}/:
+    get:
+      operationId: healthcare_v3_reports_retrieve
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhenopacketReport'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: healthcare_v3_reports_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhenopacketReportRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhenopacketReport'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    patch:
+      operationId: healthcare_v3_reports_partial_update
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPhenopacketReportRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhenopacketReport'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: healthcare_v3_reports_destroy
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /healthcare/v3/reports/{id}/pdf/:
+    post:
+      operationId: healthcare_v3_reports_pdf_create
+      description: |-
+        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
+        deriving the permission type from the particular action to be performed..
+
+        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
+        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportsExportRequestRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportsExportRequest'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/schema/:
+    get:
+      operationId: root_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+components:
+  schemas:
+    AcmgPathogenicityClassificationEnum:
+      enum:
+      - NOT_PROVIDED
+      - BENIGN
+      - LIKELY_BENIGN
+      - UNCERTAIN_SIGNIFICANCE
+      - LIKELY_PATHOGENIC
+      - PATHOGENIC
+      type: string
+      description: |-
+        * `NOT_PROVIDED` - NOT_PROVIDED
+        * `BENIGN` - BENIGN
+        * `LIKELY_BENIGN` - LIKELY_BENIGN
+        * `UNCERTAIN_SIGNIFICANCE` - UNCERTAIN_SIGNIFICANCE
+        * `LIKELY_PATHOGENIC` - LIKELY_PATHOGENIC
+        * `PATHOGENIC` - PATHOGENIC
+    Age:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        iso8601duration:
+          type: string
+      required:
+      - id
+      - iso8601duration
+    AgeRange:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start:
+          $ref: '#/components/schemas/Age'
+        end:
+          $ref: '#/components/schemas/Age'
+      required:
+      - end
+      - id
+      - start
+    AgeRangeRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        start:
+          $ref: '#/components/schemas/AgeRequest'
+        end:
+          $ref: '#/components/schemas/AgeRequest'
+      required:
+      - end
+      - start
+    AgeRequest:
+      type: object
+      properties:
+        iso8601duration:
+          type: string
+          minLength: 1
+      required:
+      - iso8601duration
+    Allele:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        chromosome_location:
+          $ref: '#/components/schemas/ChromosomeLocation'
+        sequence_location:
+          $ref: '#/components/schemas/SequenceLocation'
+        sequence_state:
+          $ref: '#/components/schemas/SequenceState'
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpression'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpression'
+        repeated_sequence_expression:
+          $ref: '#/components/schemas/RepeatedSequenceExpression'
+        _id:
+          type: string
+          title: ' id'
+        curie:
+          type: string
+      required:
+      - id
+    AlleleRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        chromosome_location:
+          $ref: '#/components/schemas/ChromosomeLocationRequest'
+        sequence_location:
+          $ref: '#/components/schemas/SequenceLocationRequest'
+        sequence_state:
+          $ref: '#/components/schemas/SequenceStateRequest'
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpressionRequest'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpressionRequest'
+        repeated_sequence_expression:
+          $ref: '#/components/schemas/RepeatedSequenceExpressionRequest'
+        _id:
+          type: string
+          minLength: 1
+          title: ' id'
+        curie:
+          type: string
+          minLength: 1
+    AtgxPathogenicityClassificationEnum:
+      enum:
+      - NOT_PROVIDED
+      - BENIGN
+      - LIKELY_BENIGN
+      - UNCERTAIN_SIGNIFICANCE
+      - LIKELY_PATHOGENIC
+      - PATHOGENIC
+      type: string
+      description: |-
+        * `NOT_PROVIDED` - NOT_PROVIDED
+        * `BENIGN` - BENIGN
+        * `LIKELY_BENIGN` - LIKELY_BENIGN
+        * `UNCERTAIN_SIGNIFICANCE` - UNCERTAIN_SIGNIFICANCE
+        * `LIKELY_PATHOGENIC` - LIKELY_PATHOGENIC
+        * `PATHOGENIC` - PATHOGENIC
+    Biosample:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+        individual_id:
+          type: string
+        derived_from_id:
+          type: string
+        description:
+          type: string
+        sampled_tissue:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        sample_type:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        phenotypic_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeature'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+        taxonomy:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        time_of_collection:
+          $ref: '#/components/schemas/TimeElement'
+        histological_diagnosis:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        tumor_progression:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        tumor_grade:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        pathological_stage:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        pathological_tnm_finding:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        diagnostic_markers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        procedure:
+          $ref: '#/components/schemas/Procedure'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        material_sample:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        sample_processing:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        sample_storage:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Update'
+        user:
+          type: string
+          readOnly: true
+        state:
+          $ref: '#/components/schemas/StateEnum'
+        run_date:
+          type: string
+          format: date-time
+          nullable: true
+        run_id:
+          type: string
+          nullable: true
+          maxLength: 25
+      required:
+      - user
+    BiosampleRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          minLength: 1
+        individual_id:
+          type: string
+          minLength: 1
+        derived_from_id:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        sampled_tissue:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        sample_type:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        phenotypic_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeatureRequest'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementRequest'
+        taxonomy:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        time_of_collection:
+          $ref: '#/components/schemas/TimeElementRequest'
+        histological_diagnosis:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        tumor_progression:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        tumor_grade:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        pathological_stage:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        pathological_tnm_finding:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        diagnostic_markers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        procedure:
+          $ref: '#/components/schemas/ProcedureRequest'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        material_sample:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        sample_processing:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        sample_storage:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateRequest'
+        state:
+          $ref: '#/components/schemas/StateEnum'
+        run_date:
+          type: string
+          format: date-time
+          nullable: true
+        run_id:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 25
+    Charts:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        query:
+          type: string
+        variables:
+          type: object
+          additionalProperties: {}
+        model:
+          $ref: '#/components/schemas/ModelEnum'
+        version:
+          type: string
+          format: date-time
+          readOnly: true
+        identifier:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+      - id
+      - model
+      - query
+      - variables
+      - version
+    ChartsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+        variables:
+          type: object
+          additionalProperties: {}
+        model:
+          $ref: '#/components/schemas/ModelEnum'
+        identifier:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+      - model
+      - query
+      - variables
+    ChrEnum:
+      enum:
+      - CHR1
+      - CHR2
+      - CHR3
+      - CHR4
+      - CHR5
+      - CHR6
+      - CHR7
+      - CHR8
+      - CHR9
+      - CHR10
+      - CHR11
+      - CHR12
+      - CHR13
+      - CHR14
+      - CHR15
+      - CHR16
+      - CHR17
+      - CHR18
+      - CHR19
+      - CHR20
+      - CHR21
+      - CHR22
+      - CHRX
+      - CHRY
+      type: string
+      description: |-
+        * `CHR1` - CHR1
+        * `CHR2` - CHR2
+        * `CHR3` - CHR3
+        * `CHR4` - CHR4
+        * `CHR5` - CHR5
+        * `CHR6` - CHR6
+        * `CHR7` - CHR7
+        * `CHR8` - CHR8
+        * `CHR9` - CHR9
+        * `CHR10` - CHR10
+        * `CHR11` - CHR11
+        * `CHR12` - CHR12
+        * `CHR13` - CHR13
+        * `CHR14` - CHR14
+        * `CHR15` - CHR15
+        * `CHR16` - CHR16
+        * `CHR17` - CHR17
+        * `CHR18` - CHR18
+        * `CHR19` - CHR19
+        * `CHR20` - CHR20
+        * `CHR21` - CHR21
+        * `CHR22` - CHR22
+        * `CHRX` - CHRX
+        * `CHRY` - CHRY
+    ChromosomeLocation:
+      type: object
+      description: https://vrs.ga4gh.org/en/stable/terms_and_model.html#humancytoband
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        interval:
+          $ref: '#/components/schemas/CytobandInterval'
+        _id:
+          type: string
+          title: ' id'
+        chr:
+          $ref: '#/components/schemas/ChrEnum'
+        species_id:
+          type: string
+          nullable: true
+      required:
+      - chr
+      - id
+      - interval
+    ChromosomeLocationRequest:
+      type: object
+      description: https://vrs.ga4gh.org/en/stable/terms_and_model.html#humancytoband
+      properties:
+        interval:
+          $ref: '#/components/schemas/CytobandIntervalRequest'
+        _id:
+          type: string
+          minLength: 1
+          title: ' id'
+        chr:
+          $ref: '#/components/schemas/ChrEnum'
+        species_id:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - chr
+      - interval
+    ComparatorEnum:
+      enum:
+      - LTE
+      - MTE
+      type: string
+      description: |-
+        * `LTE` - LTE
+        * `MTE` - MTE
+    ComplexValue:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        typed_quantities:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedQuantity'
+      required:
+      - id
+      - typed_quantities
+    ComplexValueRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        typed_quantities:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypedQuantityRequest'
+      required:
+      - typed_quantities
+    CopyNumber:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        allele:
+          $ref: '#/components/schemas/Allele'
+        haplotype:
+          $ref: '#/components/schemas/Haplotype'
+        gene:
+          $ref: '#/components/schemas/Gene'
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpression'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpression'
+        repeated_sequence_expression:
+          $ref: '#/components/schemas/RepeatedSequenceExpression'
+        curie:
+          type: string
+        number:
+          $ref: '#/components/schemas/Number'
+        indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRange'
+        definite_range:
+          $ref: '#/components/schemas/DefiniteRange'
+        _id:
+          type: string
+          nullable: true
+          title: ' id'
+      required:
+      - id
+    CopyNumberRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        allele:
+          $ref: '#/components/schemas/AlleleRequest'
+        haplotype:
+          $ref: '#/components/schemas/HaplotypeRequest'
+        gene:
+          $ref: '#/components/schemas/GeneRequest'
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpressionRequest'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpressionRequest'
+        repeated_sequence_expression:
+          $ref: '#/components/schemas/RepeatedSequenceExpressionRequest'
+        curie:
+          type: string
+          minLength: 1
+        number:
+          $ref: '#/components/schemas/NumberRequest'
+        indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRangeRequest'
+        definite_range:
+          $ref: '#/components/schemas/DefiniteRangeRequest'
+        _id:
+          type: string
+          nullable: true
+          minLength: 1
+          title: ' id'
+    CytobandInterval:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start:
+          type: string
+          nullable: true
+        end:
+          type: string
+          nullable: true
+      required:
+      - id
+    CytobandIntervalRequest:
+      type: object
+      properties:
+        start:
+          type: string
+          nullable: true
+          minLength: 1
+        end:
+          type: string
+          nullable: true
+          minLength: 1
+    DefiniteRange:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        min:
+          type: integer
+          default: 0
+          description: A bounded, inclusive range of numbers.
+        max:
+          type: integer
+          default: 1
+          description: A bounded, inclusive range of numbers.
+      required:
+      - id
+    DefiniteRangeRequest:
+      type: object
+      properties:
+        min:
+          type: integer
+          default: 0
+          description: A bounded, inclusive range of numbers.
+        max:
+          type: integer
+          default: 1
+          description: A bounded, inclusive range of numbers.
+    DerivedSequenceExpression:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        location:
+          $ref: '#/components/schemas/SequenceLocation'
+        reverse_complement:
+          type: boolean
+          nullable: true
+      required:
+      - id
+      - location
+    DerivedSequenceExpressionRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        location:
+          $ref: '#/components/schemas/SequenceLocationRequest'
+        reverse_complement:
+          type: boolean
+          nullable: true
+      required:
+      - location
+    Diagnosis:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        disease:
+          allOf:
+          - $ref: '#/components/schemas/OntologyClassStatic'
+          description: The diagnosed condition.
+        genomic_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenomicInterpretation'
+        mode_of_inheritance:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - id
+    DiagnosisRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        disease:
+          allOf:
+          - $ref: '#/components/schemas/OntologyClassStaticRequest'
+          description: The diagnosed condition.
+        genomic_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenomicInterpretationRequest'
+        mode_of_inheritance:
+          type: string
+          nullable: true
+          maxLength: 255
+    Diseases:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        term:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        onset:
+          $ref: '#/components/schemas/TimeElement'
+        resolution:
+          $ref: '#/components/schemas/TimeElement'
+        disease_stage:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        clinical_tnm_finding:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        primary_site:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        laterality:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        excluded:
+          type: boolean
+          nullable: true
+      required:
+      - id
+      - term
+    DiseasesRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        term:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        onset:
+          $ref: '#/components/schemas/TimeElementRequest'
+        resolution:
+          $ref: '#/components/schemas/TimeElementRequest'
+        disease_stage:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        clinical_tnm_finding:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        primary_site:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        laterality:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        excluded:
+          type: boolean
+          nullable: true
+      required:
+      - term
+    DoseInterval:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        schedule_frequency:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        interval:
+          $ref: '#/components/schemas/TimeInterval'
+      required:
+      - id
+      - interval
+      - quantity
+      - schedule_frequency
+    DoseIntervalRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        quantity:
+          $ref: '#/components/schemas/QuantityRequest'
+        schedule_frequency:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        interval:
+          $ref: '#/components/schemas/TimeIntervalRequest'
+      required:
+      - interval
+      - quantity
+      - schedule_frequency
+    DrugTypeEnum:
+      enum:
+      - UNKNOWN_DRUG_TYPE
+      - PRESCRIPTION
+      - EHR_MEDICATION_LIST
+      - ADMINISTRATION_RELATED_TO_PROCEDURE
+      type: string
+      description: |-
+        * `UNKNOWN_DRUG_TYPE` - 0
+        * `PRESCRIPTION` - 1
+        * `EHR_MEDICATION_LIST` - 2
+        * `ADMINISTRATION_RELATED_TO_PROCEDURE` - 3
+    Evidence:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        evidence_code:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        reference:
+          $ref: '#/components/schemas/ExternalReferences'
+      required:
+      - evidence_code
+      - id
+    EvidenceRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        evidence_code:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        reference:
+          $ref: '#/components/schemas/ExternalReferencesRequest'
+      required:
+      - evidence_code
+    Expression:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        syntax:
+          type: string
+        version:
+          type: string
+        value:
+          type: string
+          nullable: true
+      required:
+      - id
+    ExpressionRequest:
+      type: object
+      properties:
+        syntax:
+          type: string
+          minLength: 1
+        version:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          nullable: true
+          minLength: 1
+    Extension:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: A name for the Extension.
+        value:
+          type: string
+          nullable: true
+          description: A string representation of the user-defined object (Required).
+      required:
+      - id
+      - name
+    ExtensionRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: A name for the Extension.
+        value:
+          type: string
+          nullable: true
+          minLength: 1
+          description: A string representation of the user-defined object (Required).
+      required:
+      - name
+    ExternalReferences:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        reference:
+          type: string
+        description:
+          type: string
+      required:
+      - id
+    ExternalReferencesRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        reference:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+      required:
+      - id
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        individual_to_file_identifiers:
+          type: object
+          additionalProperties: {}
+        file_attribute:
+          type: object
+          additionalProperties: {}
+        uri:
+          type: string
+          nullable: true
+          format: uri
+      required:
+      - id
+    FileRequest:
+      type: object
+      properties:
+        individual_to_file_identifiers:
+          type: object
+          additionalProperties: {}
+        file_attribute:
+          type: object
+          additionalProperties: {}
+        uri:
+          type: string
+          nullable: true
+          minLength: 1
+          format: uri
+    Gene:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        gene_id:
+          type: string
+          nullable: true
+      required:
+      - id
+    GeneDescriptor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value_id:
+          type: string
+        description:
+          type: string
+        alternate_ids:
+          type: array
+          items:
+            type: string
+        xrefs:
+          type: array
+          items:
+            type: string
+        alternate_symbols:
+          type: array
+          items:
+            type: string
+        symbol:
+          type: string
+          nullable: true
+      required:
+      - id
+      - value_id
+    GeneDescriptorRequest:
+      type: object
+      properties:
+        value_id:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        alternate_ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        xrefs:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        alternate_symbols:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        symbol:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - value_id
+    GeneRequest:
+      type: object
+      properties:
+        gene_id:
+          type: string
+          nullable: true
+          minLength: 1
+    GenomicInterpretation:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        gene:
+          $ref: '#/components/schemas/GeneDescriptor'
+        variant_interpretation:
+          $ref: '#/components/schemas/VariantInterpretation'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+    GenomicInterpretationRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        gene:
+          $ref: '#/components/schemas/GeneDescriptorRequest'
+        variant_interpretation:
+          $ref: '#/components/schemas/VariantInterpretationRequest'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          minLength: 1
+    GestationalAge:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        weeks:
+          type: integer
+        days:
+          type: integer
+      required:
+      - id
+    GestationalAgeRequest:
+      type: object
+      properties:
+        weeks:
+          type: integer
+        days:
+          type: integer
+    Haplotype:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        _id:
+          type: string
+          nullable: true
+          title: ' id'
+      required:
+      - id
+      - members
+    HaplotypeRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberRequest'
+        _id:
+          type: string
+          nullable: true
+          minLength: 1
+          title: ' id'
+      required:
+      - members
+    IncludeEnum:
+      enum:
+      - documents
+      - embeddings
+      - metadatas
+      - distances
+      type: string
+      description: |-
+        * `documents` - documents
+        * `embeddings` - embeddings
+        * `metadatas` - metadatas
+        * `distances` - distances
+    IndefiniteRange:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: integer
+          default: 0
+          description: 'A half-bounded range of numbers represented as a number bound
+            and associated comparator. The bound operator is interpreted as follows:
+            ''>='' are all numbers greater than and including `value`, ''<='' are
+            all numbers less than and including `value`'
+        comparator:
+          $ref: '#/components/schemas/ComparatorEnum'
+      required:
+      - comparator
+      - id
+    IndefiniteRangeRequest:
+      type: object
+      properties:
+        value:
+          type: integer
+          default: 0
+          description: 'A half-bounded range of numbers represented as a number bound
+            and associated comparator. The bound operator is interpreted as follows:
+            ''>='' are all numbers greater than and including `value`, ''<='' are
+            all numbers less than and including `value`'
+        comparator:
+          $ref: '#/components/schemas/ComparatorEnum'
+      required:
+      - comparator
+    Individual:
+      type: object
+      description: Information on the Individual element for each phenopacket
+      properties:
+        id:
+          type: string
+        time_at_last_encounter:
+          $ref: '#/components/schemas/TimeElement'
+        vital_status:
+          $ref: '#/components/schemas/VitalStatus'
+        sex:
+          $ref: '#/components/schemas/SexEnum'
+        karyotypic_sex:
+          $ref: '#/components/schemas/KaryotypicSexEnum'
+        gender:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        taxonomy:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        alternate_ids:
+          type: array
+          items:
+            type: string
+            nullable: true
+        date_of_birth:
+          type: string
+          format: date
+        user:
+          type: string
+          readOnly: true
+        ethnicity:
+          $ref: '#/components/schemas/OntologyClassStatic'
+      required:
+      - user
+    IndividualRequest:
+      type: object
+      description: Information on the Individual element for each phenopacket
+      properties:
+        id:
+          type: string
+          minLength: 1
+        time_at_last_encounter:
+          $ref: '#/components/schemas/TimeElementRequest'
+        vital_status:
+          $ref: '#/components/schemas/VitalStatusRequest'
+        sex:
+          $ref: '#/components/schemas/SexEnum'
+        karyotypic_sex:
+          $ref: '#/components/schemas/KaryotypicSexEnum'
+        gender:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        taxonomy:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        alternate_ids:
+          type: array
+          items:
+            type: string
+            nullable: true
+        date_of_birth:
+          type: string
+          format: date
+        ethnicity:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+    Interpretation:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        diagnosis:
+          $ref: '#/components/schemas/Diagnosis'
+        progress_status:
+          allOf:
+          - $ref: '#/components/schemas/ProgressStatusEnum'
+          default: UNKNOWN_PROGRESS
+          description: |-
+            THe current resolution status.
+
+            * `UNKNOWN_PROGRESS` - UNKNOWN_PROGRESS
+            * `IN_PROGRESS` - IN_PROGRESS
+            * `COMPLETED` - COMPLETED
+            * `SOLVED` - SOLVED
+            * `UNSOLVED` - UNSOLVED
+        summary:
+          type: string
+    InterpretationRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        diagnosis:
+          $ref: '#/components/schemas/DiagnosisRequest'
+        progress_status:
+          allOf:
+          - $ref: '#/components/schemas/ProgressStatusEnum'
+          default: UNKNOWN_PROGRESS
+          description: |-
+            THe current resolution status.
+
+            * `UNKNOWN_PROGRESS` - UNKNOWN_PROGRESS
+            * `IN_PROGRESS` - IN_PROGRESS
+            * `COMPLETED` - COMPLETED
+            * `SOLVED` - SOLVED
+            * `UNSOLVED` - UNSOLVED
+        summary:
+          type: string
+          minLength: 1
+    InterpretationStatusEnum:
+      enum:
+      - UNKNOWN_STATUS
+      - REJECTED
+      - CANDIDATE
+      - CONTRIBUTORY
+      - CAUSATIVE
+      type: string
+      description: |-
+        * `UNKNOWN_STATUS` - UNKNOWN_STATUS
+        * `REJECTED` - REJECTED
+        * `CANDIDATE` - CANDIDATE
+        * `CONTRIBUTORY` - CONTRIBUTORY
+        * `CAUSATIVE` - CAUSATIVE
+    KaryotypicSexEnum:
+      enum:
+      - UNKNOWN_KARYOTYPE
+      - XX
+      - XY
+      - XO
+      - XXY
+      - XXX
+      - XXYY
+      - XXXY
+      - XXXX
+      - XYY
+      - OTHER_KARYOTYPE
+      type: string
+      description: |-
+        * `UNKNOWN_KARYOTYPE` - 0
+        * `XX` - 1
+        * `XY` - 2
+        * `XO` - 3
+        * `XXY` - 4
+        * `XXX` - 5
+        * `XXYY` - 6
+        * `XXXY` - 7
+        * `XXXX` - 8
+        * `XYY` - 9
+        * `OTHER_KARYOTYPE` - 10
+    LiteralSequenceExpression:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sequence:
+          type: string
+          nullable: true
+      required:
+      - id
+    LiteralSequenceExpressionRequest:
+      type: object
+      properties:
+        sequence:
+          type: string
+          nullable: true
+          minLength: 1
+    Measurement:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+        assay:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        value:
+          $ref: '#/components/schemas/Value'
+        complex_value:
+          $ref: '#/components/schemas/ComplexValue'
+        time_observed:
+          $ref: '#/components/schemas/TimeElement'
+        procedure:
+          $ref: '#/components/schemas/Procedure'
+      required:
+      - assay
+      - id
+    MeasurementRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        description:
+          type: string
+          minLength: 1
+        assay:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        value:
+          $ref: '#/components/schemas/ValueRequest'
+        complex_value:
+          $ref: '#/components/schemas/ComplexValueRequest'
+        time_observed:
+          $ref: '#/components/schemas/TimeElementRequest'
+        procedure:
+          $ref: '#/components/schemas/ProcedureRequest'
+      required:
+      - assay
+    MedicalAction:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        procedure:
+          $ref: '#/components/schemas/Procedure'
+        radiation_therapy:
+          $ref: '#/components/schemas/RadiationTherapy'
+        treatment:
+          $ref: '#/components/schemas/Treatment'
+        therapeutic_regimen:
+          $ref: '#/components/schemas/TherapeuticRegimen'
+        treatment_target:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        treatment_intent:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        response_to_treatment:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        adverse_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        treatment_termination_reason:
+          $ref: '#/components/schemas/OntologyClassStatic'
+      required:
+      - id
+    MedicalActionRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        procedure:
+          $ref: '#/components/schemas/ProcedureRequest'
+        radiation_therapy:
+          $ref: '#/components/schemas/RadiationTherapyRequest'
+        treatment:
+          $ref: '#/components/schemas/TreatmentRequest'
+        therapeutic_regimen:
+          $ref: '#/components/schemas/TherapeuticRegimenRequest'
+        treatment_target:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        treatment_intent:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        response_to_treatment:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        adverse_events:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        treatment_termination_reason:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+    Member:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        allele:
+          $ref: '#/components/schemas/Allele'
+        curie:
+          type: string
+      required:
+      - id
+    MemberRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        allele:
+          $ref: '#/components/schemas/AlleleRequest'
+        curie:
+          type: string
+          minLength: 1
+    Metadata:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        submitted_by:
+          type: string
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReferences'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Update'
+        phenopacket_schema_version:
+          allOf:
+          - $ref: '#/components/schemas/PhenopacketSchemaVersionEnum'
+          default: '2.0'
+        created:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date-time
+        priority:
+          type: string
+          nullable: true
+          description: Indicates the urgency of the phenopacket encounter
+          pattern: '[^\s]+(\s[^\s]+)*'
+          maxLength: 32
+        created_by:
+          type: string
+          nullable: true
+      required:
+      - id
+    MetadataRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        submitted_by:
+          type: string
+          minLength: 1
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReferencesRequest'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRequest'
+        updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateRequest'
+        phenopacket_schema_version:
+          allOf:
+          - $ref: '#/components/schemas/PhenopacketSchemaVersionEnum'
+          default: '2.0'
+        created:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date-time
+        priority:
+          type: string
+          nullable: true
+          minLength: 1
+          description: Indicates the urgency of the phenopacket encounter
+          pattern: '[^\s]+(\s[^\s]+)*'
+          maxLength: 32
+        created_by:
+          type: string
+          nullable: true
+          minLength: 1
+    ModelEnum:
+      enum:
+      - Phenopacket
+      - Biosample
+      - Measurement
+      - PhenotypicFeature
+      - Individual
+      - Interpretation
+      - OntologyClass
+      type: string
+      description: |-
+        * `Phenopacket` - Phenopacket
+        * `Biosample` - Biosample
+        * `Measurement` - Measurement
+        * `PhenotypicFeature` - PhenotypicFeature
+        * `Individual` - Individual
+        * `Interpretation` - Interpretation
+        * `OntologyClass` - OntologyClass
+    MoleculeContextEnum:
+      enum:
+      - UNSPECIFIED_MOLECULE_CONTEXT
+      - GENOMIC
+      - TRANSCRIPT
+      - PROTEIN
+      type: string
+      description: |-
+        * `UNSPECIFIED_MOLECULE_CONTEXT` - UNSPECIFIED_MOLECULE_CONTEXT
+        * `GENOMIC` - GENOMIC
+        * `TRANSCRIPT` - TRANSCRIPT
+        * `PROTEIN` - PROTEIN
+    Number:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: integer
+          default: 0
+      required:
+      - id
+    NumberRequest:
+      type: object
+      properties:
+        value:
+          type: integer
+          default: 0
+    OntologyClassStatic:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        identifier:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        label:
+          type: string
+          nullable: true
+      required:
+      - id
+    OntologyClassStaticRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        identifier:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        label:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - id
+    Pages:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        charts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charts'
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+        organization:
+          type: string
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - charts
+      - id
+      - name
+      - organization
+      - user
+    PagesRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        charts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartsRequest'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - charts
+      - name
+    PaginatedPagesList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pages'
+    PatchedChartsRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+        variables:
+          type: object
+          additionalProperties: {}
+        model:
+          $ref: '#/components/schemas/ModelEnum'
+        identifier:
+          type: object
+          additionalProperties: {}
+          nullable: true
+    PatchedPagesRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        charts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartsRequest'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+    PatchedPhenopacketReportRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        biosamples:
+          type: array
+          items:
+            $ref: '#/components/schemas/BiosampleRequest'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementRequest'
+        phenotypic_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeatureRequest'
+        medical_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicalActionRequest'
+        interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterpretationRequest'
+        diseases:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiseasesRequest'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        meta_data:
+          $ref: '#/components/schemas/MetadataRequest'
+        subject:
+          $ref: '#/components/schemas/IndividualRequest'
+        status:
+          type: string
+          minLength: 1
+        performers:
+          type: object
+          additionalProperties: {}
+        note:
+          type: string
+          minLength: 1
+        presented_form:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        result:
+          $ref: '#/components/schemas/ResultEnum'
+    PhenopacketReport:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        biosamples:
+          type: array
+          items:
+            $ref: '#/components/schemas/Biosample'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Measurement'
+        phenotypic_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeature'
+        medical_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicalAction'
+        interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interpretation'
+        diseases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diseases'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        meta_data:
+          $ref: '#/components/schemas/Metadata'
+        subject:
+          $ref: '#/components/schemas/Individual'
+        status:
+          type: string
+        performers:
+          type: object
+          additionalProperties: {}
+        user:
+          type: string
+          readOnly: true
+        note:
+          type: string
+        presented_form:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        result:
+          $ref: '#/components/schemas/ResultEnum'
+      required:
+      - meta_data
+      - user
+    PhenopacketReportRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        biosamples:
+          type: array
+          items:
+            $ref: '#/components/schemas/BiosampleRequest'
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementRequest'
+        phenotypic_features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeatureRequest'
+        medical_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicalActionRequest'
+        interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterpretationRequest'
+        diseases:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiseasesRequest'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        meta_data:
+          $ref: '#/components/schemas/MetadataRequest'
+        subject:
+          $ref: '#/components/schemas/IndividualRequest'
+        status:
+          type: string
+          minLength: 1
+        performers:
+          type: object
+          additionalProperties: {}
+        note:
+          type: string
+          minLength: 1
+        presented_form:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        result:
+          $ref: '#/components/schemas/ResultEnum'
+      required:
+      - meta_data
+    PhenopacketSchemaVersionEnum:
+      enum:
+      - '1.0'
+      - 1.0.0
+      - '2.0'
+      type: string
+      description: |-
+        * `1.0` - 1.0
+        * `1.0.0` - 1.0.0
+        * `2.0` - 2.0
+    PhenotypicFeature:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        severity:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        onset:
+          $ref: '#/components/schemas/TimeElement'
+        resolution:
+          $ref: '#/components/schemas/TimeElement'
+        evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/Evidence'
+        excluded:
+          type: boolean
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      required:
+      - id
+      - type
+    PhenotypicFeatureRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        type:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        severity:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        modifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        onset:
+          $ref: '#/components/schemas/TimeElementRequest'
+        resolution:
+          $ref: '#/components/schemas/TimeElementRequest'
+        evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceRequest'
+        excluded:
+          type: boolean
+          nullable: true
+        description:
+          type: string
+          nullable: true
+          minLength: 1
+      required:
+      - type
+    PhenotypicFeatureSearchResult:
+      type: object
+      description: |-
+        Serializer for individual phenotypic feature search result.
+        Contains the ontology class (id and label) extracted from ChromaDB.
+      properties:
+        type:
+          type: object
+          additionalProperties: {}
+          description: 'OntologyClass with ''id'' and ''label'' fields (e.g., {''id'':
+            ''HP:0001250'', ''label'': ''Seizure''})'
+      required:
+      - type
+    Procedure:
+      type: object
+      description: https://phenopacket-schema.readthedocs.io/en/2.0.0/procedure.html
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        body_site:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStatic'
+        performed:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeElement'
+      required:
+      - code
+      - id
+    ProcedureRequest:
+      type: object
+      description: https://phenopacket-schema.readthedocs.io/en/2.0.0/procedure.html
+      properties:
+        code:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        body_site:
+          type: array
+          items:
+            $ref: '#/components/schemas/OntologyClassStaticRequest'
+        performed:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeElementRequest'
+      required:
+      - code
+    ProgressStatusEnum:
+      enum:
+      - UNKNOWN_PROGRESS
+      - IN_PROGRESS
+      - COMPLETED
+      - SOLVED
+      - UNSOLVED
+      type: string
+      description: |-
+        * `UNKNOWN_PROGRESS` - UNKNOWN_PROGRESS
+        * `IN_PROGRESS` - IN_PROGRESS
+        * `COMPLETED` - COMPLETED
+        * `SOLVED` - SOLVED
+        * `UNSOLVED` - UNSOLVED
+    Quantity:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        reference_range:
+          $ref: '#/components/schemas/ReferenceRange'
+        unit:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        value:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - id
+      - unit
+    QuantityRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        reference_range:
+          $ref: '#/components/schemas/ReferenceRangeRequest'
+        unit:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        value:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - unit
+    RadiationTherapy:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        modality:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        body_site:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        dosage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        fractions:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+      required:
+      - body_site
+      - id
+      - modality
+    RadiationTherapyRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        modality:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        body_site:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        dosage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        fractions:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+      required:
+      - body_site
+      - modality
+    ReferenceRange:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        unit:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        low:
+          type: number
+          format: double
+          nullable: true
+        high:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - id
+      - unit
+    ReferenceRangeRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        unit:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        low:
+          type: number
+          format: double
+          nullable: true
+        high:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - unit
+    RegimenStatusEnum:
+      enum:
+      - UNKNOWN_STATUS
+      - STARTED
+      - COMPLETED
+      - DISCONTINUED
+      type: string
+      description: |-
+        * `UNKNOWN_STATUS` - UNKNOWN_STATUS
+        * `STARTED` - STARTED
+        * `COMPLETED` - COMPLETED
+        * `DISCONTINUED` - DISCONTINUED
+    RepeatedSequenceExpression:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpression'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpression'
+        number:
+          $ref: '#/components/schemas/Number'
+        indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRange'
+        definite_range:
+          $ref: '#/components/schemas/DefiniteRange'
+      required:
+      - definite_range
+      - derived_sequence_expression
+      - id
+      - indefinite_range
+      - literal_sequence_expression
+      - number
+    RepeatedSequenceExpressionRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        literal_sequence_expression:
+          $ref: '#/components/schemas/LiteralSequenceExpressionRequest'
+        derived_sequence_expression:
+          $ref: '#/components/schemas/DerivedSequenceExpressionRequest'
+        number:
+          $ref: '#/components/schemas/NumberRequest'
+        indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRangeRequest'
+        definite_range:
+          $ref: '#/components/schemas/DefiniteRangeRequest'
+      required:
+      - definite_range
+      - derived_sequence_expression
+      - indefinite_range
+      - literal_sequence_expression
+      - number
+    ReportsExportRequest:
+      type: object
+      properties:
+        assay:
+          type: string
+          maxLength: 100
+        lastsignin:
+          type: string
+          maxLength: 64
+        omicsverse:
+          type: string
+          maxLength: 2048
+      required:
+      - assay
+      - lastsignin
+      - omicsverse
+    ReportsExportRequestRequest:
+      type: object
+      properties:
+        assay:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastsignin:
+          type: string
+          minLength: 1
+          maxLength: 64
+        omicsverse:
+          type: string
+          minLength: 1
+          maxLength: 2048
+      required:
+      - assay
+      - lastsignin
+      - omicsverse
+    Resource:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+        name:
+          type: string
+          nullable: true
+        namespace_prefix:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        iri_prefix:
+          type: string
+          nullable: true
+      required:
+      - id
+    ResourceRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          nullable: true
+          minLength: 1
+        namespace_prefix:
+          type: string
+          nullable: true
+          minLength: 1
+        version:
+          type: string
+          nullable: true
+          minLength: 1
+        iri_prefix:
+          type: string
+          nullable: true
+          minLength: 1
+    ResultEnum:
+      enum:
+      - NEGATIVE
+      - POSITIVE
+      type: string
+      description: |-
+        * `NEGATIVE` - NEGATIVE
+        * `POSITIVE` - POSITIVE
+    SemanticQueryRequestRequest:
+      type: object
+      properties:
+        query_texts:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 512
+          minItems: 1
+        ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 256
+        n_results:
+          type: integer
+          default: 5
+        where:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        where_document:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        include:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncludeEnum'
+      required:
+      - query_texts
+    SemanticQueryResponse:
+      type: object
+      description: |-
+        Response serializer for semantic query results.
+        Returns transformed phenotypic features, raw ChromaDB results, and query parameters.
+      properties:
+        phenotypicFeatures:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhenotypicFeatureSearchResult'
+          description: Transformed list of phenotypic features with OntologyClass
+            structure
+        result:
+          type: object
+          additionalProperties: {}
+          description: Raw ChromaDB query results (structure depends on 'include'
+            parameter)
+        query_texts:
+          type: array
+          items:
+            type: string
+          description: The query texts used for semantic search
+        n_results:
+          type: integer
+          description: Number of results requested per query
+        where:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Metadata filter conditions applied to the search
+        where_document:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Document content filter conditions applied to the search
+        include:
+          type: array
+          items:
+            type: string
+          description: Fields included in the raw ChromaDB result (documents, embeddings,
+            metadatas, distances)
+      required:
+      - n_results
+      - phenotypicFeatures
+      - query_texts
+      - result
+    SequenceInterval:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_number:
+          $ref: '#/components/schemas/Number'
+        start_indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRange'
+        start_definite_range:
+          $ref: '#/components/schemas/DefiniteRange'
+        end_number:
+          $ref: '#/components/schemas/Number'
+        end_indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRange'
+        end_definite_range:
+          $ref: '#/components/schemas/DefiniteRange'
+      required:
+      - id
+    SequenceIntervalRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        start_number:
+          $ref: '#/components/schemas/NumberRequest'
+        start_indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRangeRequest'
+        start_definite_range:
+          $ref: '#/components/schemas/DefiniteRangeRequest'
+        end_number:
+          $ref: '#/components/schemas/NumberRequest'
+        end_indefinite_range:
+          $ref: '#/components/schemas/IndefiniteRangeRequest'
+        end_definite_range:
+          $ref: '#/components/schemas/DefiniteRangeRequest'
+    SequenceLocation:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sequence_interval:
+          $ref: '#/components/schemas/SequenceInterval'
+        sequence_id:
+          type: string
+      required:
+      - id
+      - sequence_id
+      - sequence_interval
+    SequenceLocationRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        sequence_interval:
+          $ref: '#/components/schemas/SequenceIntervalRequest'
+        sequence_id:
+          type: string
+          minLength: 1
+      required:
+      - sequence_id
+      - sequence_interval
+    SequenceState:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sequence:
+          type: string
+          nullable: true
+      required:
+      - id
+    SequenceStateRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        sequence:
+          type: string
+          nullable: true
+          minLength: 1
+    SexEnum:
+      enum:
+      - UNKNOWN_SEX
+      - FEMALE
+      - MALE
+      - OTHER_SEX
+      type: string
+      description: |-
+        * `UNKNOWN_SEX` - 0
+        * `FEMALE` - 1
+        * `MALE` - 2
+        * `OTHER_SEX` - 3
+    StandardSerializers:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: The detailed error message.
+        msg:
+          type: string
+          default: Authentication credentials were not provided
+          description: A detailed error message.
+        code:
+          type: string
+          description: The error code.
+      required:
+      - code
+      - detail
+    StateEnum:
+      enum:
+      - PENDING
+      - ANALYSIS
+      - REVIEW
+      - REPORT
+      - CLOSED
+      - REJECTED
+      type: string
+      description: |-
+        * `PENDING` - Pending
+        * `ANALYSIS` - Analysis
+        * `REVIEW` - Review
+        * `REPORT` - Report
+        * `CLOSED` - Closed
+        * `REJECTED` - Rejected
+    StatusEnum:
+      enum:
+      - UNKNOWN_STATUS
+      - ALIVE
+      - DECEASED
+      type: string
+      description: |-
+        * `UNKNOWN_STATUS` - UNKNOWN_STATUS
+        * `ALIVE` - ALIVE
+        * `DECEASED` - DECEASED
+    Text:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        _id:
+          type: string
+          nullable: true
+          title: ' id'
+        definition:
+          type: string
+          nullable: true
+      required:
+      - id
+    TextRequest:
+      type: object
+      properties:
+        _id:
+          type: string
+          nullable: true
+          minLength: 1
+          title: ' id'
+        definition:
+          type: string
+          nullable: true
+          minLength: 1
+    TherapeuticActionabilityEnum:
+      enum:
+      - UNKNOWN_ACTIONABILITY
+      - NOT_ACTIONABLE
+      - ACTIONABLE
+      type: string
+      description: |-
+        * `UNKNOWN_ACTIONABILITY` - UNKNOWN_ACTIONABILITY
+        * `NOT_ACTIONABLE` - NOT_ACTIONABLE
+        * `ACTIONABLE` - ACTIONABLE
+    TherapeuticRegimen:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start_time:
+          $ref: '#/components/schemas/TimeElement'
+        end_time:
+          $ref: '#/components/schemas/TimeElement'
+        external_reference:
+          $ref: '#/components/schemas/ExternalReferences'
+        ontology_class:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        regimen_status:
+          $ref: '#/components/schemas/RegimenStatusEnum'
+      required:
+      - id
+      - regimen_status
+    TherapeuticRegimenRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        start_time:
+          $ref: '#/components/schemas/TimeElementRequest'
+        end_time:
+          $ref: '#/components/schemas/TimeElementRequest'
+        external_reference:
+          $ref: '#/components/schemas/ExternalReferencesRequest'
+        ontology_class:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        regimen_status:
+          $ref: '#/components/schemas/RegimenStatusEnum'
+      required:
+      - regimen_status
+    TimeElement:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        gestational_age:
+          $ref: '#/components/schemas/GestationalAge'
+        age:
+          $ref: '#/components/schemas/Age'
+        age_range:
+          $ref: '#/components/schemas/AgeRange'
+        ontology_class:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        interval:
+          $ref: '#/components/schemas/TimeInterval'
+        timestamp:
+          type: string
+          format: date
+      required:
+      - id
+    TimeElementRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        gestational_age:
+          $ref: '#/components/schemas/GestationalAgeRequest'
+        age:
+          $ref: '#/components/schemas/AgeRequest'
+        age_range:
+          $ref: '#/components/schemas/AgeRangeRequest'
+        ontology_class:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        interval:
+          $ref: '#/components/schemas/TimeIntervalRequest'
+        timestamp:
+          type: string
+          format: date
+    TimeInterval:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      required:
+      - end
+      - id
+      - start
+    TimeIntervalRequest:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+      required:
+      - end
+      - start
+    Treatment:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        agent:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        route_of_administration:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        dose_intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DoseInterval'
+        drug_type:
+          $ref: '#/components/schemas/DrugTypeEnum'
+        cumulative_dose:
+          $ref: '#/components/schemas/Quantity'
+      required:
+      - agent
+      - id
+    TreatmentRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        agent:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        route_of_administration:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        dose_intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/DoseIntervalRequest'
+        drug_type:
+          $ref: '#/components/schemas/DrugTypeEnum'
+        cumulative_dose:
+          $ref: '#/components/schemas/QuantityRequest'
+      required:
+      - agent
+    TypedQuantity:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+      required:
+      - id
+      - type
+    TypedQuantityRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        type:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        quantity:
+          $ref: '#/components/schemas/QuantityRequest'
+      required:
+      - type
+    Update:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_by:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+      required:
+      - id
+      - timestamp
+    UpdateRequest:
+      type: object
+      properties:
+        updated_by:
+          type: string
+          nullable: true
+          minLength: 1
+        comment:
+          type: string
+          nullable: true
+          minLength: 1
+    Value:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        quantity:
+          allOf:
+          - $ref: '#/components/schemas/Quantity'
+          description: The outcome (value) of a measurement
+        ontology_class:
+          allOf:
+          - $ref: '#/components/schemas/OntologyClassStatic'
+          description: The outcome (value) of a measurement
+      required:
+      - id
+    ValueRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        quantity:
+          allOf:
+          - $ref: '#/components/schemas/QuantityRequest'
+          description: The outcome (value) of a measurement
+        ontology_class:
+          allOf:
+          - $ref: '#/components/schemas/OntologyClassStaticRequest'
+          description: The outcome (value) of a measurement
+    VariantInterpretation:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        variation_descriptor:
+          $ref: '#/components/schemas/VariationDescriptor'
+        acmg_pathogenicity_classification:
+          allOf:
+          - $ref: '#/components/schemas/AcmgPathogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        atgx_pathogenicity_classification:
+          allOf:
+          - $ref: '#/components/schemas/AtgxPathogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        therapeutic_actionability:
+          allOf:
+          - $ref: '#/components/schemas/TherapeuticActionabilityEnum'
+          default: UNKNOWN_ACTIONABILITY
+        acmg_pathogenicity_criteria:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        acmg_pathogenicity_score:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        clinvar_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        cvc_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+      - id
+      - variation_descriptor
+    VariantInterpretationRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        variation_descriptor:
+          $ref: '#/components/schemas/VariationDescriptorRequest'
+        acmg_pathogenicity_classification:
+          allOf:
+          - $ref: '#/components/schemas/AcmgPathogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        atgx_pathogenicity_classification:
+          allOf:
+          - $ref: '#/components/schemas/AtgxPathogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        therapeutic_actionability:
+          allOf:
+          - $ref: '#/components/schemas/TherapeuticActionabilityEnum'
+          default: UNKNOWN_ACTIONABILITY
+        acmg_pathogenicity_criteria:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        acmg_pathogenicity_score:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        clinvar_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        cvc_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+      - variation_descriptor
+    Variation:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        allele:
+          $ref: '#/components/schemas/Allele'
+        copy_number:
+          $ref: '#/components/schemas/CopyNumber'
+        haplotype:
+          $ref: '#/components/schemas/Haplotype'
+        text:
+          $ref: '#/components/schemas/Text'
+        variation_set:
+          $ref: '#/components/schemas/VariationSet'
+      required:
+      - id
+    VariationDescriptor:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        variation:
+          $ref: '#/components/schemas/Variation'
+        label:
+          type: string
+        description:
+          type: string
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptor'
+        expressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+        vcf_record:
+          $ref: '#/components/schemas/VcfRecord'
+        xrefs:
+          type: array
+          items:
+            type: string
+        alternate_labels:
+          type: array
+          items:
+            type: string
+            nullable: true
+            default: '[]'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        molecule_context:
+          allOf:
+          - $ref: '#/components/schemas/MoleculeContextEnum'
+          default: GENOMIC
+        structural_type:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        vrs_ref_allele_seq:
+          type: string
+        allelic_state:
+          $ref: '#/components/schemas/OntologyClassStatic'
+    VariationDescriptorRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        variation:
+          $ref: '#/components/schemas/VariationRequest'
+        label:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptorRequest'
+        expressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpressionRequest'
+        vcf_record:
+          $ref: '#/components/schemas/VcfRecordRequest'
+        xrefs:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        alternate_labels:
+          type: array
+          items:
+            type: string
+            nullable: true
+            default: '[]'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRequest'
+        molecule_context:
+          allOf:
+          - $ref: '#/components/schemas/MoleculeContextEnum'
+          default: GENOMIC
+        structural_type:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        vrs_ref_allele_seq:
+          type: string
+          minLength: 1
+        allelic_state:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+    VariationRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        allele:
+          $ref: '#/components/schemas/AlleleRequest'
+        copy_number:
+          $ref: '#/components/schemas/CopyNumberRequest'
+        haplotype:
+          $ref: '#/components/schemas/HaplotypeRequest'
+        text:
+          $ref: '#/components/schemas/TextRequest'
+        variation_set:
+          $ref: '#/components/schemas/VariationSetRequest'
+    VariationSet:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        _id:
+          type: string
+          nullable: true
+          title: ' id'
+      required:
+      - id
+      - members
+    VariationSetRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberRequest'
+        _id:
+          type: string
+          nullable: true
+          minLength: 1
+          title: ' id'
+      required:
+      - members
+    VcfRecord:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        genome_assembly:
+          type: string
+          description: Identifier for the genome assembly used to call the allele
+        chrom:
+          type: string
+          description: Chromosome or contig identifier
+        pos:
+          type: integer
+          description: The reference position, with the 1st base having position 1.
+        ref:
+          type: string
+          description: Reference base.
+        alt:
+          type: string
+          description: Alternate base.
+        qual:
+          type: string
+          description: 'Quality: Phred-scaled quality score for the assertion made
+            in ALT.'
+        filter:
+          type: string
+          description: 'Filter status: PASS if this position has passed all filters.'
+        info:
+          type: string
+          description: 'Additional information: Semicolon-separated series of additional
+            information fields'
+      required:
+      - alt
+      - chrom
+      - genome_assembly
+      - pos
+      - ref
+    VcfRecordRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        genome_assembly:
+          type: string
+          minLength: 1
+          description: Identifier for the genome assembly used to call the allele
+        chrom:
+          type: string
+          minLength: 1
+          description: Chromosome or contig identifier
+        pos:
+          type: integer
+          description: The reference position, with the 1st base having position 1.
+        ref:
+          type: string
+          minLength: 1
+          description: Reference base.
+        alt:
+          type: string
+          minLength: 1
+          description: Alternate base.
+        qual:
+          type: string
+          minLength: 1
+          description: 'Quality: Phred-scaled quality score for the assertion made
+            in ALT.'
+        filter:
+          type: string
+          minLength: 1
+          description: 'Filter status: PASS if this position has passed all filters.'
+        info:
+          type: string
+          minLength: 1
+          description: 'Additional information: Semicolon-separated series of additional
+            information fields'
+      required:
+      - alt
+      - chrom
+      - genome_assembly
+      - pos
+      - ref
+    VitalStatus:
+      type: object
+      description: Adds nested create feature
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        cause_of_death:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        time_of_death:
+          $ref: '#/components/schemas/TimeElement'
+        survival_time_in_days:
+          type: integer
+      required:
+      - status
+    VitalStatusRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        cause_of_death:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        time_of_death:
+          $ref: '#/components/schemas/TimeElementRequest'
+        survival_time_in_days:
+          type: integer
+      required:
+      - status
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
