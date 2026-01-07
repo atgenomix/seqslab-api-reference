@@ -872,6 +872,15 @@ paths:
       operationId: wes_v1_runs_create
       description: Add a run
       parameters:
+      - in: header
+        name: X-Retry-Policy
+        schema:
+          type: string
+          enum:
+          - quick-fail
+          - robust
+        description: Retry policy for Azure quota checks. Default is quick-fail without
+          retry.
       - in: query
         name: request_id
         schema:
@@ -2717,7 +2726,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-12-16 08:07:20.018701+00:00
+                    next_run: 2026-01-07 06:20:41.482295+00:00
                   request:
                     name: string
                     description: string
@@ -2754,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2025-12-16 08:07:20.018719+00:00
+                    next_run: 2026-01-07 06:20:41.482313+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -4904,7 +4913,7 @@ components:
         workflow_url:
           type: string
           format: uri
-          maxLength: 200
+          default: ''
     PatchedRunRuntimeOptionRequest:
       type: object
       properties:
@@ -5344,7 +5353,7 @@ components:
         workflow_url:
           type: string
           format: uri
-          maxLength: 200
+          default: ''
         user:
           allOf:
           - $ref: '#/components/schemas/SeqsLabUserWoRoles'
@@ -5393,7 +5402,7 @@ components:
         workflow_url:
           type: string
           format: uri
-          maxLength: 200
+          default: ''
     RunRuntimeOption:
       type: object
       properties:
