@@ -115,13 +115,24 @@ paths:
   /healthcare/v3/pages/:
     get:
       operationId: healthcare_v3_pages_list
-      description: |-
-        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
-        deriving the permission type from the particular action to be performed..
-
-        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
-        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      description: List all pages with optional filtering by id, name, or search
       parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+        description: Filter pages by exact id match
+        examples:
+          FilterById:
+            summary: Filter by id
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Filter pages by exact name match
+        examples:
+          FilterByExactName:
+            summary: Filter by exact name
       - name: page
         required: false
         in: query
@@ -134,6 +145,14 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search across page name and description fields (case-insensitive)
+        examples:
+          SearchFor'default':
+            summary: Search for 'default'
       tags:
       - pages
       security:
