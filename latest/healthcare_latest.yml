@@ -112,6 +112,532 @@ paths:
                   summary: You do not have permission to perform this action
                   description: You do not have permission to perform this action
           description: ''
+  /healthcare/v3/fhir/{resource_type}:
+    get:
+      operationId: healthcare_v3_fhir_list
+      description: Returns a FHIR Bundle containing all active resources of the requested
+        type.
+      summary: Search/List FHIR Resources
+      parameters:
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - FHIR
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: A FHIR Bundle resource containing the search results.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: healthcare_v3_fhir_create
+      description: Creates a new FHIR resource. The JSON payload must strictly match
+        the FHIR R5 specification for the requested `resource_type`. Pydantic will
+        validate the structure.
+      summary: Create a FHIR Resource
+      parameters:
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - FHIR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Created successfully. Check the `ETag` and `Location` headers
+            for versioning information.
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Validation Error. Returns a FHIR OperationOutcome.
+        '409':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Conflict. A resource with this ID already exists.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/fhir/{resource_type}/{fhir_id}:
+    get:
+      operationId: healthcare_v3_fhir_retrieve
+      description: Fetches a single FHIR resource by its ID.
+      summary: Retrieve a FHIR Resource
+      parameters:
+      - in: path
+        name: fhir_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - FHIR
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: The requested FHIR Resource.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    put:
+      operationId: healthcare_v3_fhir_update
+      description: Updates an existing FHIR resource. **Requires** the `If-Match`
+        header to prevent concurrent update conflicts (Optimistic Concurrency Control).
+      summary: Update a FHIR Resource (Versioned)
+      parameters:
+      - in: header
+        name: If-Match
+        schema:
+          type: string
+        description: Weak ETag specifying the expected version, e.g., `W/"1"`
+        required: true
+      - in: path
+        name: fhir_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - FHIR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Updated successfully. Returns the updated resource and a new
+            `ETag` header.
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Validation Error or mismatched ID. Returns an OperationOutcome.
+        '404':
+          description: Resource not found.
+        '412':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Precondition Failed. The `If-Match` version does not match
+            the server's current version. Returns an OperationOutcome.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: healthcare_v3_fhir_destroy
+      description: Hard-deletes the specified FHIR resource. Optionally respects the
+        `If-Match` header to ensure you aren't deleting a record that was just updated
+        by another process.
+      summary: Delete a FHIR Resource
+      parameters:
+      - in: header
+        name: If-Match
+        schema:
+          type: string
+        description: 'Optional: Weak ETag specifying the expected version to safely
+          delete, e.g., `W/"1"`'
+      - in: path
+        name: fhir_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: resource_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - FHIR
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: Resource successfully deleted (No Content).
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Malformed `If-Match` header.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+        '412':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Precondition Failed. The `If-Match` version conflict prevented
+            deletion.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /healthcare/v3/pages/:
     get:
       operationId: healthcare_v3_pages_list
