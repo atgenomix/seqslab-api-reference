@@ -2555,6 +2555,35 @@ components:
         * `UNCERTAIN_SIGNIFICANCE` - UNCERTAIN_SIGNIFICANCE
         * `LIKELY_PATHOGENIC` - LIKELY_PATHOGENIC
         * `PATHOGENIC` - PATHOGENIC
+    AxisDescriptor:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        unit:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        label:
+          type: string
+          description: Human-readable axis label
+          maxLength: 255
+      required:
+      - id
+      - label
+    AxisDescriptorRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        unit:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        label:
+          type: string
+          minLength: 1
+          description: Human-readable axis label
+          maxLength: 255
+      required:
+      - label
     Biosample:
       type: object
       description: Adds nested create feature
@@ -2705,6 +2734,20 @@ components:
           nullable: true
           minLength: 1
           maxLength: 25
+    CategoryEnum:
+      enum:
+      - SIGNIFICANTLY_REDUCED
+      - REDUCED
+      - AVERAGE
+      - INCREASED
+      - SIGNIFICANTLY_INCREASED
+      type: string
+      description: |-
+        * `SIGNIFICANTLY_REDUCED` - SIGNIFICANTLY_REDUCED
+        * `REDUCED` - REDUCED
+        * `AVERAGE` - AVERAGE
+        * `INCREASED` - INCREASED
+        * `SIGNIFICANTLY_INCREASED` - SIGNIFICANTLY_INCREASED
     Charts:
       type: object
       properties:
@@ -3031,6 +3074,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GenomicInterpretation'
+        polygenic_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolygenicInterpretation'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -3049,6 +3096,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GenomicInterpretationRequest'
+        polygenic_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolygenicInterpretationRequest'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -3422,6 +3473,10 @@ components:
           $ref: '#/components/schemas/GeneDescriptorRequest'
         variant_interpretation:
           $ref: '#/components/schemas/VariantInterpretationRequest'
+        variant:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
         files:
           type: array
           items:
@@ -3932,6 +3987,20 @@ components:
         * `GENOMIC` - GENOMIC
         * `TRANSCRIPT` - TRANSCRIPT
         * `PROTEIN` - PROTEIN
+    NameEnum:
+      enum:
+      - SIGNIFICANTLY_REDUCED
+      - REDUCED
+      - AVERAGE
+      - INCREASED
+      - SIGNIFICANTLY_INCREASED
+      type: string
+      description: |-
+        * `SIGNIFICANTLY_REDUCED` - SIGNIFICANTLY_REDUCED
+        * `REDUCED` - REDUCED
+        * `AVERAGE` - AVERAGE
+        * `INCREASED` - INCREASED
+        * `SIGNIFICANTLY_INCREASED` - SIGNIFICANTLY_INCREASED
     Number:
       type: object
       properties:
@@ -4338,6 +4407,85 @@ components:
             ''HP:0001250'', ''label'': ''Seizure''})'
       required:
       - type
+    PolygenicInterpretation:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        model:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        score:
+          $ref: '#/components/schemas/Score'
+        risk_descriptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDescriptor'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        notes:
+          type: string
+          nullable: true
+    PolygenicInterpretationRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        model:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        score:
+          $ref: '#/components/schemas/ScoreRequest'
+        risk_descriptors:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskDescriptorRequest'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileRequest'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRequest'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        notes:
+          type: string
+          nullable: true
     Procedure:
       type: object
       description: https://phenopacket-schema.readthedocs.io/en/2.0.0/procedure.html
@@ -4645,6 +4793,268 @@ components:
       description: |-
         * `NEGATIVE` - NEGATIVE
         * `POSITIVE` - POSITIVE
+    RiskDescriptor:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/RiskDescriptorTypeEnum'
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        thresholds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskThreshold'
+        risk_expression:
+          $ref: '#/components/schemas/RiskExpression'
+        description:
+          type: string
+          nullable: true
+          description: Free-text description of this risk descriptor
+      required:
+      - category
+      - id
+      - type
+    RiskDescriptorRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        type:
+          $ref: '#/components/schemas/RiskDescriptorTypeEnum'
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        thresholds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskThresholdRequest'
+        threshold:
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskThresholdRequest'
+          writeOnly: true
+        risk_expression:
+          $ref: '#/components/schemas/RiskExpressionRequest'
+        description:
+          type: string
+          nullable: true
+          description: Free-text description of this risk descriptor
+      required:
+      - category
+      - type
+    RiskDescriptorTypeEnum:
+      enum:
+      - RELATIVE_RISK
+      - LIFETIME_RISK
+      - ABSOLUTE_10_YEAR_RISK
+      - ODDS_RATIO
+      - HAZARD_RATIO
+      - ATTRIBUTABLE_RISK
+      - POPULATION_ATTRIBUTABLE_FRACTION
+      type: string
+      description: |-
+        * `RELATIVE_RISK` - RELATIVE_RISK
+        * `LIFETIME_RISK` - LIFETIME_RISK
+        * `ABSOLUTE_10_YEAR_RISK` - ABSOLUTE_10_YEAR_RISK
+        * `ODDS_RATIO` - ODDS_RATIO
+        * `HAZARD_RATIO` - HAZARD_RATIO
+        * `ATTRIBUTABLE_RISK` - ATTRIBUTABLE_RISK
+        * `POPULATION_ATTRIBUTABLE_FRACTION` - POPULATION_ATTRIBUTABLE_FRACTION
+    RiskExpression:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/RiskExpressionTypeEnum'
+        value:
+          $ref: '#/components/schemas/RiskValue'
+        x_axis:
+          $ref: '#/components/schemas/AxisDescriptor'
+        y_axis:
+          $ref: '#/components/schemas/AxisDescriptor'
+      required:
+      - id
+      - type
+    RiskExpressionRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        type:
+          $ref: '#/components/schemas/RiskExpressionTypeEnum'
+        value:
+          $ref: '#/components/schemas/RiskValueRequest'
+        x_axis:
+          $ref: '#/components/schemas/AxisDescriptorRequest'
+        y_axis:
+          $ref: '#/components/schemas/AxisDescriptorRequest'
+      required:
+      - type
+    RiskExpressionTypeEnum:
+      enum:
+      - NORMAL_DISTRIBUTION
+      - CUMULATIVE_INCIDENCE_CURVE
+      - ODDS_RATIO_BY_PERCENTILE
+      - ABSOLUTE_RISK_REDUCTION
+      - FOREST_PLOT
+      - KAPLAN_MEIER
+      - MULTI_OMIC_COMPOSITE
+      type: string
+      description: |-
+        * `NORMAL_DISTRIBUTION` - NORMAL_DISTRIBUTION
+        * `CUMULATIVE_INCIDENCE_CURVE` - CUMULATIVE_INCIDENCE_CURVE
+        * `ODDS_RATIO_BY_PERCENTILE` - ODDS_RATIO_BY_PERCENTILE
+        * `ABSOLUTE_RISK_REDUCTION` - ABSOLUTE_RISK_REDUCTION
+        * `FOREST_PLOT` - FOREST_PLOT
+        * `KAPLAN_MEIER` - KAPLAN_MEIER
+        * `MULTI_OMIC_COMPOSITE` - MULTI_OMIC_COMPOSITE
+    RiskThreshold:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          $ref: '#/components/schemas/NameEnum'
+        value:
+          type: number
+          format: double
+          description: Percentile cutoff value for this threshold
+      required:
+      - id
+      - name
+      - value
+    RiskThresholdRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        name:
+          $ref: '#/components/schemas/NameEnum'
+        value:
+          type: number
+          format: double
+          description: Percentile cutoff value for this threshold
+      required:
+      - name
+      - value
+    RiskValue:
+      type: object
+      description: |-
+        Serializer for RiskExpression value field.
+        Contains arrays of XYPoint objects for subject, baseline, and comparison curves.
+      properties:
+        subject:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPoint'
+          description: Subject's risk curve data points
+        baseline:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPoint'
+          description: Baseline/reference population risk curve data points
+        comparison_high:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPoint'
+          description: High-risk comparison curve data points
+        comparison_low:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPoint'
+          description: Low-risk comparison curve data points
+      required:
+      - subject
+    RiskValueRequest:
+      type: object
+      description: |-
+        Serializer for RiskExpression value field.
+        Contains arrays of XYPoint objects for subject, baseline, and comparison curves.
+      properties:
+        subject:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPointRequest'
+          description: Subject's risk curve data points
+        baseline:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPointRequest'
+          description: Baseline/reference population risk curve data points
+        comparison_high:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPointRequest'
+          description: High-risk comparison curve data points
+        comparison_low:
+          type: array
+          items:
+            $ref: '#/components/schemas/XYPointRequest'
+          description: Low-risk comparison curve data points
+      required:
+      - subject
+    Score:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        zscore:
+          type: number
+          format: double
+          nullable: true
+          description: Standardized z-score vs reference population
+        relative_risk:
+          type: number
+          format: double
+          nullable: true
+          description: relative risk
+        percentile_rank:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Percentile rank (0-100) computed against reference population
+        variants_number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number of variants actually evaluated after QC
+      required:
+      - id
+    ScoreRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        zscore:
+          type: number
+          format: double
+          nullable: true
+          description: Standardized z-score vs reference population
+        relative_risk:
+          type: number
+          format: double
+          nullable: true
+          description: relative risk
+        percentile_rank:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Percentile rank (0-100) computed against reference population
+        variants_number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number of variants actually evaluated after QC
     SemanticQueryRequestRequest:
       type: object
       properties:
@@ -5484,6 +5894,60 @@ components:
           type: integer
       required:
       - status
+    XYPoint:
+      type: object
+      description: |-
+        Serializer for a single X-Y coordinate point with optional confidence intervals.
+        Used in risk expression visualizations.
+      properties:
+        x:
+          type: number
+          format: double
+          description: X-axis value (e.g., percentile)
+        y:
+          type: number
+          format: double
+          description: Y-axis value (e.g., odds ratio, risk score)
+        y_ci_lower:
+          type: number
+          format: double
+          nullable: true
+          description: Lower bound of Y confidence interval
+        y_ci_upper:
+          type: number
+          format: double
+          nullable: true
+          description: Upper bound of Y confidence interval
+      required:
+      - x
+      - y
+    XYPointRequest:
+      type: object
+      description: |-
+        Serializer for a single X-Y coordinate point with optional confidence intervals.
+        Used in risk expression visualizations.
+      properties:
+        x:
+          type: number
+          format: double
+          description: X-axis value (e.g., percentile)
+        y:
+          type: number
+          format: double
+          description: Y-axis value (e.g., odds ratio, risk score)
+        y_ci_lower:
+          type: number
+          format: double
+          nullable: true
+          description: Lower bound of Y confidence interval
+        y_ci_upper:
+          type: number
+          format: double
+          nullable: true
+          description: Upper bound of Y confidence interval
+      required:
+      - x
+      - y
   securitySchemes:
     jwtAuth:
       type: http

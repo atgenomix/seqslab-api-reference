@@ -7,9 +7,24 @@ info:
 paths:
   /label/v3/labels/:
     get:
-      operationId: list label under user
+      operationId: label_v3_labels_from_root_list
       description: List Labels
       parameters:
+      - in: query
+        name: exclude_path
+        schema:
+          type: array
+          items:
+            type: string
+        description: Exclude entire subtrees from results by specifying absolute label
+          paths to filter out (e.g., 'output' or 'temp/logs'). Useful for filtering
+          out reserved or gigantic label trees.
+      - in: query
+        name: layer
+        schema:
+          type: integer
+        description: Limit the depth of child node response (e.g., 0 for no children,
+          1 for immediate children).
       - in: query
         name: order
         schema:
@@ -59,18 +74,18 @@ paths:
                           name: LabelName
                           extra:
                             color: hex code
-                        id: 22
+                        id: 51
                         children:
                         - data:
                             name: LabelName
                             extra:
                               color: hex code
-                          id: 62
+                          id: 84
                       - data:
                           name: LabelName1
                           extra:
                             color: hex code
-                        id: 87
+                        id: 54
                   summary: Return the Label under user
                   description: Return the label tree under user The return list will
                     appear under the data.
@@ -135,7 +150,7 @@ paths:
                   description: You do not have permission to perform this action
           description: ''
     post:
-      operationId: create label by user
+      operationId: label_v3_labels_from_root_create
       description: Create the Label under a root
       tags:
       - label
@@ -283,6 +298,12 @@ paths:
           type: integer
         description: A unique integer value identifying this label.
         required: true
+      - in: query
+        name: layer
+        schema:
+          type: integer
+        description: Limit the depth of child node response (e.g., 0 for no children,
+          1 for immediate children).
       tags:
       - label
       security:
@@ -302,13 +323,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 38
+                    id: 47
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 44
+                      id: 60
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -583,13 +604,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 38
+                    id: 47
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 44
+                      id: 60
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
@@ -708,13 +729,13 @@ paths:
                       name: LabelName
                       extra:
                         color: hex code
-                    id: 38
+                    id: 47
                     children:
                     - data:
                         name: LabelName
                         extra:
                           color: hex code
-                      id: 44
+                      id: 60
                   summary: Return the Label tree by the label id
                   description: Return the label tree by label ID The return list will
                     appear under the data.
