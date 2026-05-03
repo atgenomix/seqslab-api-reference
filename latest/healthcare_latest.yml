@@ -3078,6 +3078,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PolygenicInterpretation'
+        biomarker_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementInterpretation'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -3100,6 +3104,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PolygenicInterpretationRequest'
+        biomarker_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementInterpretationRequest'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -3781,6 +3789,71 @@ components:
       required:
       - assay
       - id
+    MeasurementInterpretation:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        measurement:
+          $ref: '#/components/schemas/Measurement'
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicalAction'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - measurement
+    MeasurementInterpretationRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        measurement:
+          $ref: '#/components/schemas/MeasurementRequest'
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicalActionRequest'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRequest'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - measurement
     MeasurementRequest:
       type: object
       description: Adds nested create feature

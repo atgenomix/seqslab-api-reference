@@ -2726,7 +2726,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-03-26 05:59:45.233607+00:00
+                    next_run: 2026-05-03 07:36:44.017846+00:00
                   request:
                     name: string
                     description: string
@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-03-26 05:59:45.233627+00:00
+                    next_run: 2026-05-03 07:36:44.017863+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
