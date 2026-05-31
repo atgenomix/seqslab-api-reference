@@ -1933,7 +1933,8 @@ paths:
           description: ''
     delete:
       operationId: management_v3_users_destroy
-      description: Delete a specific user.
+      description: Delete a specific user. Optional JSON payload with 'reassign_to'
+        to transfer ownership of whitelist resources.
       parameters:
       - in: path
         name: id
@@ -1943,6 +1944,21 @@ paths:
         required: true
       tags:
       - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDeleteRequest'
+            examples:
+              DeleteWithReassignment:
+                value:
+                  reassign_to: usr_1234567890
+                summary: Delete with reassignment
+                description: 'Optional: Reassign whitelist resources to another user
+                  before deletion'
+              DeleteWithoutReassignment:
+                summary: Delete without reassignment
+                description: Delete user without reassigning resources
       security:
       - jwtAuth: []
       responses:
@@ -3168,6 +3184,14 @@ components:
           description: Whether user contains the given role
       required:
       - contains
+    UserDeleteRequest:
+      type: object
+      properties:
+        reassign_to:
+          type: string
+          minLength: 1
+          description: User ID to reassign the deleted user's whitelist resources
+            to
     UserOrganizationField:
       type: object
       properties:

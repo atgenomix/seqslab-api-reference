@@ -2726,7 +2726,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-05-03 07:36:44.017846+00:00
+                    next_run: 2026-05-31 15:16:04.312624+00:00
                   request:
                     name: string
                     description: string
@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-05-03 07:36:44.017863+00:00
+                    next_run: 2026-05-31 15:16:04.312643+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -5986,6 +5986,16 @@ components:
         cron:
           type: string
           minLength: 1
+    Store:
+      type: object
+      properties:
+        root:
+          type: string
+    StoreRequest:
+      type: object
+      properties:
+        root:
+          type: string
     Tag:
       type: object
       properties:
@@ -6046,6 +6056,8 @@ components:
           type: string
         token_lifetime:
           type: integer
+        store:
+          $ref: '#/components/schemas/Store'
     WorkflowBackendParamsRequest:
       type: object
       properties:
@@ -6074,6 +6086,8 @@ components:
           type: string
         token_lifetime:
           type: integer
+        store:
+          $ref: '#/components/schemas/StoreRequest'
     WorkflowParams:
       type: object
       properties:

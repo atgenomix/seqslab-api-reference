@@ -3082,6 +3082,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementInterpretation'
+        population_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementInterpretation'
+        pharmacogenomics_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PharmacogenomicsInterpretation'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -3108,6 +3116,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MeasurementInterpretationRequest'
+        population_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasurementInterpretationRequest'
+        pharmacogenomics_interpretations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PharmacogenomicsInterpretationRequest'
         mode_of_inheritance:
           type: string
           nullable: true
@@ -4281,6 +4297,109 @@ components:
             $ref: '#/components/schemas/FileRequest'
         result:
           $ref: '#/components/schemas/ResultEnum'
+    PharmacogenomicsInterpretation:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptor'
+        drug:
+          $ref: '#/components/schemas/OntologyClassStatic'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        diplotype:
+          type: string
+          nullable: true
+          maxLength: 255
+        phenotype:
+          type: string
+          nullable: true
+          maxLength: 255
+        guideline:
+          type: string
+          nullable: true
+          maxLength: 255
+        recommendation:
+          type: string
+          nullable: true
+        classification:
+          type: string
+          nullable: true
+          maxLength: 64
+        xrefs:
+          type: object
+          additionalProperties: {}
+          nullable: true
+    PharmacogenomicsInterpretationRequest:
+      type: object
+      description: |-
+        Simple mixin to remove UniqueValidator from the 'id' field.
+        This solves the conflict where nested updates fail with "already exists" errors.
+
+        Does not inherit from any base class to avoid MRO conflicts.
+        Must be placed before the main serializer class in inheritance order.
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        interpretation_status:
+          allOf:
+          - $ref: '#/components/schemas/InterpretationStatusEnum'
+          default: UNKNOWN_STATUS
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptorRequest'
+        drug:
+          $ref: '#/components/schemas/OntologyClassStaticRequest'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRequest'
+        subject_or_biosample_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        diplotype:
+          type: string
+          nullable: true
+          maxLength: 255
+        phenotype:
+          type: string
+          nullable: true
+          maxLength: 255
+        guideline:
+          type: string
+          nullable: true
+          maxLength: 255
+        recommendation:
+          type: string
+          nullable: true
+        classification:
+          type: string
+          nullable: true
+          maxLength: 64
+        xrefs:
+          type: object
+          additionalProperties: {}
+          nullable: true
     PhenopacketReport:
       type: object
       description: Adds nested create feature

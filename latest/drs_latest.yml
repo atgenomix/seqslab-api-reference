@@ -1012,6 +1012,19 @@ paths:
             type: string
         description: Filter DRS objects according to region
       - in: query
+        name: metadata
+        schema:
+          type: object
+          additionalProperties: {}
+        description: "\n    Filter DRS objects by metadata with a dictionary of key-value\
+          \ pairs. The keys are Field Lookup terms\n    handled in django Q object,\
+          \ e.g.:\n    {\n        \"metadata.sample_type\": \"control\",\n       \
+          \ \"metadata.properties.has_any_keys\": [\"value1\", \"value2\"],\n    \
+          \    \"metadata.some_key.isnull\": true, // query for missing key in metadata\n\
+          \        \"metadata.age.gte\": 20,\n        \"metadata.dates.0.date\": \"\
+          2023-06-01T15:30:00+08:00\",\n        \"metadata.dates.contains\": {\"date\"\
+          : \"2023-06-01T15:30:00+08:00\"}\n    }\n    "
+      - in: query
         name: order
         schema:
           enum:
@@ -1149,8 +1162,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-05-03 07:36:38.404001+00:00'
-                  deleted_time: '2026-08-01'
+                  created_time: '2026-05-31 15:15:59.230615+00:00'
+                  deleted_time: '2026-08-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1174,8 +1187,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-05-03 07:36:38.404355+00:00'
-                  deleted_time: '2026-08-01'
+                  created_time: '2026-05-31 15:15:59.230887+00:00'
+                  deleted_time: '2026-08-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1195,8 +1208,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-05-03 07:36:38.404408+00:00'
-                  deleted_time: '2026-08-01'
+                  created_time: '2026-05-31 15:15:59.230922+00:00'
+                  deleted_time: '2026-08-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1263,10 +1276,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2026-05-03 07:36:38.404299+00:00
-                    created_time: 2026-05-03 07:36:38.404300+00:00
+                    version: 2026-05-31 15:15:59.230850+00:00
+                    created_time: 2026-05-31 15:15:59.230851+00:00
                     updated_time: null
-                    deleted_time: 2026-08-01
+                    deleted_time: 2026-08-29
                     metadata:
                       investigation:
                         center: null
@@ -1328,10 +1341,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2026-05-03 07:36:38.404461+00:00
-                    created_time: 2026-05-03 07:36:38.404462+00:00
+                    version: 2026-05-31 15:15:59.230956+00:00
+                    created_time: 2026-05-31 15:15:59.230957+00:00
                     updated_time: null
-                    deleted_time: 2026-08-01
+                    deleted_time: 2026-08-29
                     metadata:
                       investigation:
                         center: null
@@ -1389,10 +1402,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2026-05-03 07:36:38.404511+00:00
-                    created_time: 2026-05-03 07:36:38.404512+00:00
+                    version: 2026-05-31 15:15:59.230990+00:00
+                    created_time: 2026-05-31 15:15:59.230991+00:00
                     updated_time: null
-                    deleted_time: 2026-08-01
+                    deleted_time: 2026-08-29
                     metadata:
                       investigation:
                         center: null
@@ -1457,7 +1470,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2026-08-01
+                    deleted_time: 2026-08-29
                     metadata:
                       investigation:
                         center: null
@@ -1632,7 +1645,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2026-05-03 07:36:38.404712+00:00
+                    version: 2026-05-31 15:15:59.231155+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1700,7 +1713,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2026-05-03 07:36:38.404707+00:00
+                    version: 2026-05-31 15:15:59.231151+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1854,9 +1867,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2026-05-03 07:36:38.404639+00:00
-                  updated_time: 2026-05-03 07:36:38.404639+00:00
-                  deleted_time: 2026-08-01
+                  created_time: 2026-05-31 15:15:59.231100+00:00
+                  updated_time: 2026-05-31 15:15:59.231101+00:00
+                  deleted_time: 2026-08-29
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1981,9 +1994,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2026-05-03 07:36:38.404639+00:00
-                  updated_time: 2026-05-03 07:36:38.404639+00:00
-                  deleted_time: 2026-08-01
+                  created_time: 2026-05-31 15:15:59.231100+00:00
+                  updated_time: 2026-05-31 15:15:59.231101+00:00
+                  deleted_time: 2026-08-29
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -2002,14 +2015,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2026-05-03 07:36:38.404692+00:00
+                  updated_time: 2026-05-31 15:15:59.231136+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2026-05-03 07:36:38.404690+00:00
+                  created_time: 2026-05-31 15:15:59.231135+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
