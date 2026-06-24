@@ -4116,6 +4116,9 @@ components:
         * `AVERAGE` - AVERAGE
         * `INCREASED` - INCREASED
         * `SIGNIFICANTLY_INCREASED` - SIGNIFICANTLY_INCREASED
+    NullEnum:
+      enum:
+      - null
     Number:
       type: object
       properties:
@@ -4133,6 +4136,22 @@ components:
         value:
           type: integer
           default: 0
+    OncogenicityClassificationEnum:
+      enum:
+      - NOT_PROVIDED
+      - BENIGN
+      - LIKELY_BENIGN
+      - UNCERTAIN_SIGNIFICANCE
+      - LIKELY_ONCOGENIC
+      - ONCOGENIC
+      type: string
+      description: |-
+        * `NOT_PROVIDED` - Not Provided
+        * `BENIGN` - Benign
+        * `LIKELY_BENIGN` - Likely Benign
+        * `UNCERTAIN_SIGNIFICANCE` - Uncertain Significance
+        * `LIKELY_ONCOGENIC` - Likely Oncogenic
+        * `ONCOGENIC` - Oncogenic
     OntologyClassStatic:
       type: object
       properties:
@@ -4361,9 +4380,9 @@ components:
           items:
             type: string
         diplotype:
-          type: array
-          items:
-            type: string
+          type: object
+          additionalProperties: {}
+          nullable: true
         subject_or_biosample_id:
           type: string
           nullable: true
@@ -4414,10 +4433,9 @@ components:
             type: string
             minLength: 1
         diplotype:
-          type: array
-          items:
-            type: string
-            minLength: 1
+          type: object
+          additionalProperties: {}
+          nullable: true
         subject_or_biosample_id:
           type: string
           nullable: true
@@ -5547,14 +5565,20 @@ components:
           minLength: 1
     TherapeuticActionabilityEnum:
       enum:
-      - UNKNOWN_ACTIONABILITY
-      - NOT_ACTIONABLE
-      - ACTIONABLE
+      - IA
+      - IB
+      - IIC
+      - IID
+      - III
+      - IV
       type: string
       description: |-
-        * `UNKNOWN_ACTIONABILITY` - UNKNOWN_ACTIONABILITY
-        * `NOT_ACTIONABLE` - NOT_ACTIONABLE
-        * `ACTIONABLE` - ACTIONABLE
+        * `IA` - IA (Strong clinical significance - FDA-approved therapy available)
+        * `IB` - IB (Strong clinical significance - Compelling experimental evidence)
+        * `IIC` - IIC (Potential clinical significance - Early evidence of response)
+        * `IID` - IID (Potential clinical significance - Preclinical evidence)
+        * `III` - III (Uncertain clinical significance - No known actionability)
+        * `IV` - IV (Benign)
     TherapeuticRegimen:
       type: object
       description: Adds nested create feature
@@ -5798,10 +5822,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/AtgxPathogenicityClassificationEnum'
           default: NOT_PROVIDED
-        therapeutic_actionability:
+        oncogenicity_classification:
           allOf:
+          - $ref: '#/components/schemas/OncogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        therapeutic_actionability:
+          nullable: true
+          oneOf:
           - $ref: '#/components/schemas/TherapeuticActionabilityEnum'
-          default: UNKNOWN_ACTIONABILITY
+          - $ref: '#/components/schemas/NullEnum'
         acmg_pathogenicity_criteria:
           type: object
           additionalProperties: {}
@@ -5815,6 +5844,14 @@ components:
           additionalProperties: {}
           nullable: true
         cvc_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        oncogenicity_criteria:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        oncogenicity_score:
           type: object
           additionalProperties: {}
           nullable: true
@@ -5835,10 +5872,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/AtgxPathogenicityClassificationEnum'
           default: NOT_PROVIDED
-        therapeutic_actionability:
+        oncogenicity_classification:
           allOf:
+          - $ref: '#/components/schemas/OncogenicityClassificationEnum'
+          default: NOT_PROVIDED
+        therapeutic_actionability:
+          nullable: true
+          oneOf:
           - $ref: '#/components/schemas/TherapeuticActionabilityEnum'
-          default: UNKNOWN_ACTIONABILITY
+          - $ref: '#/components/schemas/NullEnum'
         acmg_pathogenicity_criteria:
           type: object
           additionalProperties: {}
@@ -5852,6 +5894,14 @@ components:
           additionalProperties: {}
           nullable: true
         cvc_pathogenicity_classification:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        oncogenicity_criteria:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        oncogenicity_score:
           type: object
           additionalProperties: {}
           nullable: true
