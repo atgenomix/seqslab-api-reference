@@ -2726,7 +2726,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-06-25 02:01:23.310184+00:00
+                    next_run: 2026-07-21 03:58:43.579425+00:00
                   request:
                     name: string
                     description: string
@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-06-25 02:01:23.310198+00:00
+                    next_run: 2026-07-21 03:58:43.579443+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -6054,10 +6054,15 @@ components:
           type: string
         smart_reuse_level:
           type: string
+        resume_run_id:
+          type: string
         token_lifetime:
           type: integer
         store:
           $ref: '#/components/schemas/Store'
+        operation:
+          type: object
+          additionalProperties: {}
     WorkflowBackendParamsRequest:
       type: object
       properties:
@@ -6082,12 +6087,20 @@ components:
           default: false
         smart_reuse_id:
           type: string
+          minLength: 1
         smart_reuse_level:
           type: string
+          minLength: 1
+        resume_run_id:
+          type: string
+          minLength: 1
         token_lifetime:
           type: integer
         store:
           $ref: '#/components/schemas/StoreRequest'
+        operation:
+          type: object
+          additionalProperties: {}
     WorkflowParams:
       type: object
       properties:

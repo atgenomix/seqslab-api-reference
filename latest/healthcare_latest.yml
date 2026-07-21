@@ -3155,6 +3155,41 @@ components:
           type: string
           nullable: true
           maxLength: 255
+    Diplotype:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          maxLength: 255
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptor'
+        diplotype:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        phenotype:
+          type: string
+          nullable: true
+          maxLength: 255
+    DiplotypeRequest:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        gene_context:
+          $ref: '#/components/schemas/GeneDescriptorRequest'
+        diplotype:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        phenotype:
+          type: string
+          nullable: true
+          maxLength: 255
     Diseases:
       type: object
       description: Adds nested create feature
@@ -4367,27 +4402,21 @@ components:
           allOf:
           - $ref: '#/components/schemas/InterpretationStatusEnum'
           default: UNKNOWN_STATUS
-        gene_context:
-          $ref: '#/components/schemas/GeneDescriptor'
         drug:
           $ref: '#/components/schemas/OntologyClassStatic'
-        extensions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Extension'
         xrefs:
           type: array
           items:
             type: string
-        diplotype:
-          type: object
-          additionalProperties: {}
-          nullable: true
+        diplotypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diplotype'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Extension'
         subject_or_biosample_id:
-          type: string
-          nullable: true
-          maxLength: 255
-        phenotype:
           type: string
           nullable: true
           maxLength: 255
@@ -4419,28 +4448,22 @@ components:
           allOf:
           - $ref: '#/components/schemas/InterpretationStatusEnum'
           default: UNKNOWN_STATUS
-        gene_context:
-          $ref: '#/components/schemas/GeneDescriptorRequest'
         drug:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
-        extensions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtensionRequest'
         xrefs:
           type: array
           items:
             type: string
             minLength: 1
-        diplotype:
-          type: object
-          additionalProperties: {}
-          nullable: true
+        diplotypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiplotypeRequest'
+        extensions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRequest'
         subject_or_biosample_id:
-          type: string
-          nullable: true
-          maxLength: 255
-        phenotype:
           type: string
           nullable: true
           maxLength: 255

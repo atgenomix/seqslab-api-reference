@@ -7963,26 +7963,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "JSONString",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "recommendation",
                   "type": {
                     "kind": "SCALAR",
@@ -7997,6 +7977,16 @@
                   "type": {
                     "kind": "SCALAR",
                     "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -8109,84 +8099,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -8198,6 +8110,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -8231,6 +8157,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "classification",
                   "type": {
                     "kind": "SCALAR",
@@ -8255,7 +8201,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline",
+                  "name": "recommendation__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -8265,7 +8211,75 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline__contains",
+                  "name": "diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__diplotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -8336,26 +8350,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "JSONString",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "recommendation",
                   "type": {
                     "kind": "SCALAR",
@@ -8370,6 +8364,16 @@
                   "type": {
                     "kind": "SCALAR",
                     "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -8482,84 +8486,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -8571,6 +8497,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -8604,6 +8544,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "classification",
                   "type": {
                     "kind": "SCALAR",
@@ -8628,7 +8588,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline",
+                  "name": "recommendation__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -8638,7 +8598,75 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline__contains",
+                  "name": "diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__diplotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -17902,84 +17930,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "pharmacogenomic_interpretations__guideline",
                   "type": {
                     "kind": "SCALAR",
@@ -18083,6 +18033,84 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "pharmacogenomic_interpretations__recommendation__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -19207,84 +19235,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "pharmacogenomic_interpretations__guideline",
                   "type": {
                     "kind": "SCALAR",
@@ -19388,6 +19338,84 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "pharmacogenomic_interpretations__recommendation__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -20501,84 +20529,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -20590,6 +20540,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -20623,6 +20587,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -20647,7 +20631,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -20657,7 +20641,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -21698,84 +21740,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -21787,6 +21751,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -21820,6 +21798,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -21844,7 +21842,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -21854,7 +21852,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -26312,6 +26368,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "result",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "meta_data__created__gte",
                   "type": {
                     "kind": "SCALAR",
@@ -27944,6 +28010,16 @@
                       "name": "String",
                       "ofType": null
                     }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "result",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   }
                 },
                 {
@@ -34045,7 +34121,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "pharmacogenomicinterpretation_gene_descriptor",
+              "name": "diplotype_gene_descriptor",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -34057,7 +34133,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "OBJECT",
-                      "name": "PharmacogenomicInterpretationType",
+                      "name": "DiplotypeType",
                       "ofType": null
                     }
                   }
@@ -44401,84 +44477,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -44490,6 +44488,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -44523,6 +44535,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -44547,7 +44579,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -44557,7 +44589,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -47923,84 +48013,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -48012,6 +48024,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -48045,6 +48071,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -48069,7 +48115,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -48079,7 +48125,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -55327,84 +55431,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -55416,6 +55442,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -55449,6 +55489,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -55473,7 +55533,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -55483,7 +55543,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -58888,84 +59006,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -58977,6 +59017,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__qpharmacogenomic_interpretations__drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -59010,6 +59064,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "diagnosis__pharmacogenomic_interpretations__classification",
                   "type": {
                     "kind": "SCALAR",
@@ -59034,7 +59108,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -59044,7 +59118,65 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__pharmacogenomic_interpretations__guideline__contains",
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__diplotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diagnosis__pharmacogenomic_interpretations__diplotypes__phenotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -63148,26 +63280,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "JSONString",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "recommendation",
                   "type": {
                     "kind": "SCALAR",
@@ -63182,6 +63294,16 @@
                   "type": {
                     "kind": "SCALAR",
                     "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -63294,84 +63416,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -63383,6 +63427,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -63416,6 +63474,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "classification",
                   "type": {
                     "kind": "SCALAR",
@@ -63440,7 +63518,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline",
+                  "name": "recommendation__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -63450,7 +63528,75 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline__contains",
+                  "name": "diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__diplotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -64889,26 +65035,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "JSONString",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "recommendation",
                   "type": {
                     "kind": "SCALAR",
@@ -64923,6 +65049,16 @@
                   "type": {
                     "kind": "SCALAR",
                     "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -65035,84 +65171,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "gene_context__value_id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__value_id__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "gene_context__symbol__in",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "diplotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
-                  "name": "phenotype__contains",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "drug__id",
                   "type": {
                     "kind": "SCALAR",
@@ -65124,6 +65182,20 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "drug__id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "drug__id__contains",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -65157,6 +65229,26 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "guideline",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "guideline__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "classification",
                   "type": {
                     "kind": "SCALAR",
@@ -65181,7 +65273,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline",
+                  "name": "recommendation__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -65191,7 +65283,75 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "guideline__contains",
+                  "name": "diplotypes__gene_context__value_id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__value_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__gene_context__symbol__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__phenotype__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__diplotype__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -65349,42 +65509,6 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "gene_context",
-              "type": {
-                "kind": "OBJECT",
-                "name": "GeneDescriptorType",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "diplotype",
-              "type": {
-                "kind": "SCALAR",
-                "name": "GenericScalar",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "phenotype",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "guideline",
               "type": {
                 "kind": "SCALAR",
@@ -65440,6 +65564,77 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "gene_context__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "_sort",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "diplotypes",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "DiplotypeType",
                   "ofType": null
                 }
               }
@@ -65527,6 +65722,113 @@
                     }
                   }
                 }
+              }
+            },
+            {
+              "args": [
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "gene_context__id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "JSONString",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenotype",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "_sort",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "before",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "after",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "first",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "last",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                }
+              ],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "diplotypeconnections",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DiplotypeConnection",
+                "ofType": null
               }
             },
             {
@@ -65634,6 +65936,93 @@
           "possibleTypes": null
         },
         {
+          "description": null,
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "id",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "gene_context",
+              "type": {
+                "kind": "OBJECT",
+                "name": "GeneDescriptorType",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "diplotype",
+              "type": {
+                "kind": "SCALAR",
+                "name": "GenericScalar",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "phenotype",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "pharmacogenomicinterpretation_diplotypes",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "PharmacogenomicInterpretationType",
+                      "ofType": null
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DiplotypeType",
+          "possibleTypes": null
+        },
+        {
           "description": "The `GenericScalar` scalar type represents a generic\nGraphQL scalar value that could be:\nString, Boolean, Int, Float, List or Object.",
           "enumValues": null,
           "fields": null,
@@ -65641,6 +66030,200 @@
           "interfaces": null,
           "kind": "SCALAR",
           "name": "GenericScalar",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "Pagination data for this connection.",
+              "isDeprecated": false,
+              "name": "pageInfo",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "Contains the nodes in this connection.",
+              "isDeprecated": false,
+              "name": "edges",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "DiplotypeEdge",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "count",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "offset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "pagesize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "first",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "last",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "next",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "previous",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DiplotypeConnection",
+          "possibleTypes": null
+        },
+        {
+          "description": "A Relay edge containing a `Diplotype` and its cursor.",
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "The item at the end of the edge",
+              "isDeprecated": false,
+              "name": "node",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DiplotypeType",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": "A cursor for use in pagination",
+              "isDeprecated": false,
+              "name": "cursor",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "mode",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "score",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DiplotypeEdge",
           "possibleTypes": null
         },
         {
@@ -258342,35 +258925,11 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "gene_context",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "GeneDescriptorSerializerInput",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
               "name": "drug",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "OntologyClassStaticSerializerInput",
                 "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "extensions",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExtensionSerializerInput",
-                  "ofType": null
-                }
               }
             },
             {
@@ -258390,27 +258949,35 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "diplotype",
+              "name": "diplotypes",
               "type": {
-                "kind": "SCALAR",
-                "name": "JSONStringOrObject",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DiplotypeSerializerInput",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "extensions",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ExtensionSerializerInput",
+                  "ofType": null
+                }
               }
             },
             {
               "defaultValue": null,
               "description": null,
               "name": "subject_or_biosample_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "phenotype",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -258451,6 +259018,57 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "PharmacogenomicInterpretationSerializerInput",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "gene_context",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "GeneDescriptorSerializerInput",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "diplotype",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSONStringOrObject",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "phenotype",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DiplotypeSerializerInput",
           "possibleTypes": null
         },
         {
@@ -273189,39 +273807,11 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "gene_context",
-              "type": {
-                "kind": "OBJECT",
-                "name": "GeneDescriptorType",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "drug",
               "type": {
                 "kind": "OBJECT",
                 "name": "OntologyClassType",
                 "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "extensions",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "ExtensionType",
-                  "ofType": null
-                }
               }
             },
             {
@@ -273245,11 +273835,31 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "diplotype",
+              "name": "diplotypes",
               "type": {
-                "kind": "SCALAR",
-                "name": "JSONStringOrObject",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "DiplotypeType",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "extensions",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ExtensionType",
+                  "ofType": null
+                }
               }
             },
             {
@@ -273258,18 +273868,6 @@
               "description": null,
               "isDeprecated": false,
               "name": "subject_or_biosample_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "phenotype",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -273375,35 +273973,11 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "gene_context",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "GeneDescriptorSerializerInput",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
               "name": "drug",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "OntologyClassStaticSerializerInput",
                 "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "extensions",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExtensionSerializerInput",
-                  "ofType": null
-                }
               }
             },
             {
@@ -273423,27 +273997,35 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "diplotype",
+              "name": "diplotypes",
               "type": {
-                "kind": "SCALAR",
-                "name": "JSONStringOrObject",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DiplotypeSerializerInput",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "extensions",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ExtensionSerializerInput",
+                  "ofType": null
+                }
               }
             },
             {
               "defaultValue": null,
               "description": null,
               "name": "subject_or_biosample_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "phenotype",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -273529,39 +274111,11 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "gene_context",
-              "type": {
-                "kind": "OBJECT",
-                "name": "GeneDescriptorType",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
               "name": "drug",
               "type": {
                 "kind": "OBJECT",
                 "name": "OntologyClassType",
                 "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "extensions",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "ExtensionType",
-                  "ofType": null
-                }
               }
             },
             {
@@ -273585,11 +274139,31 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "diplotype",
+              "name": "diplotypes",
               "type": {
-                "kind": "SCALAR",
-                "name": "JSONStringOrObject",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "DiplotypeType",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "extensions",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ExtensionType",
+                  "ofType": null
+                }
               }
             },
             {
@@ -273598,18 +274172,6 @@
               "description": null,
               "isDeprecated": false,
               "name": "subject_or_biosample_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "phenotype",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -273715,35 +274277,11 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "gene_context",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "GeneDescriptorSerializerInput",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
               "name": "drug",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "OntologyClassStaticSerializerInput",
                 "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "extensions",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "ExtensionSerializerInput",
-                  "ofType": null
-                }
               }
             },
             {
@@ -273763,27 +274301,35 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "diplotype",
+              "name": "diplotypes",
               "type": {
-                "kind": "SCALAR",
-                "name": "JSONStringOrObject",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DiplotypeSerializerInput",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "extensions",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ExtensionSerializerInput",
+                  "ofType": null
+                }
               }
             },
             {
               "defaultValue": null,
               "description": null,
               "name": "subject_or_biosample_id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "phenotype",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
