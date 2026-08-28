@@ -3460,14 +3460,17 @@ components:
           type: array
           items:
             type: string
+            nullable: true
         xrefs:
           type: array
           items:
             type: string
+            nullable: true
         alternate_symbols:
           type: array
           items:
             type: string
+            nullable: true
         symbol:
           type: string
           nullable: true
@@ -3487,17 +3490,17 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         xrefs:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         alternate_symbols:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         symbol:
           type: string
           nullable: true
@@ -3689,6 +3692,7 @@ components:
           type: array
           items:
             type: string
+            nullable: true
         date_of_birth:
           type: string
           format: date
@@ -3722,7 +3726,7 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         date_of_birth:
           type: string
           format: date
@@ -4369,7 +4373,7 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         note:
           type: string
           minLength: 1
@@ -4408,6 +4412,7 @@ components:
           type: array
           items:
             type: string
+            nullable: true
         diplotypes:
           type: array
           items:
@@ -4454,7 +4459,7 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         diplotypes:
           type: array
           items:
@@ -4523,6 +4528,7 @@ components:
           type: array
           items:
             type: string
+            nullable: true
         user:
           type: string
           readOnly: true
@@ -4591,7 +4597,7 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         note:
           type: string
           minLength: 1
@@ -5979,10 +5985,12 @@ components:
           type: array
           items:
             type: string
+            nullable: true
         alternate_labels:
           type: array
           items:
             type: string
+            nullable: true
         extensions:
           type: array
           items:
@@ -6030,12 +6038,12 @@ components:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         alternate_labels:
           type: array
           items:
             type: string
-            minLength: 1
+            nullable: true
         extensions:
           type: array
           items:

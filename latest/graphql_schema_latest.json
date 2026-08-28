@@ -19559,20 +19559,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -20770,20 +20770,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -43507,20 +43507,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -47043,20 +47043,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -49170,6 +49170,42 @@
                     }
                   }
                 }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "organization_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "practitioner_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "practitioner_role_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               }
             },
             {
@@ -54461,20 +54497,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -58036,20 +58072,20 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "progress_status",
+                  "name": "summary",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Int",
+                    "name": "String",
                     "ofType": null
                   }
                 },
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "summary",
+                  "name": "progress_status",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -66457,7 +66493,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "progress_status",
+              "name": "summary",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -66469,7 +66505,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "summary",
+              "name": "progress_status",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
