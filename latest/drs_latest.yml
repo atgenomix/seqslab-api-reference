@@ -1162,8 +1162,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-08-28 23:10:40.225161+00:00'
-                  deleted_time: '2026-11-26'
+                  created_time: '2026-09-30 19:49:51.091460+00:00'
+                  deleted_time: '2026-12-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1187,8 +1187,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-08-28 23:10:40.225472+00:00'
-                  deleted_time: '2026-11-26'
+                  created_time: '2026-09-30 19:49:51.091832+00:00'
+                  deleted_time: '2026-12-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1208,8 +1208,8 @@ paths:
                   mime_type: string
                   file_type: regular
                   description: string
-                  created_time: '2026-08-28 23:10:40.225510+00:00'
-                  deleted_time: '2026-11-26'
+                  created_time: '2026-09-30 19:49:51.091884+00:00'
+                  deleted_time: '2026-12-29'
                   aliases: []
                   metadata: {}
                   tags:
@@ -1276,10 +1276,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2026-08-28 23:10:40.225427+00:00
-                    created_time: 2026-08-28 23:10:40.225428+00:00
+                    version: 2026-09-30 19:49:51.091778+00:00
+                    created_time: 2026-09-30 19:49:51.091779+00:00
                     updated_time: null
-                    deleted_time: 2026-11-26
+                    deleted_time: 2026-12-29
                     metadata:
                       investigation:
                         center: null
@@ -1341,10 +1341,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG3
                     size: 3189
-                    version: 2026-08-28 23:10:40.225550+00:00
-                    created_time: 2026-08-28 23:10:40.225550+00:00
+                    version: 2026-09-30 19:49:51.091935+00:00
+                    created_time: 2026-09-30 19:49:51.091936+00:00
                     updated_time: null
-                    deleted_time: 2026-11-26
+                    deleted_time: 2026-12-29
                     metadata:
                       investigation:
                         center: null
@@ -1402,10 +1402,10 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_1cu5pYmDJKRefG4
                     size: 3189
-                    version: 2026-08-28 23:10:40.225583+00:00
-                    created_time: 2026-08-28 23:10:40.225584+00:00
+                    version: 2026-09-30 19:49:51.091986+00:00
+                    created_time: 2026-09-30 19:49:51.091987+00:00
                     updated_time: null
-                    deleted_time: 2026-11-26
+                    deleted_time: 2026-12-29
                     metadata:
                       investigation:
                         center: null
@@ -1470,7 +1470,7 @@ paths:
                     version: '2021-09-11T03:11:37.673810Z'
                     created_time: null
                     updated_time: null
-                    deleted_time: 2026-11-26
+                    deleted_time: 2026-12-29
                     metadata:
                       investigation:
                         center: null
@@ -1645,7 +1645,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2026-08-28 23:10:40.225735+00:00
+                    version: 2026-09-30 19:49:51.092172+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1713,7 +1713,7 @@ paths:
                     description: string
                     self_uri: drs://localhost:8000/drs_SfJ2ApkL3q7nJVT
                     size: 3189
-                    version: 2026-08-28 23:10:40.225728+00:00
+                    version: 2026-09-30 19:49:51.092167+00:00
                     created_time: null
                     updated_time: null
                     deleted_time: null
@@ -1867,9 +1867,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2026-08-28 23:10:40.225660+00:00
-                  updated_time: 2026-08-28 23:10:40.225661+00:00
-                  deleted_time: 2026-11-26
+                  created_time: 2026-09-30 19:49:51.092097+00:00
+                  updated_time: 2026-09-30 19:49:51.092097+00:00
+                  deleted_time: 2026-12-29
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -1994,9 +1994,9 @@ paths:
                       url: abfss://container@stroageaccount.dfs.core.windows.net/hg19/make_hg19.sh
                       headers: {}
                     region: westus2
-                  created_time: 2026-08-28 23:10:40.225660+00:00
-                  updated_time: 2026-08-28 23:10:40.225661+00:00
-                  deleted_time: 2026-11-26
+                  created_time: 2026-09-30 19:49:51.092097+00:00
+                  updated_time: 2026-09-30 19:49:51.092097+00:00
+                  deleted_time: 2026-12-29
                 summary: Update blob data and content
                 description: 'Update name, tags, metadata and DRS object content <br>name:
                   DRS object name <br>tags: DRS object label (Note: It will override
@@ -2015,14 +2015,14 @@ paths:
                   override the original checksums) <br>Serializers refer to BlobUpdateRequest.'
               UpdateBlobContentUpdatedTime:
                 value:
-                  updated_time: 2026-08-28 23:10:40.225711+00:00
+                  updated_time: 2026-09-30 19:49:51.092151+00:00
                 summary: Update blob content updated_time
                 description: Update DRS object content updated_time.This will connect
                   to the data updated time <br>or last modified time. <br>Serializers
                   refer to BlobUpdateRequest.
               UpdateBlobContentCreatedTime:
                 value:
-                  created_time: 2026-08-28 23:10:40.225710+00:00
+                  created_time: 2026-09-30 19:49:51.092150+00:00
                 summary: Update blob content created_time
                 description: Update blob content created_time.This will connect to
                   the data created time. <br>Serializers refer to BlobUpdateRequest.
@@ -2978,6 +2978,119 @@ paths:
         description: Returns a TSV or JSON file of all DRS Objects
       tags:
       - ga4gh
+      security:
+      - jwtAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DrsFileDownload'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: ga4gh_drs_v1_objects_downloads_create
+      description: Return a JSON list of Gen2 file information
+      parameters:
+      - in: query
+        name: compressed
+        schema:
+          type: boolean
+        description: Whether to download the backend file compressed or not.
+      - in: query
+        name: drs_objects
+        schema:
+          type: array
+          items:
+            type: string
+        description: Target DRS objects to download
+      - in: query
+        name: expiry_time
+        schema:
+          type: string
+          format: date-time
+        description: Customized expiry time of SAS token for download usage
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - tsv
+          - json
+        description: Returns a TSV or JSON file of all DRS Objects
+      tags:
+      - ga4gh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DrsFileDownloadRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DrsFileDownloadRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DrsFileDownloadRequest'
+        required: true
       security:
       - jwtAuth: []
       - tokenAuth: []

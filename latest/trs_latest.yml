@@ -4291,7 +4291,7 @@ components:
           maxLength: 255
         version_id:
           type: string
-          pattern: ^\d+\.\d+(\.\d+)?$
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
           maxLength: 16
         is_production:
           type: boolean
@@ -4395,7 +4395,7 @@ components:
         version_id:
           type: string
           minLength: 1
-          pattern: ^\d+\.\d+(\.\d+)?$
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
           maxLength: 16
         is_production:
           type: boolean
