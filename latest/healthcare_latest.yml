@@ -1601,6 +1601,1214 @@ paths:
                   summary: Not found
                   description: Not found
           description: ''
+  /healthcare/v3/reporting-templates/:
+    get:
+      operationId: healthcare_v3_reporting_templates_list
+      description: Retrieve a list of configured reporting templates filtered by status,
+        locale, or origin.
+      summary: List Reporting Templates
+      parameters:
+      - in: query
+        name: locale
+        schema:
+          type: string
+        description: Filter configurations by pre-resolved locale code (e.g., 'en-US',
+          'zh-TW').
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: origin
+        schema:
+          type: string
+          enum:
+          - custom
+          - precanned
+        description: Filter configurations by source origin or system.
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - deprecated
+          - draft
+          - published
+        description: Filter results by configuration lifecycle status (e.g., 'draft',
+          'published', 'deprecated').
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReportingTemplateList'
+              examples:
+                ReportingTemplateList:
+                  value:
+                  - id: 89c9c67a-3dde-4f06-98cc-9d8326f28f6d
+                    name: Somatic癌症基因CGP
+                    slug: somatic-cgp
+                    version: 3.0.1
+                    locale: zh-TW
+                    status: draft
+                    is_precanned: false
+                    description: Cloned from 遺傳性癌症次世代定序檢測報告 (Hereditary Cancer NGS
+                      Report) (v2.4.0)
+                    published_date: ''
+                    page_count: 2
+                    created_by_username: May Wang
+                    updated_by_username: Allen Chang
+                    created_at: '2026-09-30T09:50:17.971346Z'
+                    updated_at: '2026-09-30T09:58:11.608953Z'
+                  summary: Reporting template list
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: healthcare_v3_reporting_templates_create
+      description: |-
+        ViewSet for managing SeqsLab Nexus Clinical Reporting Templates.
+
+        Standard CRUD is unrestricted with respect to `status` and `published_date` (a non-null `published_date`
+        forces `status` to `published`). Only cross-organization access (404) and writes to pre-canned
+        templates (400) are refused. The following actions are client-side conveniences that never reject on state:
+          - `clone`: Duplicates any template into a new editable draft with the given version.
+          - `publish`: Sets status to published and stamps today's date.
+          - `deprecate`: Sets status to deprecated.
+          - `revert_to_draft`: Sets status back to draft.
+          - `precanned`: Lists the factory-provided reference templates.
+      tags:
+      - reporting-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportingTemplateDetailRequest'
+            examples:
+              ReportingTemplateCreation:
+                value:
+                  resource_type: ReportingTemplate
+                  metadata:
+                    id: tpl_hereditary_cancer_01
+                    name: 遺傳性癌症次世代定序檢測報告 (Hereditary Cancer NGS Report)
+                    slug: hereditary-cancer-ngs-report
+                    version: 2.4.0
+                    published_date: '2026-09-18'
+                    locale: zh-TW
+                    status: published
+                    description: ''
+                  spec:
+                    pages:
+                    - id: p1
+                      title: 'Page 1: Test Results and Detected Variants'
+                      sections:
+                      - id: sec_lab_1
+                        type: lab
+                        title: Performing Laboratory
+                        configuration:
+                          lab_name: 國立精準基因體醫學檢驗所 (SeqsLab Genomic Center)
+                          lab_subtitle: CAP / CLIA 認證分子病理高通量定序實驗室
+                          logo_image: data uri in base64
+                          cert_seal_image: ''
+                          show_clia: true
+                          show_cap: true
+                          show_iso: false
+                      - id: sec_clinical_attributes
+                        type: structured_attributes
+                        title: 受檢者與檢體資訊 (Phenopacket Clinical Profile)
+                        configuration:
+                          category: combined
+                          layout: three_column
+                          active_fields:
+                          - field_id: name
+                            display_name: Patient Name
+                            source_path: $.subject.alternate_ids[?(@ =~ /^NAME:/)]
+                            fallback_value: N/A
+                          - field_id: english_name
+                            display_name: English Name
+                            source_path: $.subject.alternate_ids[?(@ =~ /^ENG_NAME:/)]
+                            fallback_value: N/A
+                          - field_id: mrn
+                            display_name: Medical Record Number (MRN)
+                            source_path: $.subject.alternate_ids[?(@ =~ /^MRN:/)]
+                            fallback_value: N/A
+                          - field_id: dob
+                            display_name: Date of Birth
+                            source_path: $.subject.date_of_birth
+                            fallback_value: Unknown
+                          - field_id: gender
+                            display_name: Gender / Sex
+                            source_path: $.subject.gender.label
+                            fallback_value: Unspecified
+                          - field_id: ethnicity
+                            display_name: Ethnicity
+                            source_path: $.subject.ethnicity.label
+                            fallback_value: Unspecified
+                          - field_id: histology
+                            display_name: Histology / Diagnosis
+                            source_path: $.biosamples[0].histological_diagnosis.label
+                            fallback_value: Pending
+                          - field_id: sample_id
+                            display_name: Sample ID
+                            source_path: $.biosamples[0].id
+                            fallback_value: N/A
+                          - field_id: sampled_tissue
+                            display_name: Sampled Tissue
+                            source_path: $.biosamples[0].sampled_tissue.label
+                            fallback_value: N/A
+                          - field_id: sample_type
+                            display_name: Sample Type
+                            source_path: $.biosamples[0].sample_type.label
+                            fallback_value: N/A
+                          - field_id: collection_date
+                            display_name: Collection Date
+                            source_path: $.biosamples[0].time_of_collection.timestamp
+                            fallback_value: N/A
+                          - field_id: entry_date
+                            display_name: Record Entry Date
+                            source_path: $.biosamples[0]?.phenopacket_biosamples[0].meta_data.created
+                            fallback_value: N/A
+                          - field_id: assay_type
+                            display_name: Assay / Panel Type
+                            source_path: $.biosamples[0].measurementconnections.edges[?(@
+                              =~ /^ldt.assay:/)].node.assay.label
+                            fallback_value: N/A
+                          - field_id: tumor_purity
+                            display_name: Tumor Purity
+                            source_path: $.biosamples[0].measurementconnections.edges[?(@.node.assay.label
+                              == 'Tumor Purity')].node.value.quantity.value
+                            fallback_value: N/A
+                      - id: sec_content_summary
+                        type: content
+                        title: 基因檢測結果摘要 (Executive Summary of Genomic Findings)
+                        configuration:
+                          application: summary_of_results
+                          language: zh-TW
+                          accession: Extract individual phenotypes (TNBC) and match
+                            with BRCA1/2, PALB2, TP53 variants.
+                          generation: Summarize primary findings in Traditional Chinese.
+                            Indicate if pathogenic variants were detected.
+                          sample_output_markdown: |-
+                            ### 檢測結果判定：**陽性 (POSITIVE)**
+
+                            受檢者檢體經次世代定序分析，於 **BRCA1** 基因發現一個具臨床顯著意義之**致病性變異 (Pathogenic Variant)**。此變異與遺傳性乳癌與卵巢癌症候群 (HBOC) 高度相關。
+
+                            * **檢測基因數**：30 遺傳性癌症關聯基因
+                            * **平均定序深度**：> 850X (覆蓋率 > 99.8%)
+                            * **建議諮詢**：建議轉介臨床遺傳專科醫師進行遺傳諮詢與親屬篩檢評估。
+                      - id: sec_content_variants
+                        type: content
+                        title: 致病性/疑似致病性變異位點 (Detected Pathogenic Variants)
+                        configuration:
+                          application: germline_short_variants
+                          language: zh-TW
+                          accession: Query germline SNVs/Indels filtered by ACMG Class
+                            1 (Pathogenic) and Class 2 (Likely Pathogenic).
+                          generation: 'Construct a clinical markdown table with columns:
+                            基因 (Gene), 核苷酸變化 (cDNA), 蛋白質變化 (Protein), 接合子狀態 (Zygosity),
+                            ACMG 分級.'
+                          sample_output_markdown: |-
+                            | 基因 (Gene) | 轉錄本 (Transcript) | 核苷酸變化 (cDNA) | 蛋白質變化 (p.) | 接合狀態 | ACMG 分級 |
+                            | :--- | :--- | :--- | :--- | :--- | :--- |
+                            | **BRCA1** | NM_007294.4 | c.5266dupC | p.Gln1756Profs*74 | 雜合子 (Heterozygous) | **Pathogenic** |
+                            | **TP53** | NM_000546.6 | - | 未檢出顯著致病變異 | - | - |
+                    - id: p2
+                      title: 第二頁：臨床建議與簽核
+                      sections:
+                      - id: sec_content_therapy
+                        type: content
+                        title: 臨床治療與用藥評估 (Therapeutic Implications)
+                        configuration:
+                          application: therapeutic_implications
+                          language: zh-TW
+                          accession: Correlate BRCA1 c.5266dupC with FDA-approved
+                            PARP inhibitors and clinical trials.
+                          generation: Generate bulleted therapeutic options including
+                            Olaparib, Talazoparib and relevant clinical guidelines
+                            (NCCN).
+                          sample_output_markdown: |-
+                            ### PARP 抑制劑 (PARP Inhibitors) 關聯性
+                            * **Olaparib (Lynparza)**: 依據 NCCN 臨床指引，帶有生殖系 *BRCA1* 突變之局部晚期或轉移性三陰性乳癌病患，具顯著臨床獲益證據。
+                            * **Talazoparib (Talzenna)**: 適用於先前曾接受化療之生殖系 *BRCA* 突變 HER2- 晚期乳癌病患。
+                            * **臨床試驗 (Clinical Trials)**: 推薦可評估合併免疫檢查點抑制劑之臨床試驗方案。
+                      - id: sec_blank_method
+                        type: blank
+                        title: 檢測方法與限制 (Methodology & Limitations)
+                        configuration:
+                          format: markdown
+                          content: |-
+                            本檢驗採用次世代定序技術 (Targeted Next-Generation Sequencing)，針對目標基因外顯子區 (Exons) 及剪接位點進行超高深度定序。分析最低偵測極限 (LOD) 之等位基因頻率為 5%。
+
+                            **限制說明**：本分析不包含深度內含子區變異 (Deep intronic variants) 及部分特殊假基因 (Pseudogene) 干擾區域之偵測。
+                      - id: sec_sig_1
+                        type: signature
+                        title: Laboratory Signatures
+                        configuration:
+                          signatures:
+                          - title: 醫事檢驗師 (Medical Technologist)
+                            name: 林欣宜 醫檢師 (Lic. 04821)
+                            seal_text: 核可
+                            has_seal: false
+                            seal_image: ''
+                          - title: 臨床遺傳學專科醫師 (Clinical Geneticist)
+                            name: 張維倫 醫師 (M.D., Ph.D.)
+                            seal_text: 審核章
+                            hasSeal: true
+                            seal_image: ''
+                          - title: 實驗室主任 (Laboratory Director)
+                            name: 陳建宏 醫學博士 (Director)
+                            seal_text: SeqsLab 印
+                            has_seal: true
+                            seal_image: ''
+                summary: Reporting Template Creation
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reporting-templates/{id}/:
+    get:
+      operationId: healthcare_v3_reporting_templates_retrieve
+      description: |-
+        ViewSet for managing SeqsLab Nexus Clinical Reporting Templates.
+
+        Standard CRUD is unrestricted with respect to `status` and `published_date` (a non-null `published_date`
+        forces `status` to `published`). Only cross-organization access (404) and writes to pre-canned
+        templates (400) are refused. The following actions are client-side conveniences that never reject on state:
+          - `clone`: Duplicates any template into a new editable draft with the given version.
+          - `publish`: Sets status to published and stamps today's date.
+          - `deprecate`: Sets status to deprecated.
+          - `revert_to_draft`: Sets status back to draft.
+          - `precanned`: Lists the factory-provided reference templates.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+    put:
+      operationId: healthcare_v3_reporting_templates_update
+      description: |-
+        ViewSet for managing SeqsLab Nexus Clinical Reporting Templates.
+
+        Standard CRUD is unrestricted with respect to `status` and `published_date` (a non-null `published_date`
+        forces `status` to `published`). Only cross-organization access (404) and writes to pre-canned
+        templates (400) are refused. The following actions are client-side conveniences that never reject on state:
+          - `clone`: Duplicates any template into a new editable draft with the given version.
+          - `publish`: Sets status to published and stamps today's date.
+          - `deprecate`: Sets status to deprecated.
+          - `revert_to_draft`: Sets status back to draft.
+          - `precanned`: Lists the factory-provided reference templates.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportingTemplateDetailRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    patch:
+      operationId: healthcare_v3_reporting_templates_partial_update
+      description: |-
+        ViewSet for managing SeqsLab Nexus Clinical Reporting Templates.
+
+        Standard CRUD is unrestricted with respect to `status` and `published_date` (a non-null `published_date`
+        forces `status` to `published`). Only cross-organization access (404) and writes to pre-canned
+        templates (400) are refused. The following actions are client-side conveniences that never reject on state:
+          - `clone`: Duplicates any template into a new editable draft with the given version.
+          - `publish`: Sets status to published and stamps today's date.
+          - `deprecate`: Sets status to deprecated.
+          - `revert_to_draft`: Sets status back to draft.
+          - `precanned`: Lists the factory-provided reference templates.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReportingTemplateDetailRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    delete:
+      operationId: healthcare_v3_reporting_templates_destroy
+      description: |-
+        ViewSet for managing SeqsLab Nexus Clinical Reporting Templates.
+
+        Standard CRUD is unrestricted with respect to `status` and `published_date` (a non-null `published_date`
+        forces `status` to `published`). Only cross-organization access (404) and writes to pre-canned
+        templates (400) are refused. The following actions are client-side conveniences that never reject on state:
+          - `clone`: Duplicates any template into a new editable draft with the given version.
+          - `publish`: Sets status to published and stamps today's date.
+          - `deprecate`: Sets status to deprecated.
+          - `revert_to_draft`: Sets status back to draft.
+          - `precanned`: Lists the factory-provided reference templates.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                NotFound:
+                  value:
+                    detail: No <object> matches the given query
+                    code: object_does_not_exist
+                  summary: Not found
+                  description: Not found
+          description: ''
+  /healthcare/v3/reporting-templates/{id}/clone/:
+    post:
+      operationId: healthcare_v3_reporting_templates_clone_create
+      description: 'Convenience action: clones any template (including pre-canned
+        ones) into a new editable DRAFT.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportingTemplateCloneRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateClone'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reporting-templates/{id}/deprecate/:
+    post:
+      operationId: healthcare_v3_reporting_templates_deprecate_create
+      description: 'Convenience action: sets status to DEPRECATED.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reporting-templates/{id}/publish/:
+    post:
+      operationId: healthcare_v3_reporting_templates_publish_create
+      description: 'Convenience action: sets status to PUBLISHED and stamps the current
+        date as published_date.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reporting-templates/{id}/revert-draft/:
+    post:
+      operationId: healthcare_v3_reporting_templates_revert_draft_create
+      description: 'Convenience action: sets status to DRAFT.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier (UUIDv4) for the reporting template.
+        required: true
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateDetail'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+  /healthcare/v3/reporting-templates/precanned/:
+    get:
+      operationId: healthcare_v3_reporting_templates_precanned_retrieve
+      description: Returns only pre-canned factory-certified reference templates.
+      tags:
+      - reporting-template
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingTemplateList'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
   /healthcare/v3/reports/:
     get:
       operationId: healthcare_v3_reports_list
@@ -2143,12 +3351,8 @@ paths:
   /healthcare/v3/reports/{id}/pdf/:
     post:
       operationId: healthcare_v3_reports_pdf_create
-      description: |-
-        Enforces object-level permissions in ``rest_framework.viewsets.ViewSet``,
-        deriving the permission type from the particular action to be performed..
-
-        As with ``rules.contrib.views.AutoPermissionRequiredMixin``, this only works when
-        model permissions are registered using ``rules.contrib.models.RulesModelMixin``.
+      description: Creates a formatted PDF artifact from a Phenopacket report into
+        a downloadable PDF report document.
       parameters:
       - in: path
         name: id
@@ -2338,6 +3542,7 @@ paths:
           - tr
           - tt
           - udm
+          - ug
           - uk
           - ur
           - uz
@@ -3848,6 +5053,14 @@ components:
           type: string
           nullable: true
           minLength: 1
+    LocaleEnum:
+      enum:
+      - en-US
+      - zh-TW
+      type: string
+      description: |-
+        * `en-US` - English (United States)
+        * `zh-TW` - Traditional Chinese (Taiwan)
     Measurement:
       type: object
       description: Adds nested create feature
@@ -4390,6 +5603,21 @@ components:
             $ref: '#/components/schemas/CodeableConceptRequest'
         result:
           $ref: '#/components/schemas/ResultEnum'
+    PatchedReportingTemplateDetailRequest:
+      type: object
+      description: |-
+        Full envelope serializer.
+        Mirrors the exact declarative structure consumed by SeqsLab Nexus.
+      properties:
+        resource_type:
+          type: string
+          minLength: 1
+          default: ReportingTemplate
+        metadata:
+          $ref: '#/components/schemas/ReportingTemplateMetadataRequest'
+        spec:
+          type: object
+          additionalProperties: {}
     PharmacogenomicInterpretation:
       type: object
       description: |-
@@ -4999,6 +6227,242 @@ components:
       - indefinite_range
       - literal_sequence_expression
       - number
+    ReportingTemplateClone:
+      type: object
+      description: Validates inputs for cloning a template to a new version.
+      properties:
+        new_name:
+          type: string
+          maxLength: 255
+        new_version:
+          type: string
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
+          maxLength: 32
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-\w]+$
+      required:
+      - new_version
+    ReportingTemplateCloneRequest:
+      type: object
+      description: Validates inputs for cloning a template to a new version.
+      properties:
+        new_name:
+          type: string
+          maxLength: 255
+        new_version:
+          type: string
+          minLength: 1
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
+          maxLength: 32
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-\w]+$
+      required:
+      - new_version
+    ReportingTemplateDetail:
+      type: object
+      description: |-
+        Full envelope serializer.
+        Mirrors the exact declarative structure consumed by SeqsLab Nexus.
+      properties:
+        resource_type:
+          type: string
+          default: ReportingTemplate
+        metadata:
+          $ref: '#/components/schemas/ReportingTemplateMetadata'
+        spec:
+          type: object
+          additionalProperties: {}
+      required:
+      - metadata
+      - spec
+    ReportingTemplateDetailRequest:
+      type: object
+      description: |-
+        Full envelope serializer.
+        Mirrors the exact declarative structure consumed by SeqsLab Nexus.
+      properties:
+        resource_type:
+          type: string
+          minLength: 1
+          default: ReportingTemplate
+        metadata:
+          $ref: '#/components/schemas/ReportingTemplateMetadataRequest'
+        spec:
+          type: object
+          additionalProperties: {}
+      required:
+      - metadata
+      - spec
+    ReportingTemplateList:
+      type: object
+      description: |-
+        Lightweight summary serializer optimized for registry data tables.
+        Omits heavy base64 strings and nested section configs while exposing
+        computed metrics like page_count and author details.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier (UUIDv4) for the reporting template.
+        name:
+          type: string
+          readOnly: true
+          description: Human-readable title of the clinical report template.
+        slug:
+          type: string
+          readOnly: true
+          description: URL-friendly identifier; combined with version for uniqueness.
+          pattern: ^[-\w]+$
+        version:
+          type: string
+          readOnly: true
+          default: 1.0.0
+          description: Semantic version string (e.g., '1.0.0', '2.4.0').
+        locale:
+          allOf:
+          - $ref: '#/components/schemas/LocaleEnum'
+          readOnly: true
+          description: |-
+            Target reporting language and locale.
+
+            * `en-US` - English (United States)
+            * `zh-TW` - Traditional Chinese (Taiwan)
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status535Enum'
+          readOnly: true
+          description: |-
+            Lifecycle state of the template.
+
+            * `draft` - Draft
+            * `published` - Published
+            * `deprecated` - Deprecated
+        is_precanned:
+          type: boolean
+          readOnly: true
+          description: Indicates whether this is a factory-provided default template
+            in SeqsLab Nexus.
+        description:
+          type: string
+          readOnly: true
+          description: Clinical summary, target panel, or intended regulatory scope.
+        published_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+          description: Clinical validation or release date printed on the report.
+        page_count:
+          type: integer
+          readOnly: true
+        created_by_username:
+          type: string
+          readOnly: true
+        updated_by_username:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - created_by_username
+      - description
+      - id
+      - is_precanned
+      - locale
+      - name
+      - page_count
+      - published_date
+      - slug
+      - status
+      - updated_at
+      - updated_by_username
+      - version
+    ReportingTemplateMetadata:
+      type: object
+      description: Encapsulates template identity, lifecycle status, and locale metadata.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        slug:
+          type: string
+          maxLength: 255
+          pattern: ^[-\w]+$
+        version:
+          type: string
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
+          maxLength: 32
+        locale:
+          $ref: '#/components/schemas/LocaleEnum'
+        status:
+          $ref: '#/components/schemas/Status535Enum'
+        is_precanned:
+          type: boolean
+          readOnly: true
+        published_date:
+          type: string
+          format: date
+          nullable: true
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - is_precanned
+      - name
+      - updated_at
+    ReportingTemplateMetadataRequest:
+      type: object
+      description: Encapsulates template identity, lifecycle status, and locale metadata.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 255
+          pattern: ^[-\w]+$
+        version:
+          type: string
+          minLength: 1
+          pattern: ^\d+\.\d+(\.\d+)?(-\w+)?$
+          maxLength: 32
+        locale:
+          $ref: '#/components/schemas/LocaleEnum'
+        status:
+          $ref: '#/components/schemas/Status535Enum'
+        published_date:
+          type: string
+          format: date
+          nullable: true
+        description:
+          type: string
+      required:
+      - name
     ReportsExportRequest:
       type: object
       properties:
@@ -5555,16 +7019,16 @@ components:
         * `REPORT` - Report
         * `CLOSED` - Closed
         * `REJECTED` - Rejected
-    StatusEnum:
+    Status535Enum:
       enum:
-      - UNKNOWN_STATUS
-      - ALIVE
-      - DECEASED
+      - draft
+      - published
+      - deprecated
       type: string
       description: |-
-        * `UNKNOWN_STATUS` - UNKNOWN_STATUS
-        * `ALIVE` - ALIVE
-        * `DECEASED` - DECEASED
+        * `draft` - Draft
+        * `published` - Published
+        * `deprecated` - Deprecated
     Text:
       type: object
       properties:
@@ -6195,7 +7659,7 @@ components:
       description: Adds nested create feature
       properties:
         status:
-          $ref: '#/components/schemas/StatusEnum'
+          $ref: '#/components/schemas/VitalStatusStatusEnum'
         cause_of_death:
           $ref: '#/components/schemas/OntologyClassStatic'
         time_of_death:
@@ -6209,7 +7673,7 @@ components:
       description: Adds nested create feature
       properties:
         status:
-          $ref: '#/components/schemas/StatusEnum'
+          $ref: '#/components/schemas/VitalStatusStatusEnum'
         cause_of_death:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
         time_of_death:
@@ -6218,6 +7682,16 @@ components:
           type: integer
       required:
       - status
+    VitalStatusStatusEnum:
+      enum:
+      - UNKNOWN_STATUS
+      - ALIVE
+      - DECEASED
+      type: string
+      description: |-
+        * `UNKNOWN_STATUS` - UNKNOWN_STATUS
+        * `ALIVE` - ALIVE
+        * `DECEASED` - DECEASED
     XYPoint:
       type: object
       description: |-

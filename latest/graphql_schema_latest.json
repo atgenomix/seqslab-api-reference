@@ -8616,6 +8616,42 @@
                     "name": "String",
                     "ofType": null
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "DiplotypeFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -9002,6 +9038,42 @@
                     "kind": "SCALAR",
                     "name": "String",
                     "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "DiplotypeFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
                   }
                 },
                 {
@@ -12521,6 +12593,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "comment___regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "metadata_updates__created__gte",
                   "type": {
                     "kind": "SCALAR",
@@ -12692,6 +12774,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "comment___regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "metadata_updates__created__gte",
                   "type": {
                     "kind": "SCALAR",
@@ -12808,6 +12900,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "comment___regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -16744,6 +16846,42 @@
                     "name": "String",
                     "ofType": null
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__expressions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExpressionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -17084,6 +17222,42 @@
                     "kind": "SCALAR",
                     "name": "String",
                     "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__expressions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExpressionFilterInput",
+                        "ofType": null
+                      }
+                    }
                   }
                 },
                 {
@@ -23338,6 +23512,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -23722,6 +23952,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -24041,6 +24281,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -24847,6 +25097,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -25231,6 +25537,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -25550,6 +25866,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -26310,6 +26636,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -26694,6 +27076,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -27022,6 +27414,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "_cursor",
                   "type": {
                     "kind": "SCALAR",
@@ -27180,6 +27582,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "meta_data__submitted_by__in",
                   "type": {
                     "kind": "LIST",
@@ -27209,6 +27621,48 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -27591,6 +28045,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -27667,6 +28131,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "measurements_count__lte",
                   "type": {
                     "kind": "SCALAR",
@@ -27712,6 +28232,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -28090,6 +28620,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -28166,6 +28706,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "measurements_count__lte",
                   "type": {
                     "kind": "SCALAR",
@@ -28211,6 +28807,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -28543,6 +29149,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -28619,6 +29235,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "measurements_count__lte",
                   "type": {
                     "kind": "SCALAR",
@@ -28664,6 +29336,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -28827,6 +29509,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "meta_data__submitted_by__in",
                   "type": {
                     "kind": "LIST",
@@ -28856,6 +29548,48 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -29154,6 +29888,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -29251,6 +29995,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -29639,6 +30439,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -29933,6 +30743,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -30030,6 +30850,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -30418,6 +31294,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -30666,6 +31552,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -30763,6 +31659,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -31151,6 +32103,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -32775,6 +33737,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -32872,6 +33844,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -33260,6 +34288,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -33639,6 +34677,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -33736,6 +34784,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -34124,6 +35228,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -40808,6 +41922,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "comment___regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "metadata_updates__created__gte",
                   "type": {
                     "kind": "SCALAR",
@@ -41779,6 +42903,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "comment___regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -43231,6 +44365,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -43615,6 +44805,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -43934,6 +45134,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -46697,6 +47907,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -47081,6 +48347,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -47400,6 +48676,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -49880,6 +51166,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "comment___regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "metadata_updates__created__gte",
                   "type": {
                     "kind": "SCALAR",
@@ -50097,7 +51393,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "organization_id",
+              "name": "submitted_by_organization_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -50109,7 +51405,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "practitioner_id",
+              "name": "submitted_by_practitioner_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -50121,7 +51417,19 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "practitioner_role_id",
+              "name": "submitted_by_practitioner_role_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "created_by_organization_id",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -50432,6 +51740,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "comment___regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -51025,6 +52343,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -51122,6 +52450,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -51510,6 +52894,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -51865,6 +53259,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "meta_data__updates__comment__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "subject__id__in",
                   "type": {
                     "kind": "LIST",
@@ -51962,6 +53366,62 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "practitioner_role_organization__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "created_by_organization_id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -52350,6 +53810,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "conclusion_code__text__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "conclusion_code__text__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -54369,6 +55839,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -54753,6 +56279,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -55072,6 +56608,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -57874,6 +59420,62 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__submitted_by_practitioner_role_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "phenopacket_biosamples__created_by_organization_id__in",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacket_biosamples__subject__alternate_ids__contains",
                   "type": {
                     "kind": "SCALAR",
@@ -58258,6 +59860,16 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "phenopacket_biosamples__conclusion_code__text__regex",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "phenopacketreport_biosamples__status",
                   "type": {
                     "kind": "SCALAR",
@@ -58577,6 +60189,16 @@
                   "defaultValue": null,
                   "description": null,
                   "name": "updates__comment__contains",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "updates__comment__regex",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -63492,6 +65114,42 @@
                     "name": "String",
                     "ofType": null
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__expressions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExpressionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -64750,6 +66408,42 @@
                     "name": "String",
                     "ofType": null
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "diplotypes__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "DiplotypeFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
                 }
               ],
               "deprecationReason": null,
@@ -65114,6 +66808,42 @@
                     "kind": "SCALAR",
                     "name": "String",
                     "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "variant_interpretation__variation_descriptor__expressions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExpressionFilterInput",
+                        "ofType": null
+                      }
+                    }
                   }
                 },
                 {
@@ -66509,6 +68239,42 @@
                 {
                   "defaultValue": null,
                   "description": null,
+                  "name": "diplotypes__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "DiplotypeFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
+                  "name": "extensions__match",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "ExtensionFilterInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": null,
                   "name": "before",
                   "type": {
                     "kind": "SCALAR",
@@ -66562,6 +68328,192 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "DiagnosisType",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "name",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__in",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__contains",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__startswith",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__isnull",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "false",
+              "description": null,
+              "name": "exclude",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "ExtensionFilterInput",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "syntax",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__in",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__contains",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "value__startswith",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "version",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "false",
+              "description": null,
+              "name": "exclude",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "ExpressionFilterInput",
           "possibleTypes": null
         },
         {
@@ -67522,6 +69474,121 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "ExtensionEdge",
+          "possibleTypes": null
+        },
+        {
+          "description": null,
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "gene_symbol",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "gene_symbol__in",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "gene_value_id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "gene_value_id__in",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "phenotype",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "phenotype__in",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "phenotype__contains",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "false",
+              "description": null,
+              "name": "exclude",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DiplotypeFilterInput",
           "possibleTypes": null
         },
         {
