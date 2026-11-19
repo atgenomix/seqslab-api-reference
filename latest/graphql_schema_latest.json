@@ -14492,16 +14492,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "model__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "score__id",
                   "type": {
                     "kind": "SCALAR",
@@ -14648,7 +14638,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id",
+                  "name": "model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -14658,7 +14648,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id__in",
+                  "name": "model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -14672,7 +14662,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label",
+                  "name": "model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -14682,7 +14672,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label__contains",
+                  "name": "model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -14769,16 +14759,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "model__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "score__id",
                   "type": {
                     "kind": "SCALAR",
@@ -14925,7 +14905,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id",
+                  "name": "model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -14935,7 +14915,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id__in",
+                  "name": "model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -14949,7 +14929,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label",
+                  "name": "model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -14959,7 +14939,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label__contains",
+                  "name": "model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -18060,7 +18040,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__id",
+                  "name": "polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -18070,7 +18050,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__id__in",
+                  "name": "polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -18084,7 +18064,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__label",
+                  "name": "polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -18094,7 +18074,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__label__contains",
+                  "name": "polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -19365,7 +19345,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__id",
+                  "name": "polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -19375,7 +19355,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__id__in",
+                  "name": "polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -19389,7 +19369,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__label",
+                  "name": "polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -19399,7 +19379,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "polygenic_interpretations__prs_model__label__contains",
+                  "name": "polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -20739,7 +20719,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -20749,7 +20729,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -20763,7 +20743,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -20773,7 +20753,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -21950,7 +21930,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -21960,7 +21940,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -21974,7 +21954,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -21984,7 +21964,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -37099,18 +37079,6 @@
               }
             },
             {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "prs_model",
-              "type": {
-                "kind": "OBJECT",
-                "name": "OntologyClassType",
-                "ofType": null
-              }
-            },
-            {
               "args": [
                 {
                   "defaultValue": null,
@@ -37726,7 +37694,7 @@
               "deprecationReason": null,
               "description": null,
               "isDeprecated": false,
-              "name": "polygenicinterpretation_prs_model",
+              "name": "polygenicinterpretation_model",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -46019,7 +45987,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -46029,7 +45997,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -46043,7 +46011,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -46053,7 +46021,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -49705,7 +49673,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -49715,7 +49683,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -49729,7 +49697,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -49739,7 +49707,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -57493,7 +57461,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -57503,7 +57471,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -57517,7 +57485,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -57527,7 +57495,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -61218,7 +61186,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id",
+                  "name": "diagnosis__polygenic_interpretations__model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -61228,7 +61196,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__id__in",
+                  "name": "diagnosis__polygenic_interpretations__model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -61242,7 +61210,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label",
+                  "name": "diagnosis__polygenic_interpretations__model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -61252,7 +61220,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "diagnosis__polygenic_interpretations__prs_model__label__contains",
+                  "name": "diagnosis__polygenic_interpretations__model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -65171,16 +65139,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "model__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "score__id",
                   "type": {
                     "kind": "SCALAR",
@@ -65327,7 +65285,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id",
+                  "name": "model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -65337,7 +65295,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id__in",
+                  "name": "model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -65351,7 +65309,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label",
+                  "name": "model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -65361,7 +65319,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label__contains",
+                  "name": "model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -66902,16 +66860,6 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "model__id",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                {
-                  "defaultValue": null,
-                  "description": null,
                   "name": "score__id",
                   "type": {
                     "kind": "SCALAR",
@@ -67058,7 +67006,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id",
+                  "name": "model__id",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -67068,7 +67016,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__id__in",
+                  "name": "model__id__in",
                   "type": {
                     "kind": "LIST",
                     "name": null,
@@ -67082,7 +67030,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label",
+                  "name": "model__label",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",
@@ -67092,7 +67040,7 @@
                 {
                   "defaultValue": null,
                   "description": null,
-                  "name": "prs_model__label__contains",
+                  "name": "model__label__contains",
                   "type": {
                     "kind": "SCALAR",
                     "name": "String",

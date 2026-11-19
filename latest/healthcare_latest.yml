@@ -3348,6 +3348,197 @@ paths:
                   summary: Not found
                   description: Not found
           description: ''
+  /healthcare/v3/reports/{id}/generate/:
+    get:
+      operationId: healthcare_v3_reports_generate_retrieve
+      description: POST starts/restarts generation; GET returns latest attempt for
+        the pair.
+      summary: Get latest report generation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      - in: query
+        name: report_template_id
+        schema:
+          type: string
+          pattern: ^(?:[0-9a-fA-F]{32}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$
+        description: 'Reporting template UUID: 32 hexadecimal characters or 36 characters
+          with hyphens.'
+        required: true
+        examples:
+          CompactUUID:
+            value: 931151706f3a4b86a7746ce6a87769fe
+            summary: Compact UUID
+          HyphenatedUUID:
+            value: 93115170-6f3a-4b86-a774-6ce6a87769fe
+            summary: Hyphenated UUID
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportGeneration'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                SerializerFormatIsNotSameAsTheRDBData:
+                  value:
+                    detail: 'Received a KeyError when attempting to get a value for
+                      field `workspace` on serializer `WorkflowBackendParamsSerializer`.
+                      The serializer field might be named incorrectly and does not
+                      match any attribute or key on the `dict` instance. Original
+                      exception text was: ''workspace''.'
+                    code: internal_server_error
+                  summary: Serializer format is not same as the RDB data
+                  description: Serializer format is not the same as the RDB data
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                AuthenticationCredentialsWereNotProvided:
+                  value:
+                    detail: Authentication credentials were not provided
+                    code: not_authenticated
+                  summary: Authentication credentials were not provided
+                  description: Authentication credentials were not provided
+                GivenTokenIsNotValidForAnyTokenType:
+                  value:
+                    detail: Given token is not valid for any token type
+                    messages:
+                    - token_class: AccessToken
+                      token_type: access
+                      message: Token is invalid or expired
+                    code: token_not_valid
+                  summary: Given token is not valid for any token type
+                  description: Given token is not valid for any token type
+                GivenTokenNotValidForAPI:
+                  value:
+                    detail: User not found
+                    code: user_not_found
+                  summary: Given token not valid for API
+                  description: Given token is not valid for API
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                YouDoNotHavePermissionToPerformThisAction:
+                  value:
+                    detail: You do not have permission to perform this action
+                    code: permission_denied
+                  summary: You do not have permission to perform this action
+                  description: You do not have permission to perform this action
+          description: ''
+    post:
+      operationId: healthcare_v3_reports_generate_create
+      description: POST starts/restarts generation; GET returns latest attempt for
+        the pair.
+      summary: Start or restart report generation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A unique value identifying this phenopacket report.
+        required: true
+      tags:
+      - reports
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportGenerationCreateRequest'
+            examples:
+              GenerateReport:
+                value:
+                  report_template_id: 4f1a47f9-ceae-4552-b110-208692a2fe0c
+                  biosample_ids:
+                  - HG001_1224
+                  - HG005_1231
+                summary: Generate report
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportGeneration'
+              examples:
+                GenerateReport:
+                  value:
+                    report_template_id: 4f1a47f9-ceae-4552-b110-208692a2fe0c
+                    biosample_ids:
+                    - HG001_1224
+                    - HG005_1231
+                  summary: Generate report
+          description: ''
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportGeneration'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                GenerateReport:
+                  value:
+                    report_template_id: 4f1a47f9-ceae-4552-b110-208692a2fe0c
+                    biosample_ids:
+                    - HG001_1224
+                    - HG005_1231
+                  summary: Generate report
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                GenerateReport:
+                  value:
+                    report_template_id: 4f1a47f9-ceae-4552-b110-208692a2fe0c
+                    biosample_ids:
+                    - HG001_1224
+                    - HG005_1231
+                  summary: Generate report
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardSerializers'
+              examples:
+                GenerateReport:
+                  value:
+                    report_template_id: 4f1a47f9-ceae-4552-b110-208692a2fe0c
+                    biosample_ids:
+                    - HG001_1224
+                    - HG005_1231
+                  summary: Generate report
+          description: ''
   /healthcare/v3/reports/{id}/pdf/:
     post:
       operationId: healthcare_v3_reports_pdf_create
@@ -3663,7 +3854,17 @@ components:
       - iso8601duration
     AgeRange:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -3678,7 +3879,17 @@ components:
       - start
     AgeRangeRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         start:
           $ref: '#/components/schemas/AgeRequest'
@@ -3697,7 +3908,17 @@ components:
       - iso8601duration
     Allele:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -3723,7 +3944,17 @@ components:
       - id
     AlleleRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         chromosome_location:
           $ref: '#/components/schemas/ChromosomeLocationRequest'
@@ -3762,7 +3993,17 @@ components:
         * `PATHOGENIC` - PATHOGENIC
     AxisDescriptor:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -3778,7 +4019,17 @@ components:
       - label
     AxisDescriptorRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         unit:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -3791,7 +4042,17 @@ components:
       - label
     Biosample:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -3866,7 +4127,17 @@ components:
       - user
     BiosampleRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -4093,7 +4364,17 @@ components:
       - interval
     CodeableConcept:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4109,7 +4390,17 @@ components:
       - id
     CodeableConceptRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         coding:
           type: array
@@ -4128,7 +4419,17 @@ components:
         * `MTE` - MTE
     ComplexValue:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4142,7 +4443,17 @@ components:
       - typed_quantities
     ComplexValueRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         typed_quantities:
           type: array
@@ -4152,7 +4463,17 @@ components:
       - typed_quantities
     CopyNumber:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4185,7 +4506,17 @@ components:
       - id
     CopyNumberRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         allele:
           $ref: '#/components/schemas/AlleleRequest'
@@ -4267,7 +4598,17 @@ components:
           description: A bounded, inclusive range of numbers.
     DerivedSequenceExpression:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4282,7 +4623,17 @@ components:
       - location
     DerivedSequenceExpressionRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         location:
           $ref: '#/components/schemas/SequenceLocationRequest'
@@ -4293,7 +4644,17 @@ components:
       - location
     Diagnosis:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4330,7 +4691,17 @@ components:
       - id
     DiagnosisRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         disease:
           allOf:
@@ -4362,7 +4733,17 @@ components:
           maxLength: 255
     Diplotype:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -4379,7 +4760,17 @@ components:
           maxLength: 255
     DiplotypeRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -4397,7 +4788,17 @@ components:
           maxLength: 255
     Diseases:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4428,7 +4829,17 @@ components:
       - term
     DiseasesRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         term:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -4455,7 +4866,17 @@ components:
       - term
     DoseInterval:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4473,7 +4894,17 @@ components:
       - schedule_frequency
     DoseIntervalRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         quantity:
           $ref: '#/components/schemas/QuantityRequest'
@@ -4499,7 +4930,17 @@ components:
         * `ADMINISTRATION_RELATED_TO_PROCEDURE` - 3
     Evidence:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4513,7 +4954,17 @@ components:
       - id
     EvidenceRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         evidence_code:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -4551,7 +5002,17 @@ components:
           minLength: 1
     Extension:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4568,7 +5029,17 @@ components:
       - name
     ExtensionRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         name:
           type: string
@@ -4800,7 +5271,17 @@ components:
           type: integer
     Haplotype:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -4818,7 +5299,17 @@ components:
       - members
     HaplotypeRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         members:
           type: array
@@ -5063,7 +5554,17 @@ components:
         * `zh-TW` - Traditional Chinese (Taiwan)
     Measurement:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5150,7 +5651,17 @@ components:
       - measurement
     MeasurementRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         description:
           type: string
@@ -5169,7 +5680,17 @@ components:
       - assay
     MedicalAction:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5198,7 +5719,17 @@ components:
       - id
     MedicalActionRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         procedure:
           $ref: '#/components/schemas/ProcedureRequest'
@@ -5222,7 +5753,17 @@ components:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
     Member:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5235,7 +5776,17 @@ components:
       - id
     MemberRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         allele:
           $ref: '#/components/schemas/AlleleRequest'
@@ -5244,7 +5795,17 @@ components:
           minLength: 1
     Metadata:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5286,7 +5847,17 @@ components:
       - id
     MetadataRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         submitted_by:
           type: string
@@ -5438,7 +6009,17 @@ components:
       - id
     Pages:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5468,7 +6049,17 @@ components:
       - user
     PagesRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         charts:
           type: array
@@ -5525,7 +6116,17 @@ components:
           nullable: true
     PatchedPagesRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         charts:
           type: array
@@ -5541,7 +6142,17 @@ components:
           minLength: 1
     PatchedPhenopacketReportRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -5713,7 +6324,17 @@ components:
           maxLength: 64
     PhenopacketReport:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -5780,7 +6401,17 @@ components:
       - user
     PhenopacketReportRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: string
@@ -5856,7 +6487,17 @@ components:
         * `2.0` - 2.0
     PhenotypicFeature:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -5888,7 +6529,17 @@ components:
       - type
     PhenotypicFeatureRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         type:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -6059,7 +6710,17 @@ components:
         * `UNSOLVED` - UNSOLVED
     Quantity:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6077,7 +6738,17 @@ components:
       - unit
     QuantityRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         reference_range:
           $ref: '#/components/schemas/ReferenceRangeRequest'
@@ -6091,7 +6762,17 @@ components:
       - unit
     RadiationTherapy:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6116,7 +6797,17 @@ components:
       - modality
     RadiationTherapyRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         modality:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -6137,7 +6828,17 @@ components:
       - modality
     ReferenceRange:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6157,7 +6858,17 @@ components:
       - unit
     ReferenceRangeRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         unit:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -6185,7 +6896,17 @@ components:
         * `DISCONTINUED` - DISCONTINUED
     RepeatedSequenceExpression:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6209,7 +6930,17 @@ components:
       - number
     RepeatedSequenceExpressionRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         literal_sequence_expression:
           $ref: '#/components/schemas/LiteralSequenceExpressionRequest'
@@ -6227,6 +6958,114 @@ components:
       - indefinite_range
       - literal_sequence_expression
       - number
+    ReportGeneration:
+      type: object
+      properties:
+        generation_id:
+          type: string
+          readOnly: true
+        attempt:
+          type: integer
+          maximum: 4294967295
+          minimum: 0
+          format: int64
+        phenopacket_report_id:
+          type: string
+        report_template_id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/ReportGenerationStatusEnum'
+        progress:
+          type: string
+          readOnly: true
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportGenerationSectionStatus'
+        report_template:
+          type: string
+          readOnly: true
+        error:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - attempt
+      - created_at
+      - error
+      - generation_id
+      - phenopacket_report_id
+      - progress
+      - report_template
+      - report_template_id
+      - sections
+      - updated_at
+    ReportGenerationCreateRequest:
+      type: object
+      properties:
+        report_template_id:
+          type: string
+          format: uuid
+        biosample_ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+      required:
+      - report_template_id
+    ReportGenerationSectionStatus:
+      type: object
+      properties:
+        page_id:
+          type: string
+          maxLength: 255
+        section_id:
+          type: string
+          maxLength: 255
+        status:
+          $ref: '#/components/schemas/ReportGenerationSectionStatusStatusEnum'
+        error_code:
+          type: string
+          maxLength: 64
+        error_message:
+          type: string
+      required:
+      - page_id
+      - section_id
+    ReportGenerationSectionStatusStatusEnum:
+      enum:
+      - PENDING
+      - PROCESSING
+      - COMPLETE
+      - FAIL
+      type: string
+      description: |-
+        * `PENDING` - Pending
+        * `PROCESSING` - Processing
+        * `COMPLETE` - Complete
+        * `FAIL` - Fail
+    ReportGenerationStatusEnum:
+      enum:
+      - GENERATING
+      - COMPLETE
+      - FAIL
+      type: string
+      description: |-
+        * `GENERATING` - Generating
+        * `COMPLETE` - Complete
+        * `FAIL` - Fail
     ReportingTemplateClone:
       type: object
       description: Validates inputs for cloning a template to a new version.
@@ -6469,6 +7308,9 @@ components:
         assay:
           type: string
           maxLength: 100
+        template:
+          type: string
+          maxLength: 36
         lastsignin:
           type: string
           maxLength: 64
@@ -6486,6 +7328,10 @@ components:
           type: string
           minLength: 1
           maxLength: 100
+        template:
+          type: string
+          minLength: 1
+          maxLength: 36
         lastsignin:
           type: string
           minLength: 1
@@ -6552,7 +7398,17 @@ components:
         * `POSITIVE` - POSITIVE
     RiskDescriptor:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6577,7 +7433,17 @@ components:
       - type
     RiskDescriptorRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         type:
           $ref: '#/components/schemas/RiskDescriptorTypeEnum'
@@ -6621,7 +7487,17 @@ components:
         * `POPULATION_ATTRIBUTABLE_FRACTION` - POPULATION_ATTRIBUTABLE_FRACTION
     RiskExpression:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6639,7 +7515,17 @@ components:
       - type
     RiskExpressionRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         type:
           $ref: '#/components/schemas/RiskExpressionTypeEnum'
@@ -6671,7 +7557,17 @@ components:
         * `MULTI_OMIC_COMPOSITE` - MULTI_OMIC_COMPOSITE
     RiskThreshold:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6688,7 +7584,17 @@ components:
       - value
     RiskThresholdRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         name:
           $ref: '#/components/schemas/NameEnum'
@@ -6757,7 +7663,17 @@ components:
       - subject
     Score:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6788,7 +7704,17 @@ components:
       - id
     ScoreRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         zscore:
           type: number
@@ -6893,7 +7819,17 @@ components:
       - result
     SequenceInterval:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6914,7 +7850,17 @@ components:
       - id
     SequenceIntervalRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         start_number:
           $ref: '#/components/schemas/NumberRequest'
@@ -6930,7 +7876,17 @@ components:
           $ref: '#/components/schemas/DefiniteRangeRequest'
     SequenceLocation:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6945,7 +7901,17 @@ components:
       - sequence_interval
     SequenceLocationRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         sequence_interval:
           $ref: '#/components/schemas/SequenceIntervalRequest'
@@ -6957,7 +7923,17 @@ components:
       - sequence_interval
     SequenceState:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -6969,7 +7945,17 @@ components:
       - id
     SequenceStateRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         sequence:
           type: string
@@ -7074,7 +8060,17 @@ components:
         * `IV` - IV (Benign)
     TherapeuticRegimen:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7094,7 +8090,17 @@ components:
       - regimen_status
     TherapeuticRegimenRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         start_time:
           $ref: '#/components/schemas/TimeElementRequest'
@@ -7110,7 +8116,17 @@ components:
       - regimen_status
     TimeElement:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7132,7 +8148,17 @@ components:
       - id
     TimeElementRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         gestational_age:
           $ref: '#/components/schemas/GestationalAgeRequest'
@@ -7177,7 +8203,17 @@ components:
       - start
     Treatment:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7199,7 +8235,17 @@ components:
       - id
     TreatmentRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         agent:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -7217,7 +8263,17 @@ components:
       - agent
     TypedQuantity:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7231,7 +8287,17 @@ components:
       - type
     TypedQuantityRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         type:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
@@ -7271,7 +8337,17 @@ components:
           minLength: 1
     Value:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7288,7 +8364,17 @@ components:
       - id
     ValueRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         quantity:
           allOf:
@@ -7300,7 +8386,17 @@ components:
           description: The outcome (value) of a measurement
     VariantInterpretation:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7353,7 +8449,17 @@ components:
       - variation_descriptor
     VariantInterpretationRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         variation_descriptor:
           $ref: '#/components/schemas/VariationDescriptorRequest'
@@ -7402,7 +8508,17 @@ components:
       - variation_descriptor
     Variation:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7525,7 +8641,17 @@ components:
           $ref: '#/components/schemas/OntologyClassStaticRequest'
     VariationRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         allele:
           $ref: '#/components/schemas/AlleleRequest'
@@ -7539,7 +8665,17 @@ components:
           $ref: '#/components/schemas/VariationSetRequest'
     VariationSet:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         id:
           type: integer
@@ -7557,7 +8693,17 @@ components:
       - members
     VariationSetRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         members:
           type: array
@@ -7656,7 +8802,17 @@ components:
       - ref
     VitalStatus:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         status:
           $ref: '#/components/schemas/VitalStatusStatusEnum'
@@ -7670,7 +8826,17 @@ components:
       - status
     VitalStatusRequest:
       type: object
-      description: Adds nested create feature
+      description: |-
+        Serializer mixin that schedules asynchronous cleanup of a nested child that an update has detached from its
+        parent.
+
+        drf-writable-nested creates a new child whenever the nested payload carries no primary key, and it never
+        deletes the child it replaced. This mixin remembers the child referenced by every writable direct (forward
+        FK / one-to-one) nested field before the update and, once the update has really changed the reference, schedules
+        cleanup of the former child after the surrounding transaction commits.
+
+        A detached child is only a candidate: whether it is really an orphan (not shared, not protected) is decided
+        later by CleanupService.
       properties:
         status:
           $ref: '#/components/schemas/VitalStatusStatusEnum'

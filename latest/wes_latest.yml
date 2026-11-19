@@ -2726,7 +2726,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-11-01 05:49:50.889664+00:00
+                    next_run: 2026-11-19 03:54:23.398388+00:00
                   request:
                     name: string
                     description: string
@@ -2763,7 +2763,7 @@ paths:
                 value:
                   schedule:
                     schedule_type: O
-                    next_run: 2026-11-01 05:49:50.889682+00:00
+                    next_run: 2026-11-19 03:54:23.398405+00:00
                   request:
                     tags:
                     - tag1/tag2/tag3
@@ -6055,6 +6055,11 @@ components:
           type: string
         smart_reuse_level:
           type: string
+        smart_reuse_tasks:
+          type: array
+          items:
+            type: string
+          description: 'Label name list: any string e.g., [''TUMOR''].'
         resume_run_id:
           type: string
         token_lifetime:
@@ -6092,6 +6097,12 @@ components:
         smart_reuse_level:
           type: string
           minLength: 1
+        smart_reuse_tasks:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: 'Label name list: any string e.g., [''TUMOR''].'
         resume_run_id:
           type: string
           minLength: 1
